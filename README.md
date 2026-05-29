@@ -185,3 +185,11 @@ build\
 - 抖音 / 小红书 / 视频号 / B 站：`tecbinAI进化`
 
 如果你是个人用户，直接下载使用即可。
+
+## 支持项目
+
+66Claw 面向个人用户免费开放。如果它帮你节省了安装、配置和踩坑时间，也欢迎自愿支持后续维护。
+
+<p align="center">
+  <img src="docs/assets/wechat-payment.png" alt="微信收款码" width="260">
+</p>
