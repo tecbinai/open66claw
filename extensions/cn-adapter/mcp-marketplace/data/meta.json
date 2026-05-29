@@ -1,0 +1,51 @@
+{
+  "totalItems": 4681,
+  "categories": {
+    "all": {
+      "count": 4681,
+      "pages": 94
+    },
+    "filesystem": {
+      "count": 253,
+      "pages": 6
+    },
+    "database": {
+      "count": 209,
+      "pages": 5
+    },
+    "search": {
+      "count": 230,
+      "pages": 5
+    },
+    "productivity": {
+      "count": 10,
+      "pages": 1
+    },
+    "development": {
+      "count": 776,
+      "pages": 16
+    },
+    "network": {
+      "count": 209,
+      "pages": 5
+    },
+    "smarthome": {
+      "count": 2,
+      "pages": 1
+    },
+    "ai": {
+      "count": 602,
+      "pages": 13
+    },
+    "social": {
+      "count": 1,
+      "pages": 1
+    },
+    "other": {
+      "count": 2389,
+      "pages": 48
+    }
+  },
+  "generatedAt": "2026-03-15T05:01:46.258Z",
+  "sourceVersion": "v5"
+}

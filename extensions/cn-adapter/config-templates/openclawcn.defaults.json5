@@ -1,0 +1,41 @@
+// OpenClawCN 默认配置模板 v1
+// 首次安装时通过 migration.ts 合并到用户配置中
+// 升级时按 3 级合并策略处理：fill-empty / deep-merge / force-overwrite
+{
+  // === 执行环境 ===
+  tools: {
+    exec: {
+      // CN 默认：直接在 gateway 进程执行（不走 Docker 沙箱）
+      // 国内用户大多没有 Docker，默认 sandbox 会导致所有工具不可用
+      host: "gateway",
+      // CN 默认：满血模式，允许所有命令执行
+      // 上游默认是受限模式，国内用户反馈"变笨"的主因
+      security: "full",
+    },
+  },
+
+  // === CN 插件配置 ===
+  cnPlugin: {
+    // 配置版本号，migration.ts 用来追踪和迁移
+    configVersion: 1,
+    // 界面语言
+    locale: "zh-CN",
+    // 国内镜像源
+    mirror: {
+      npm: "https://registry.npmmirror.com",
+      pip: "https://pypi.tuna.tsinghua.edu.cn/simple",
+    },
+    // 安全档位：full / balanced / safe
+    securityTier: "full",
+  },
+
+  // === Phase 1: Hook 配置 ===
+  // cnPlugin.models.default: { provider: "siliconflow", model: "deepseek-v3" }
+  // 支持的 provider: siliconflow, dashscope, doubao, zhipu, moonshot
+
+  // === Phase 5: 升级体系配置 ===
+  // cnPlugin.proxy.enabled: false — 代理设置（国内直连，海外走代理）
+  // cnPlugin.proxy.noProxy: ["*.aliyuncs.com", "*.tencent.com", ...] — 不走代理的域名
+  // cnPlugin.telemetry: false — 默认关闭遥测（国内用户隐私偏好）
+  // cnPlugin.updateChannel: "stable" — 更新通道 (stable/beta/dev)
+}

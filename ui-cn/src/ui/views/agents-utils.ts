@@ -1,0 +1,498 @@
+import { html } from "lit";
+import {
+  expandToolGroups,
+  normalizeToolName,
+  resolveToolProfilePolicy,
+} from "../../shared/tool-policy.js";
+import type { AgentIdentityResult, AgentsFilesListResult, AgentsListResult } from "../types.ts";
+
+export const TOOL_SECTIONS = [
+  {
+    id: "fs",
+    label: "文件",
+    tools: [
+      { id: "read", label: "read", description: "读取文件内容" },
+      { id: "write", label: "write", description: "创建或覆盖文件" },
+      { id: "edit", label: "edit", description: "精确编辑文件" },
+      { id: "apply_patch", label: "apply_patch", description: "补丁修改文件" },
+    ],
+  },
+  {
+    id: "runtime",
+    label: "运行时",
+    tools: [
+      { id: "exec", label: "exec", description: "执行 Shell 命令" },
+      { id: "process", label: "process", description: "管理后台进程" },
+    ],
+  },
+  {
+    id: "web",
+    label: "网络",
+    tools: [
+      { id: "web_search", label: "web_search", description: "搜索网页" },
+      { id: "web_fetch", label: "web_fetch", description: "抓取网页内容" },
+    ],
+  },
+  {
+    id: "memory",
+    label: "记忆",
+    tools: [
+      { id: "memory_search", label: "memory_search", description: "语义搜索" },
+      { id: "memory_get", label: "memory_get", description: "读取记忆文件" },
+    ],
+  },
+  {
+    id: "sessions",
+    label: "会话",
+    tools: [
+      { id: "sessions_list", label: "sessions_list", description: "列出会话" },
+      { id: "sessions_history", label: "sessions_history", description: "会话历史" },
+      { id: "sessions_send", label: "sessions_send", description: "发送到会话" },
+      { id: "sessions_spawn", label: "sessions_spawn", description: "派生子代理" },
+      { id: "session_status", label: "session_status", description: "会话状态" },
+    ],
+  },
+  {
+    id: "ui",
+    label: "界面",
+    tools: [
+      { id: "browser", label: "browser", description: "控制浏览器" },
+      { id: "canvas", label: "canvas", description: "控制画布" },
+    ],
+  },
+  {
+    id: "messaging",
+    label: "消息",
+    tools: [{ id: "message", label: "message", description: "发送消息" }],
+  },
+  {
+    id: "automation",
+    label: "自动化",
+    tools: [
+      { id: "cron", label: "cron", description: "定时任务" },
+      { id: "gateway", label: "gateway", description: "网关控制" },
+    ],
+  },
+  {
+    id: "nodes",
+    label: "节点",
+    tools: [{ id: "nodes", label: "nodes", description: "节点与设备" }],
+  },
+  {
+    id: "agents",
+    label: "智能体",
+    tools: [{ id: "agents_list", label: "agents_list", description: "列出智能体" }],
+  },
+  {
+    id: "media",
+    label: "媒体",
+    tools: [{ id: "image", label: "image", description: "图片理解" }],
+  },
+];
+
+export const PROFILE_OPTIONS = [
+  { id: "minimal", label: "精简" },
+  { id: "coding", label: "编程" },
+  { id: "messaging", label: "消息" },
+  { id: "full", label: "完整" },
+] as const;
+
+type ToolPolicy = {
+  allow?: string[];
+  deny?: string[];
+};
+
+type AgentConfigEntry = {
+  id: string;
+  name?: string;
+  workspace?: string;
+  agentDir?: string;
+  model?: unknown;
+  skills?: string[];
+  tools?: {
+    profile?: string;
+    allow?: string[];
+    alsoAllow?: string[];
+    deny?: string[];
+  };
+};
+
+type ConfigSnapshot = {
+  agents?: {
+    defaults?: { workspace?: string; model?: unknown; models?: Record<string, { alias?: string }> };
+    list?: AgentConfigEntry[];
+  };
+  tools?: {
+    profile?: string;
+    allow?: string[];
+    alsoAllow?: string[];
+    deny?: string[];
+  };
+};
+
+export function normalizeAgentLabel(agent: {
+  id: string;
+  name?: string;
+  identity?: { name?: string };
+}) {
+  return agent.name?.trim() || agent.identity?.name?.trim() || agent.id;
+}
+
+function isLikelyEmoji(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return false;
+  }
+  // Real emoji are at most ~8 UTF-16 code units (ZWJ sequences).
+  // 16 was too generous and let short CJK text / prompt fragments through.
+  if (trimmed.length > 8) {
+    return false;
+  }
+  let hasNonAscii = false;
+  let asciiLetterCount = 0;
+  for (let i = 0; i < trimmed.length; i += 1) {
+    const code = trimmed.charCodeAt(i);
+    if (code > 127) {
+      hasNonAscii = true;
+    } else if ((code >= 65 && code <= 90) || (code >= 97 && code <= 122)) {
+      asciiLetterCount += 1;
+    }
+  }
+  if (!hasNonAscii) {
+    return false;
+  }
+  // If more than half the string is ASCII letters it's probably text, not emoji
+  if (asciiLetterCount > trimmed.length / 2) {
+    return false;
+  }
+  if (trimmed.includes("://") || trimmed.includes("/") || trimmed.includes(".")) {
+    return false;
+  }
+  return true;
+}
+
+export function resolveAgentEmoji(
+  agent: { identity?: { emoji?: string; avatar?: string } },
+  agentIdentity?: AgentIdentityResult | null,
+) {
+  const identityEmoji = agentIdentity?.emoji?.trim();
+  if (identityEmoji && isLikelyEmoji(identityEmoji)) {
+    return identityEmoji;
+  }
+  const agentEmoji = agent.identity?.emoji?.trim();
+  if (agentEmoji && isLikelyEmoji(agentEmoji)) {
+    return agentEmoji;
+  }
+  const identityAvatar = agentIdentity?.avatar?.trim();
+  if (identityAvatar && isLikelyEmoji(identityAvatar)) {
+    return identityAvatar;
+  }
+  const avatar = agent.identity?.avatar?.trim();
+  if (avatar && isLikelyEmoji(avatar)) {
+    return avatar;
+  }
+  return "";
+}
+
+/**
+ * Extract a display initial from agent name (for avatar, replaces emoji).
+ * Chinese: first character. English: uppercase first letter. Fallback: "A".
+ */
+export function resolveAgentInitial(
+  agent: { id: string; name?: string; identity?: { name?: string } },
+  agentIdentity?: AgentIdentityResult | null,
+): string {
+  const name =
+    agentIdentity?.name?.trim() || agent.identity?.name?.trim() || agent.name?.trim() || agent.id;
+  if (!name) return "A";
+  // First character (works for CJK and Latin)
+  const first = [...name][0]; // handles surrogate pairs
+  if (!first) return "A";
+  // Uppercase if Latin
+  if (/[a-zA-Z]/.test(first)) return first.toUpperCase();
+  return first;
+}
+
+export function agentBadgeText(agentId: string, defaultId: string | null) {
+  return defaultId && agentId === defaultId ? "默认" : null;
+}
+
+export function formatBytes(bytes?: number) {
+  if (bytes == null || !Number.isFinite(bytes)) {
+    return "-";
+  }
+  if (bytes < 1024) {
+    return `${bytes} B`;
+  }
+  const units = ["KB", "MB", "GB", "TB"];
+  let size = bytes / 1024;
+  let unitIndex = 0;
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex += 1;
+  }
+  return `${size.toFixed(size < 10 ? 1 : 0)} ${units[unitIndex]}`;
+}
+
+export function resolveAgentConfig(config: Record<string, unknown> | null, agentId: string) {
+  const cfg = config as ConfigSnapshot | null;
+  const list = cfg?.agents?.list ?? [];
+  const entry = list.find((agent) => agent?.id === agentId);
+  return {
+    entry,
+    defaults: cfg?.agents?.defaults,
+    globalTools: cfg?.tools,
+  };
+}
+
+export type AgentContext = {
+  workspace: string;
+  model: string;
+  identityName: string;
+  identityEmoji: string;
+  skillsLabel: string;
+  isDefault: boolean;
+};
+
+export function buildAgentContext(
+  agent: AgentsListResult["agents"][number],
+  configForm: Record<string, unknown> | null,
+  agentFilesList: AgentsFilesListResult | null,
+  defaultId: string | null,
+  agentIdentity?: AgentIdentityResult | null,
+): AgentContext {
+  const config = resolveAgentConfig(configForm, agent.id);
+  const workspaceFromFiles =
+    agentFilesList && agentFilesList.agentId === agent.id ? agentFilesList.workspace : null;
+  const workspace =
+    workspaceFromFiles || config.entry?.workspace || config.defaults?.workspace || "default";
+  const modelLabel = config.entry?.model
+    ? resolveModelLabel(config.entry?.model)
+    : resolveModelLabel(config.defaults?.model);
+  const identityName =
+    agentIdentity?.name?.trim() ||
+    agent.identity?.name?.trim() ||
+    agent.name?.trim() ||
+    config.entry?.name ||
+    agent.id;
+  const identityEmoji = resolveAgentEmoji(agent, agentIdentity) || "-";
+  const skillFilter = Array.isArray(config.entry?.skills) ? config.entry?.skills : null;
+  const skillCount = skillFilter?.length ?? null;
+  return {
+    workspace,
+    model: modelLabel,
+    identityName,
+    identityEmoji,
+    skillsLabel: skillFilter ? `已选 ${skillCount} 个` : "全部技能",
+    isDefault: Boolean(defaultId && agent.id === defaultId),
+  };
+}
+
+export function resolveModelLabel(model?: unknown): string {
+  if (!model) {
+    return "-";
+  }
+  if (typeof model === "string") {
+    return model.trim() || "-";
+  }
+  if (typeof model === "object" && model) {
+    const record = model as { primary?: string; fallbacks?: string[] };
+    const primary = record.primary?.trim();
+    if (primary) {
+      const fallbackCount = Array.isArray(record.fallbacks) ? record.fallbacks.length : 0;
+      return fallbackCount > 0 ? `${primary} (+${fallbackCount} 备选)` : primary;
+    }
+  }
+  return "-";
+}
+
+export function normalizeModelValue(label: string): string {
+  const match = label.match(/^(.+) \(\+\d+ (?:fallback|备选)\)$/);
+  return match ? match[1] : label;
+}
+
+export function resolveModelPrimary(model?: unknown): string | null {
+  if (!model) {
+    return null;
+  }
+  if (typeof model === "string") {
+    const trimmed = model.trim();
+    return trimmed || null;
+  }
+  if (typeof model === "object" && model) {
+    const record = model as Record<string, unknown>;
+    const candidate =
+      typeof record.primary === "string"
+        ? record.primary
+        : typeof record.model === "string"
+          ? record.model
+          : typeof record.id === "string"
+            ? record.id
+            : typeof record.value === "string"
+              ? record.value
+              : null;
+    const primary = candidate?.trim();
+    return primary || null;
+  }
+  return null;
+}
+
+export function resolveModelFallbacks(model?: unknown): string[] | null {
+  if (!model || typeof model === "string") {
+    return null;
+  }
+  if (typeof model === "object" && model) {
+    const record = model as Record<string, unknown>;
+    const fallbacks = Array.isArray(record.fallbacks)
+      ? record.fallbacks
+      : Array.isArray(record.fallback)
+        ? record.fallback
+        : null;
+    return fallbacks
+      ? fallbacks.filter((entry): entry is string => typeof entry === "string")
+      : null;
+  }
+  return null;
+}
+
+export function parseFallbackList(value: string): string[] {
+  return value
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+}
+
+type ConfiguredModelOption = {
+  value: string;
+  label: string;
+};
+
+function resolveConfiguredModels(
+  configForm: Record<string, unknown> | null,
+): ConfiguredModelOption[] {
+  const cfg = configForm as ConfigSnapshot | null;
+  const models = cfg?.agents?.defaults?.models;
+  if (!models || typeof models !== "object") {
+    return [];
+  }
+  const options: ConfiguredModelOption[] = [];
+  for (const [modelId, modelRaw] of Object.entries(models)) {
+    const trimmed = modelId.trim();
+    if (!trimmed) {
+      continue;
+    }
+    const alias =
+      modelRaw && typeof modelRaw === "object" && "alias" in modelRaw
+        ? typeof (modelRaw as { alias?: unknown }).alias === "string"
+          ? (modelRaw as { alias?: string }).alias?.trim()
+          : undefined
+        : undefined;
+    const label = alias && alias !== trimmed ? `${alias} (${trimmed})` : trimmed;
+    options.push({ value: trimmed, label });
+  }
+  return options;
+}
+
+export function buildModelOptions(
+  configForm: Record<string, unknown> | null,
+  current?: string | null,
+) {
+  const options = resolveConfiguredModels(configForm);
+  const hasCurrent = current ? options.some((option) => option.value === current) : false;
+  if (current && !hasCurrent) {
+    options.unshift({ value: current, label: `当前 (${current})` });
+  }
+  if (options.length === 0) {
+    return html`
+      <option value="" disabled>暂无已配置的模型</option>
+    `;
+  }
+  return options.map((option) => html`<option value=${option.value}>${option.label}</option>`);
+}
+
+type CompiledPattern =
+  | { kind: "all" }
+  | { kind: "exact"; value: string }
+  | { kind: "regex"; value: RegExp };
+
+function compilePattern(pattern: string): CompiledPattern {
+  const normalized = normalizeToolName(pattern);
+  if (!normalized) {
+    return { kind: "exact", value: "" };
+  }
+  if (normalized === "*") {
+    return { kind: "all" };
+  }
+  if (!normalized.includes("*")) {
+    return { kind: "exact", value: normalized };
+  }
+  const escaped = normalized.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return { kind: "regex", value: new RegExp(`^${escaped.replaceAll("\\*", ".*")}$`) };
+}
+
+function compilePatterns(patterns?: string[]): CompiledPattern[] {
+  if (!Array.isArray(patterns)) {
+    return [];
+  }
+  return expandToolGroups(patterns)
+    .map(compilePattern)
+    .filter((pattern) => {
+      return pattern.kind !== "exact" || pattern.value.length > 0;
+    });
+}
+
+function matchesAny(name: string, patterns: CompiledPattern[]) {
+  for (const pattern of patterns) {
+    if (pattern.kind === "all") {
+      return true;
+    }
+    if (pattern.kind === "exact" && name === pattern.value) {
+      return true;
+    }
+    if (pattern.kind === "regex" && pattern.value.test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function isAllowedByPolicy(name: string, policy?: ToolPolicy) {
+  if (!policy) {
+    return true;
+  }
+  const normalized = normalizeToolName(name);
+  const deny = compilePatterns(policy.deny);
+  if (matchesAny(normalized, deny)) {
+    return false;
+  }
+  const allow = compilePatterns(policy.allow);
+  if (allow.length === 0) {
+    return true;
+  }
+  if (matchesAny(normalized, allow)) {
+    return true;
+  }
+  if (normalized === "apply_patch" && matchesAny("exec", allow)) {
+    return true;
+  }
+  return false;
+}
+
+export function matchesList(name: string, list?: string[]) {
+  if (!Array.isArray(list) || list.length === 0) {
+    return false;
+  }
+  const normalized = normalizeToolName(name);
+  const patterns = compilePatterns(list);
+  if (matchesAny(normalized, patterns)) {
+    return true;
+  }
+  if (normalized === "apply_patch" && matchesAny("exec", patterns)) {
+    return true;
+  }
+  return false;
+}
+
+export function resolveToolProfile(profile: string) {
+  return resolveToolProfilePolicy(profile) ?? undefined;
+}

@@ -1,0 +1,152 @@
+/* ============================================================
+ * Video Generation — shimmer, result card, player, expired
+ * Reuses .image-gen-action, .image-gen-result-meta, .image-gen-error
+ * from image-gen.css for consistency.
+ * ============================================================ */
+
+/* --- Shimmer Placeholder (pending) --- */
+
+.video-gen-pending {
+  max-width: 640px;
+}
+
+.video-gen-shimmer {
+  background: var(--bg-tertiary, #1a1a2e);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 640px;
+  aspect-ratio: 16 / 9;
+  min-height: 120px;
+}
+
+.video-gen-shimmer-inner {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary, #1a1a2e) 0%,
+    var(--bg-secondary, #252540) 40%,
+    var(--bg-tertiary, #1a1a2e) 80%
+  );
+  background-size: 200% 100%;
+  animation: image-gen-shimmer 1.8s ease-in-out infinite;
+}
+
+.video-gen-pending-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.video-gen-pending-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-tertiary, #888);
+}
+
+.video-gen-pending-label svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.video-gen-pending-prompt {
+  font-size: 12px;
+  color: var(--text-quaternary, #666);
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Result Card --- */
+
+.video-gen-result {
+  margin: 4px 0;
+  max-width: 640px;
+}
+
+.video-gen-player {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 640px;
+  line-height: 0;
+  background: #000;
+}
+
+.video-gen-player video {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  max-height: 360px;
+  object-fit: contain;
+}
+
+/* --- Hover Overlay (download + regenerate on top-right) --- */
+
+.video-gen-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 12px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.video-gen-player:hover .video-gen-overlay {
+  opacity: 1;
+}
+
+.video-gen-overlay-actions {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+/* Reuses .image-gen-overlay-btn from image-gen.css */
+
+/* --- Expired Video --- */
+
+.video-gen-expired {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 32px;
+  border-radius: 12px;
+  border: 1px dashed var(--border-primary, #333);
+  background: var(--bg-tertiary, #1a1a2e);
+  max-width: 320px;
+  text-align: center;
+}
+
+.video-gen-expired-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--text-quaternary, #666);
+  fill: none;
+}
+
+.video-gen-expired-text {
+  font-size: 13px;
+  color: var(--text-tertiary, #888);
+}
+
+.video-gen-expired-prompt {
+  font-size: 12px;
+  color: var(--text-quaternary, #666);
+  font-style: italic;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

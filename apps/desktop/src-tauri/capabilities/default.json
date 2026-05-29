@@ -1,0 +1,10 @@
+{
+  "identifier": "default",
+  "description": "Default capabilities for 66Claw desktop",
+  "windows": ["main", "repair-assistant", "screen-share-border"],
+  "permissions": [
+    "core:default",
+    "core:event:default",
+    "shell:allow-open"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "@openclaw-cn/cn-adapter",
+  "version": "0.1.0",
+  "description": "OpenClawCN 中国区适配插件",
+  "keywords": [
+    "china",
+    "cn-adapter",
+    "openclaw",
+    "plugin"
+  ],
+  "license": "MIT",
+  "files": [
+    "**/*.ts",
+    "!**/__tests__/**",
+    "!**/*.test.ts",
+    "config-templates/",
+    "openclaw.plugin.json"
+  ],
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "build": {
+      "staticAssets": [
+        {
+          "source": "oem/brands/default.json",
+          "output": "oem/brands/default.json"
+        },
+        {
+          "source": "oem/brands/default.json",
+          "output": "brands/default.json"
+        }
+      ]
+    }
+  }
+}

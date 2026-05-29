@@ -1,0 +1,468 @@
+/* =============================================
+   CODE BLOCK ENHANCED STYLES
+   带语法高亮、复制按钮、语言标签的代码块
+   ============================================= */
+
+/* === 颜色变量 === */
+:root {
+  /* 深色主题代码块颜色 */
+  --code-bg: #1e1e2e;
+  --code-header-bg: rgba(0, 0, 0, 0.3);
+  --code-text: #cdd6f4;
+  --code-gutter: #45475a;
+
+  /* 语法高亮颜色 - Catppuccin Mocha 风格 */
+  --code-keyword: #cba6f7; /* 紫色 - 关键字 */
+  --code-string: #a6e3a1; /* 绿色 - 字符串 */
+  --code-number: #fab387; /* 橙色 - 数字 */
+  --code-function: #89b4fa; /* 蓝色 - 函数名 */
+  --code-variable: #f5e0dc; /* 浅粉 - 变量 */
+  --code-comment: #6c7086; /* 灰色 - 注释 */
+  --code-operator: #89dceb; /* 青色 - 运算符 */
+  --code-class: #f38ba8; /* 粉红 - 类名 */
+  --code-property: #94e2d5; /* 青绿 - 属性 */
+  --code-punctuation: #bac2de; /* 标点 */
+  --code-tag: #f38ba8; /* 标签 */
+  --code-attr-name: #89b4fa; /* 属性名 */
+  --code-attr-value: #a6e3a1; /* 属性值 */
+  --code-builtin: #f9e2af; /* 内置函数 */
+  --code-regex: #f5c2e7; /* 正则 */
+}
+
+/* 浅色主题代码块颜色 */
+:root[data-theme="light"] {
+  --code-bg: #f8f9fc;
+  --code-header-bg: rgba(0, 0, 0, 0.04);
+  --code-text: #4c4f69;
+  --code-gutter: #9ca0b0;
+
+  /* 语法高亮颜色 - Catppuccin Latte 风格 */
+  --code-keyword: #8839ef; /* 紫色 */
+  --code-string: #40a02b; /* 绿色 */
+  --code-number: #fe640b; /* 橙色 */
+  --code-function: #1e66f5; /* 蓝色 */
+  --code-variable: #4c4f69; /* 深灰 */
+  --code-comment: #9ca0b0; /* 灰色 */
+  --code-operator: #04a5e5; /* 青色 */
+  --code-class: #d20f39; /* 红色 */
+  --code-property: #179299; /* 青绿 */
+  --code-punctuation: #5c5f77; /* 标点 */
+  --code-tag: #d20f39; /* 标签 */
+  --code-attr-name: #1e66f5; /* 属性名 */
+  --code-attr-value: #40a02b; /* 属性值 */
+  --code-builtin: #df8e1d; /* 内置函数 */
+  --code-regex: #ea76cb; /* 正则 */
+}
+
+/* === 代码块容器 === */
+.code-block-enhanced {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  margin: 14px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition:
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+.code-block-enhanced:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* === 头部工具栏 === */
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--code-header-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 语言标签 */
+.code-block-lang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.code-block-lang-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--code-keyword);
+  box-shadow: 0 0 6px var(--code-keyword);
+}
+
+/* 语言颜色映射 */
+.code-block-enhanced[data-lang="python"] .code-block-lang-dot {
+  background: #3572a5;
+  box-shadow: 0 0 6px #3572a5;
+}
+.code-block-enhanced[data-lang="py"] .code-block-lang-dot {
+  background: #3572a5;
+  box-shadow: 0 0 6px #3572a5;
+}
+.code-block-enhanced[data-lang="javascript"] .code-block-lang-dot {
+  background: #f7df1e;
+  box-shadow: 0 0 6px #f7df1e;
+}
+.code-block-enhanced[data-lang="js"] .code-block-lang-dot {
+  background: #f7df1e;
+  box-shadow: 0 0 6px #f7df1e;
+}
+.code-block-enhanced[data-lang="typescript"] .code-block-lang-dot {
+  background: #3178c6;
+  box-shadow: 0 0 6px #3178c6;
+}
+.code-block-enhanced[data-lang="ts"] .code-block-lang-dot {
+  background: #3178c6;
+  box-shadow: 0 0 6px #3178c6;
+}
+.code-block-enhanced[data-lang="rust"] .code-block-lang-dot {
+  background: #dea584;
+  box-shadow: 0 0 6px #dea584;
+}
+.code-block-enhanced[data-lang="go"] .code-block-lang-dot {
+  background: #00add8;
+  box-shadow: 0 0 6px #00add8;
+}
+.code-block-enhanced[data-lang="java"] .code-block-lang-dot {
+  background: #b07219;
+  box-shadow: 0 0 6px #b07219;
+}
+.code-block-enhanced[data-lang="cpp"] .code-block-lang-dot,
+.code-block-enhanced[data-lang="c"] .code-block-lang-dot {
+  background: #f34b7d;
+  box-shadow: 0 0 6px #f34b7d;
+}
+.code-block-enhanced[data-lang="ruby"] .code-block-lang-dot {
+  background: #701516;
+  box-shadow: 0 0 6px #701516;
+}
+.code-block-enhanced[data-lang="php"] .code-block-lang-dot {
+  background: #4f5d95;
+  box-shadow: 0 0 6px #4f5d95;
+}
+.code-block-enhanced[data-lang="bash"] .code-block-lang-dot,
+.code-block-enhanced[data-lang="shell"] .code-block-lang-dot,
+.code-block-enhanced[data-lang="sh"] .code-block-lang-dot {
+  background: #4eaa25;
+  box-shadow: 0 0 6px #4eaa25;
+}
+.code-block-enhanced[data-lang="sql"] .code-block-lang-dot {
+  background: #e38c00;
+  box-shadow: 0 0 6px #e38c00;
+}
+.code-block-enhanced[data-lang="html"] .code-block-lang-dot {
+  background: #e34c26;
+  box-shadow: 0 0 6px #e34c26;
+}
+.code-block-enhanced[data-lang="css"] .code-block-lang-dot {
+  background: #563d7c;
+  box-shadow: 0 0 6px #563d7c;
+}
+.code-block-enhanced[data-lang="json"] .code-block-lang-dot {
+  background: #292929;
+  box-shadow: 0 0 6px #666;
+}
+.code-block-enhanced[data-lang="yaml"] .code-block-lang-dot,
+.code-block-enhanced[data-lang="yml"] .code-block-lang-dot {
+  background: #cb171e;
+  box-shadow: 0 0 6px #cb171e;
+}
+
+/* === 操作按钮 === */
+.code-block-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.code-block-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.code-block-copy-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.code-block-copy-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+}
+
+.code-block-copy-icon {
+  display: block;
+}
+
+.code-block-check-icon {
+  display: none;
+}
+
+/* 复制成功状态 */
+.code-block-copy-btn--copied {
+  background: var(--ok-subtle) !important;
+  color: var(--ok) !important;
+  border-color: var(--ok) !important;
+}
+
+.code-block-copy-btn--copied .code-block-copy-icon {
+  display: none;
+}
+
+.code-block-copy-btn--copied .code-block-check-icon {
+  display: block;
+}
+
+/* 复制失败状态 */
+.code-block-copy-btn--error {
+  background: var(--danger-subtle) !important;
+  color: var(--danger) !important;
+  border-color: var(--danger) !important;
+}
+
+/* === 代码内容区 === */
+.code-block-content {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.code-block-content code {
+  display: block;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--code-text);
+  background: none;
+  padding: 0;
+  white-space: pre;
+  tab-size: 2;
+}
+
+/* === 语法高亮类 (highlight.js) === */
+
+/* 关键字 */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section,
+.hljs-link {
+  color: var(--code-keyword);
+  font-weight: 500;
+}
+
+/* 字符串 */
+.hljs-string,
+.hljs-template-string,
+.hljs-addition {
+  color: var(--code-string);
+}
+
+/* 数字 */
+.hljs-number,
+.hljs-symbol {
+  color: var(--code-number);
+}
+
+/* 函数名 */
+.hljs-title,
+.hljs-title.function_,
+.hljs-title.class_,
+.hljs-title.function_.inherited__ {
+  color: var(--code-function);
+}
+
+/* 变量、参数 */
+.hljs-variable,
+.hljs-params,
+.hljs-template-variable {
+  color: var(--code-variable);
+}
+
+/* 注释 */
+.hljs-comment,
+.hljs-quote {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+/* 运算符 */
+.hljs-operator,
+.hljs-punctuation {
+  color: var(--code-operator);
+}
+
+/* 类名、类型 */
+.hljs-type,
+.hljs-class,
+.hljs-built_in {
+  color: var(--code-class);
+}
+
+/* 属性 */
+.hljs-property,
+.hljs-attr {
+  color: var(--code-property);
+}
+
+/* 标签 (HTML/XML) */
+.hljs-tag {
+  color: var(--code-tag);
+}
+
+.hljs-name {
+  color: var(--code-tag);
+}
+
+/* 属性名 */
+.hljs-attribute {
+  color: var(--code-attr-name);
+}
+
+/* 内置 */
+.hljs-builtin-name {
+  color: var(--code-builtin);
+}
+
+/* 正则 */
+.hljs-regexp {
+  color: var(--code-regex);
+}
+
+/* 删除 */
+.hljs-deletion {
+  color: var(--danger);
+  background: var(--danger-subtle);
+}
+
+/* 强调 */
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* Meta */
+.hljs-meta,
+.hljs-meta-keyword,
+.hljs-meta-string {
+  color: var(--code-builtin);
+}
+
+/* Subst */
+.hljs-subst {
+  color: var(--code-variable);
+}
+
+/* Selector */
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: var(--code-function);
+}
+
+/* Doctype */
+.hljs-doctag {
+  color: var(--code-comment);
+}
+
+/* === 滚动条美化 === */
+.code-block-content::-webkit-scrollbar {
+  height: 8px;
+}
+
+.code-block-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.code-block-content::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.code-block-content::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* === 响应式适配 === */
+@media (max-width: 640px) {
+  .code-block-enhanced {
+    border-radius: 8px;
+    margin: 10px 0;
+  }
+
+  .code-block-header {
+    padding: 8px 12px;
+  }
+
+  .code-block-lang {
+    font-size: 11px;
+  }
+
+  .code-block-copy-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .code-block-copy-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .code-block-content {
+    padding: 12px 14px;
+  }
+
+  .code-block-content code {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+/* === 浅色主题微调 === */
+:root[data-theme="light"] .code-block-enhanced {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .code-block-enhanced:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+:root[data-theme="light"] .code-block-header {
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="light"] .code-block-lang-dot {
+  box-shadow: 0 0 4px currentColor;
+}

@@ -1,0 +1,13 @@
+{
+  "id": "cn-adapter",
+  "name": "CN Adapter",
+  "description": "OpenClawCN 中国区适配插件",
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

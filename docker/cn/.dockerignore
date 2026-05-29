@@ -1,0 +1,4 @@
+# CN Docker 构建时使用项目根目录 .dockerignore
+# 此文件仅用于 cn/ 子目录独立构建场景（通常不需要）
+*.md
+*.log

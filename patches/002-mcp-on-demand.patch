@@ -1,0 +1,37 @@
+diff --git a/src/agents/pi-embedded-runner/run/attempt.ts b/src/agents/pi-embedded-runner/run/attempt.ts
+index 467b8e150..a0dbf3ff1 100644
+--- a/src/agents/pi-embedded-runner/run/attempt.ts
++++ b/src/agents/pi-embedded-runner/run/attempt.ts
+@@ -1174,7 +1174,31 @@ export async function runEmbeddedAttempt(
+           )
+         : [];
+ 
+-      const allCustomTools = [...customTools, ...clientToolDefs];
++      let allCustomTools = [...customTools, ...clientToolDefs];
++
++      // CN-PATCH: mcp-on-demand — allow plugins to inject tools before session creation
++      if (hookRunner) {
++        try {
++          const mcpResult = await hookRunner.runBeforeAgentStart(
++            {
++              prompt: params.prompt,
++              messages: [],
++            },
++            {
++              agentId: sessionAgentId,
++              sessionKey: params.sessionKey,
++              sessionId: params.sessionId,
++              workspaceDir: params.workspaceDir,
++              messageProvider: params.messageProvider ?? undefined,
++            },
++          );
++          if (mcpResult && Array.isArray((mcpResult as any).additionalTools)) {
++            allCustomTools = [...allCustomTools, ...(mcpResult as any).additionalTools];
++          }
++        } catch (mcpErr) {
++          log.debug(`mcp-on-demand hook failed: ${String(mcpErr)}`);
++        }
++      }
+ 
+       ({ session } = await createAgentSession({
+         cwd: resolvedWorkspace,

@@ -1,0 +1,186 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{fontspec}
+
+\usepackage[chinese, bidi=basic, provide=*]{babel}
+
+\babelprovide[import, onchar=ids fonts]{chinese}
+\babelprovide[import, onchar=ids fonts]{english}
+
+% Set default/Latin font to Sans Serif in the main (rm) slot
+\babelfont{rm}{Noto Sans}
+% Assign a specific font for Chinese text
+\babelfont[chinese]{rm}{Noto Sans CJK SC}
+
+% Add because main language is not English
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+
+% For page number detection (fix header on first page only)
+\usepackage{ifthen}
+
+% For hyperlinks (email, phone)
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=corpblue,
+    urlcolor=corpcyan,
+    pdfauthor={森泽云创(杭州)智能科技有限公司},
+    pdftitle={森泽云创公司介绍},
+}
+
+% For footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\small\color{corpgray}森泽云创(杭州)智能科技有限公司\quad|\quad 机密文件\quad|\quad 2026 年 3 月}
+\fancyfoot[R]{\small\color{corpgray}\thepage}
+% --------------------------------
+
+% Packages for styling, colors, and drawing backgrounds
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, decorations.pathreplacing, calc}
+\usepackage[many]{tcolorbox}
+\usepackage{eso-pic}
+
+% --- Define Corporate Colors (Tech Blue Theme) ---
+\definecolor{corpblue}{RGB}{20, 80, 160}       % Main tech blue
+\definecolor{corplightblue}{RGB}{242, 247, 252} % Very light blue for background
+\definecolor{corpcyan}{RGB}{40, 160, 220}      % Accent color
+\definecolor{corpgray}{RGB}{80, 80, 80}        % Text gray
+\definecolor{corpgold}{RGB}{200, 160, 50}      % Gold accent for contact section
+
+% --- Custom Box Style for Content ---
+\newtcolorbox{sectionbox}[1]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=corpblue,
+    coltitle=white,
+    fonttitle=\Large\bfseries,
+    title={#1},
+    boxrule=0.8pt,
+    arc=4mm,
+    auto outer arc,
+    shadow={2mm}{-2mm}{0mm}{black!15},
+    left=8mm, right=8mm, top=5mm, bottom=5mm,
+    toptitle=4mm, bottomtitle=4mm,
+    before skip=8mm, after skip=8mm
+}
+
+% --- Page counter for conditional header ---
+\newcounter{bgpage}
+
+\begin{document}
+
+% --- Background: light blue + geometric on ALL pages ---
+\AddToShipoutPictureBG{%
+    \stepcounter{bgpage}%
+    \begin{tikzpicture}[remember picture, overlay]
+        % 1. Light tech-blue global background
+        \fill[corplightblue] (current page.south west) rectangle (current page.north east);
+
+        % 2. Abstract Geometric Background Patterns
+        \draw[corpblue!8, line width=1.5mm] (-5, -5) -- (25, 35);
+        \draw[corpblue!8, line width=1.5mm] (25, -5) -- (-5, 35);
+        \fill[corpcyan!5] (current page.south west) circle (6cm);
+        \fill[corpblue!5] (current page.north east) circle (8cm);
+        \fill[corpcyan!5] ([xshift=5cm, yshift=-10cm]current page.north) circle (3cm);
+
+        % Draw subtle network nodes
+        \foreach \x/\y in {2/-3, 18/-5, 5/-15, 16/-20, 3/-25, 19/-27} {
+            \fill[corpblue!15] ([xshift=\x cm, yshift=\y cm]current page.north west) circle (0.15cm);
+            \draw[corpblue!15, thick] ([xshift=\x cm, yshift=\y cm]current page.north west) circle (0.4cm);
+        }
+
+        % 3. Dark Tech-Blue Header Banner — FIRST PAGE ONLY
+        \ifthenelse{\value{bgpage}=1}{%
+            \fill[corpblue] (current page.north west) rectangle ([yshift=-5cm]current page.north east);
+            % Header decorative circles
+            \draw[white!15, line width=1mm] ([xshift=-1cm, yshift=1cm]current page.north west) circle (4cm);
+            \draw[white!10, line width=2mm] ([xshift=1cm, yshift=1cm]current page.north east) circle (5cm);
+            \draw[white!10, line width=1.5mm] ([xshift=-1cm, yshift=-5.5cm]current page.north east) circle (2cm);
+        }{}
+    \end{tikzpicture}
+}
+
+% --- Title Section ---
+\vspace*{-1.5cm}
+
+\begin{center}
+    \textcolor{white}{\Huge \textbf{森泽云创(杭州)智能科技有限公司}}\\[1cm]
+    \textcolor{white!90}{\Large \textbf{—— 驱动企业数智化变革，您值得信赖的 AI 与 IT 技术合伙人}}
+\end{center}
+
+\vspace{2.5cm}
+
+% --- Content Section 1: 关于我们 ---
+\begin{sectionbox}{关于我们}
+\large\color{corpgray}
+\setlength{\parindent}{2em}
+森泽云创(杭州)智能科技有限公司是一家专注于人工智能技术落地与前沿 IT 软件研发的创新型科技企业。我们立足杭州，致力于将最先进的 AI 技术与深厚的软件工程经验相结合，转化为企业切实的生产力。
+
+无论是前沿的 Agent 智能体系统从零搭建、智能开发工具的深度改造，还是现有业务的 AI 赋能，我们都能为您提供全方位、全链路的数字化、智能化解决方案，助力您的企业在激烈的商业竞争中抢占技术高地。
+\end{sectionbox}
+
+% --- Content Section 2: 核心业务 ---
+\begin{sectionbox}{核心业务}
+\large\color{corpgray}
+我们以客户的实际商业需求为导向，提供灵活且深度的技术定制服务：
+
+\vspace{0.5cm}
+\begin{itemize}[leftmargin=1.5em, label=\textcolor{corpcyan}{\rule{1.2ex}{1.2ex}}, itemsep=1.5ex]
+    \item \textbf{\textcolor{corpblue}{AI 编程工具定制：}} 基于开源 AI 编程助手生态，提供专业的二次开发与系统深度定制服务。针对您的独特业务场景，改造并打造专属的高效智能开发系统。
+    \item \textbf{\textcolor{corpblue}{Agent 企业系统开发：}} 紧跟大模型时代前沿，为企业打造高度智能化的自主智能体（Agent）系统，实现复杂业务流程的自动化运转与智能决策。
+    \item \textbf{\textcolor{corpblue}{AI 软件应用开发：}} 提供涵盖大模型应用、自然语言交互等领域的专属 AI 软件开发服务，让 AI 技术真正融入您的产品线。
+    \item \textbf{\textcolor{corpblue}{软件产品深度定制：}} 从需求调研、UI/UX 设计到架构搭建与研发测试，提供端到端的全生命周期 IT 软件产品定制开发服务。
+    \item \textbf{\textcolor{corpblue}{企业 AI 业务咨询：}} 深入剖析您的行业痛点，提供专业的 AI 技术选型、架构规划及业务赋能落地咨询，让技术投资真正服务于商业变现。
+    \item \textbf{\textcolor{corpblue}{本地化与私有化部署：}} 针对对数据隐私和安全性有极高要求的企业，提供算力评估、模型微调及安全可靠的本地化私有部署方案，确保核心数据不出域。
+\end{itemize}
+\end{sectionbox}
+
+% --- Content Section 3: 为什么选择森泽云创 ---
+\begin{sectionbox}{为什么选择森泽云创？}
+\large\color{corpgray}
+\begin{itemize}[leftmargin=1.5em, label=\textcolor{corpcyan}{\Large $\bullet$}, itemsep=1.5ex]
+    \item \textbf{\textcolor{corpblue}{技术驱动，专注落地：}} 团队拥有丰富的 AI 与 IT 实战经验，不空谈概念，只做能切实提高效率、降低成本的落地技术。
+    \item \textbf{\textcolor{corpblue}{量身定制，拒绝流水线：}} 我们深入理解您的行业逻辑，提供的不是一套生搬硬套的模板，而是 100\% 契合您业务场景的专属解决方案。
+    \item \textbf{\textcolor{corpblue}{端到端交付，省心可靠：}} 从前期的"咨询与规划"到中期的"定制与开发"，再到后期的"部署与运维"，提供一站式技术托底服务。
+    \item \textbf{\textcolor{corpblue}{安全可控，响应迅速：}} 深刻理解企业对系统稳定性和数据安全的重视，提供完善的本地化部署保障与高效敏捷的技术响应机制。
+\end{itemize}
+\end{sectionbox}
+
+% --- Content Section 4: 愿景与合作 ---
+\begin{sectionbox}{愿景与合作}
+\large\color{corpgray}
+\setlength{\parindent}{2em}
+在 AI 重塑千行百业的今天，森泽云创愿成为您跨越技术门槛的坚实桥梁。我们相信，技术的价值在于解决真实问题——每一次合作，我们都全力以赴，用扎实的工程能力和前沿的 AI 视野，帮助客户实现从"技术可能"到"商业落地"的跨越。
+
+期待与您携手，共同开启智能业务时代的新篇章！
+\end{sectionbox}
+
+% --- Content Section 5: 联系我们 ---
+\begin{sectionbox}{联系我们}
+\large\color{corpgray}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{r @{\hspace{1em}} l}
+    \textbf{\textcolor{corpblue}{公司全称}} & 森泽云创(杭州)智能科技有限公司 \\
+    \textbf{\textcolor{corpblue}{联系电话}} & 166-5315-7782 \\
+    \textbf{\textcolor{corpblue}{电子邮箱}} & \href{mailto:contact@senzeyunchuang.com}{contact@senzeyunchuang.com} \\
+    \textbf{\textcolor{corpblue}{公司地址}} & 浙江省杭州市（详细地址面议提供） \\
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+\begin{center}
+\textcolor{corpblue}{\large\bfseries 欢迎来电或来函垂询，我们将在 24 小时内回复您！}
+\end{center}
+\end{sectionbox}
+
+\end{document}

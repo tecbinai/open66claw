@@ -1,0 +1,451 @@
+:root {
+  /* Background - 更温暖舒适的深色背景 */
+  --bg: #0f1419;
+  --bg-accent: #151b23;
+  --bg-elevated: #1c242e;
+  --bg-hover: #2a3544;
+  --bg-muted: #2a3544;
+
+  /* Card / Surface - 更好的层次区分 */
+  --card: #1a2332;
+  --card-foreground: #f8f9fa;
+  --card-highlight: rgba(255, 255, 255, 0.08);
+  --popover: #1a2332;
+  --popover-foreground: #f8f9fa;
+
+  /* Surface - 弹框/面板背景 */
+  --surface: #1a2332;
+  --surface-elevated: #212d3d;
+  --surface-hover: #2a3544;
+  --foreground: #e8ecf1;
+
+  /* Panel */
+  --panel: #0f1419;
+  --panel-strong: #1c242e;
+  --panel-hover: #2a3544;
+  --chrome: rgba(15, 20, 25, 0.96);
+  --chrome-strong: rgba(15, 20, 25, 0.98);
+
+  /* Text - 更高对比度，更易读 */
+  --text: #e8ecf1;
+  --text-strong: #ffffff;
+  --chat-text: #e8ecf1;
+  --muted: #8b9caf;
+  --muted-strong: #6b7d91;
+  --muted-foreground: #8b9caf;
+
+  /* Border - 更清晰的边界 */
+  --border: #2d3a4d;
+  --border-strong: #4a5a70;
+  --border-hover: #5d6f87;
+  --input: #2d3a4d;
+  --ring: #6c8cff;
+
+  /* Accent - 清新的蓝紫色调，更专业更易读 */
+  --accent: #6c8cff;
+  --accent-rgb: 108, 140, 255;
+  --accent-hover: #89a5ff;
+  --accent-muted: #6c8cff;
+  --accent-subtle: rgba(108, 140, 255, 0.18);
+  --accent-foreground: #ffffff;
+  --accent-glow: rgba(108, 140, 255, 0.3);
+  --primary: #6c8cff;
+  --primary-foreground: #ffffff;
+
+  /* Secondary - 更亮的辅助色 */
+  --secondary: #212d3d;
+  --secondary-foreground: #f8f9fa;
+  --accent-2: #20d5bc;
+  --accent-2-muted: rgba(32, 213, 188, 0.75);
+  --accent-2-subtle: rgba(32, 213, 188, 0.18);
+
+  /* Semantic - 更鲜明的语义色彩 */
+  --ok: #34d399;
+  --ok-muted: rgba(52, 211, 153, 0.8);
+  --ok-subtle: rgba(52, 211, 153, 0.15);
+  --destructive: #f87171;
+  --destructive-foreground: #ffffff;
+  --warn: #fbbf24;
+  --warn-muted: rgba(251, 191, 36, 0.8);
+  --warn-subtle: rgba(251, 191, 36, 0.15);
+  --danger: #f87171;
+  --danger-muted: rgba(248, 113, 113, 0.8);
+  --danger-subtle: rgba(248, 113, 113, 0.15);
+  --info: #60a5fa;
+
+  /* Glass — MCP 页面毛玻璃层次 */
+  --glass-card: rgba(26, 35, 50, 0.65);
+  --glass-modal: rgba(20, 28, 38, 0.95);
+  --info-subtle: rgba(96, 165, 250, 0.12);
+  --muted-subtle: rgba(148, 163, 184, 0.08);
+
+  /* Focus - With glow */
+  --focus: rgba(108, 140, 255, 0.3);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--ring);
+  --focus-glow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ring), 0 0 20px var(--accent-glow);
+
+  /* Grid */
+  --grid-line: rgba(255, 255, 255, 0.06);
+
+  /* Theme transition */
+  --theme-switch-x: 50%;
+  --theme-switch-y: 50%;
+
+  /* Typography - Noto Sans SC for Chinese, Space Grotesk for Latin */
+  --mono:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  --font-body:
+    "Noto Sans SC", "Source Han Sans CN", "Space Grotesk", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --font-display:
+    "Noto Sans SC", "Source Han Sans CN", "Space Grotesk", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+
+  /* Shadows - Richer with subtle color */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-glow: 0 0 30px var(--accent-glow);
+
+  /* Radii - Slightly larger for friendlier feel */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --radius: 8px;
+
+  /* Transitions - Snappy but smooth */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --duration-slow: 350ms;
+
+  color-scheme: dark;
+}
+
+/* Light theme - 66claw 浅色主题（Figma 色系） */
+:root[data-theme="light"] {
+  /* 背景 - Figma #f6f8fb */
+  --bg: #f6f8fb;
+  --bg-accent: #eef4f9;
+  --bg-elevated: #ffffff;
+  --bg-hover: #e8eef5;
+  --bg-muted: #eef1f5;
+  --bg-content: #f6f8fb;
+
+  /* 卡片使用纯白，与背景形成层次 */
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --card-highlight: rgba(0, 0, 0, 0.02);
+  --popover: #ffffff;
+  --popover-foreground: #18181b;
+
+  /* Surface - 弹框/面板背景 */
+  --surface: #ffffff;
+  --surface-elevated: #f4f6f9;
+  --surface-hover: #e8eef5;
+  --foreground: #3f3f46;
+
+  --panel: #eef4f9;
+  --panel-strong: #e4ecf3;
+  --panel-hover: #dce4ec;
+  --chrome: rgba(246, 248, 251, 0.96);
+  --chrome-strong: rgba(246, 248, 251, 0.98);
+
+  /* 文字 - Figma #223354 深蓝、#4b4b4b 正文、#666 辅助、#999 弱 */
+  --text: #4b4b4b;
+  --text-strong: #223354;
+  --chat-text: #4b4b4b;
+  --muted: #999999;
+  --muted-strong: #666666;
+  --muted-foreground: #9199aa;
+
+  --border: #e4e8ee;
+  --border-strong: #d0d6de;
+  --border-hover: #a1a8b4;
+  --input: #e4e8ee;
+  --ring: #feb142;
+
+  /* 主色 - Figma 橙 #feb142 */
+  --accent: #feb142;
+  --accent-rgb: 254, 177, 66;
+  --accent-hover: #ffc05c;
+  --accent-muted: #feb142;
+  --accent-subtle: rgba(254, 177, 66, 0.15);
+  --accent-foreground: #ffffff;
+  --accent-glow: rgba(254, 177, 66, 0.25);
+  --primary: #feb142;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f4f6f9;
+  --secondary-foreground: #4b4b4b;
+  --accent-2: #00b42a;
+  --accent-2-muted: rgba(0, 180, 42, 0.75);
+  --accent-2-subtle: rgba(0, 180, 42, 0.12);
+
+  --ok: #00b42a;
+  --ok-muted: rgba(0, 180, 42, 0.75);
+  --ok-subtle: rgba(0, 180, 42, 0.1);
+  --destructive: #ff1a43;
+  --destructive-foreground: #ffffff;
+  --warn: #feb142;
+  --warn-muted: rgba(254, 177, 66, 0.75);
+  --warn-subtle: rgba(254, 177, 66, 0.12);
+  --danger: #ff1a43;
+  --danger-muted: rgba(255, 26, 67, 0.75);
+  --danger-subtle: rgba(255, 26, 67, 0.1);
+  --info: #3b82f6;
+
+  /* Glass — 浅色主题 */
+  --glass-card: rgba(255, 255, 255, 0.72);
+  --glass-modal: rgba(255, 255, 255, 0.95);
+  --info-subtle: rgba(59, 130, 246, 0.08);
+  --muted-subtle: rgba(148, 163, 184, 0.06);
+
+  --focus: rgba(254, 177, 66, 0.25);
+  --focus-glow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ring), 0 0 16px var(--accent-glow);
+
+  --grid-line: rgba(0, 0, 0, 0.05);
+
+  /* Light shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 24px var(--accent-glow);
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font: 400 14px/1.55 var(--font-body);
+  letter-spacing: -0.02em;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Theme transition */
+@keyframes theme-circle-transition {
+  0% {
+    clip-path: circle(0% at var(--theme-switch-x, 50%) var(--theme-switch-y, 50%));
+  }
+  100% {
+    clip-path: circle(150% at var(--theme-switch-x, 50%) var(--theme-switch-y, 50%));
+  }
+}
+
+html.theme-transition {
+  view-transition-name: theme;
+}
+
+html.theme-transition::view-transition-old(theme) {
+  mix-blend-mode: normal;
+  animation: none;
+  z-index: 1;
+}
+
+html.theme-transition::view-transition-new(theme) {
+  mix-blend-mode: normal;
+  z-index: 2;
+  animation: theme-circle-transition 0.4s var(--ease-out) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition::view-transition-old(theme),
+  html.theme-transition::view-transition-new(theme) {
+    animation: none !important;
+  }
+}
+
+clawdbot-app {
+  display: block;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--accent-subtle);
+  color: var(--text-strong);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* Animations - Polished with spring feel */
+
+/* Update banner/dialog animations (CR-17) */
+@keyframes updateBannerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes updateDialogBgIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes updateDialogIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes dashboard-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(108, 140, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+}
+
+/* Stagger animation delays for grouped elements */
+.stagger-1 {
+  animation-delay: 0ms;
+}
+.stagger-2 {
+  animation-delay: 50ms;
+}
+.stagger-3 {
+  animation-delay: 100ms;
+}
+.stagger-4 {
+  animation-delay: 150ms;
+}
+.stagger-5 {
+  animation-delay: 200ms;
+}
+.stagger-6 {
+  animation-delay: 250ms;
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

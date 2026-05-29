@@ -1,0 +1,11 @@
+{
+  "id": "agent-team",
+  "name": "Agent Team Manager",
+  "description": "Project-level agent team management: grouping, coordination, health tracking, and lifecycle.",
+  "version": "0.1.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

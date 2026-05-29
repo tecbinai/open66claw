@@ -1,0 +1,27 @@
+--- a/src/gateway/server/ws-connection.ts
++++ b/src/gateway/server/ws-connection.ts
+@@ -126,6 +126,22 @@ export function createWsConnectionHandler(...) {
+     const requestOrigin = headerValue(upgradeReq.headers.origin);
+     const requestUserAgent = headerValue(upgradeReq.headers["user-agent"]);
+     const forwardedFor = headerValue(upgradeReq.headers["x-forwarded-for"]);
+     const realIp = headerValue(upgradeReq.headers["x-real-ip"]);
+
++    // CN-PATCH: ws-origin (G1) — 当 OPENCLAW_CN_STRICT_ORIGIN=1 时拒绝非本机 Origin
++    // 防止恶意网页通过 WebSocket 访问本地 Gateway（类 CSRF 攻击）。
++    // 启用方式：环境变量 OPENCLAW_CN_STRICT_ORIGIN=1（Docker 默认开启，本地可选）。
++    if (process.env.OPENCLAW_CN_STRICT_ORIGIN === "1" && requestOrigin) {
++      let originAllowed = false;
++      try {
++        const originHost = new URL(requestOrigin).hostname;
++        originAllowed =
++          originHost === "localhost" || originHost === "127.0.0.1" || originHost === "::1";
++      } catch {
++        // URL 解析失败 → 拒绝
++      }
++      if (!originAllowed) {
++        socket.close(1008, "Origin not allowed");
++        return;
++      }
++    }
++
+     const canvasHostPortForWs = canvasHostServerPort ?? (canvasHostEnabled ? port : undefined);

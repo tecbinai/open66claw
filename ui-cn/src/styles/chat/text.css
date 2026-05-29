@@ -1,0 +1,230 @@
+/* =============================================
+   CHAT TEXT STYLING
+   ============================================= */
+
+/* 基础思考过程样式 */
+.chat-thinking {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+:root[data-theme="light"] .chat-thinking {
+  border-color: rgba(16, 24, 40, 0.25);
+  background: rgba(16, 24, 40, 0.04);
+}
+
+/* =============================================
+   可折叠的思考过程区域
+   ============================================= */
+
+.chat-thinking-collapsible {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  transition: all 200ms ease;
+}
+
+:root[data-theme="light"] .chat-thinking-collapsible {
+  border-color: rgba(16, 24, 40, 0.2);
+  background: rgba(16, 24, 40, 0.03);
+}
+
+/* 头部 */
+.chat-thinking-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 150ms ease;
+}
+
+.chat-thinking-header:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+:root[data-theme="light"] .chat-thinking-header:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.chat-thinking-header__icon {
+  font-size: 14px;
+}
+
+.chat-thinking-header__title {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.chat-thinking-header__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.chat-thinking-chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+  transition: transform 200ms ease;
+}
+
+/* 内容区域 */
+.chat-thinking-content {
+  padding: 0 12px 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.chat-thinking-preview {
+  display: block;
+}
+
+.chat-thinking-full {
+  display: none;
+}
+
+/* 展开状态 */
+.chat-thinking-collapsible--expanded .chat-thinking-chevron {
+  transform: rotate(180deg);
+}
+
+.chat-thinking-collapsible--expanded .chat-thinking-preview {
+  display: none;
+}
+
+.chat-thinking-collapsible--expanded .chat-thinking-full {
+  display: block;
+}
+
+/* 展开时的边框变化 */
+.chat-thinking-collapsible--expanded {
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+:root[data-theme="light"] .chat-thinking-collapsible--expanded {
+  border-color: rgba(16, 24, 40, 0.15);
+  background: rgba(16, 24, 40, 0.02);
+}
+
+.chat-text {
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.chat-text :where(p, ul, ol, pre, blockquote, table) {
+  margin: 0;
+}
+
+.chat-text :where(p + p, p + ul, p + ol, p + pre, p + blockquote) {
+  margin-top: 0.75em;
+}
+
+.chat-text :where(ul, ol) {
+  padding-left: 1.5em;
+}
+
+.chat-text :where(li + li) {
+  margin-top: 0.25em;
+}
+
+.chat-text :where(a) {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.chat-text :where(a:hover) {
+  opacity: 0.8;
+}
+
+.chat-text :where(code) {
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
+
+.chat-text :where(:not(pre) > code) {
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+.chat-text :where(pre) {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  padding: 10px 12px;
+  overflow-x: auto;
+}
+
+.chat-text :where(pre code) {
+  background: none;
+  padding: 0;
+}
+
+.chat-text :where(blockquote) {
+  border-left: 3px solid var(--border-strong);
+  padding-left: 12px;
+  margin-left: 0;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 8px 12px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.chat-text :where(blockquote blockquote) {
+  margin-top: 8px;
+  border-left-color: var(--border-hover);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.chat-text :where(blockquote blockquote blockquote) {
+  border-left-color: var(--muted-strong);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+:root[data-theme="light"] .chat-text :where(blockquote) {
+  background: rgba(245, 166, 35, 0.04);
+  border-left-color: rgba(245, 166, 35, 0.4);
+}
+
+:root[data-theme="light"] .chat-text :where(blockquote blockquote) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+:root[data-theme="light"] .chat-text :where(blockquote blockquote blockquote) {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme="light"] .chat-text :where(:not(pre) > code) {
+  background: rgba(245, 166, 35, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.15);
+  color: #b45309;
+}
+
+:root[data-theme="light"] .chat-text :where(pre) {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.chat-text :where(hr) {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1em 0;
+}

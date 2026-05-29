@@ -1,0 +1,559 @@
+/* ============================================================
+ * Image Generation — shimmer, result card, grid, actions, error
+ * ============================================================ */
+
+/* --- Shimmer Placeholder (pending) --- */
+
+.image-gen-pending {
+  max-width: 480px;
+}
+
+.image-gen-shimmer {
+  background: var(--bg-tertiary, #1a1a2e);
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 480px;
+  min-height: 120px;
+}
+
+.image-gen-shimmer-inner {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary, #1a1a2e) 0%,
+    var(--bg-secondary, #252540) 40%,
+    var(--bg-tertiary, #1a1a2e) 80%
+  );
+  background-size: 200% 100%;
+  animation: image-gen-shimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes image-gen-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.image-gen-pending-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.image-gen-pending-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-tertiary, #888);
+}
+
+.image-gen-pending-label svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.image-gen-pending-prompt {
+  font-size: 12px;
+  color: var(--text-quaternary, #666);
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Result Card --- */
+
+.image-gen-result {
+  margin: 4px 0;
+  max-width: 520px;
+}
+
+.image-gen-result-image {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 480px;
+  line-height: 0;
+}
+
+.image-gen-result-image img {
+  width: 100%;
+  display: block;
+  cursor: zoom-in;
+  border-radius: 12px;
+  transition: filter 0.2s ease;
+}
+
+.image-gen-result-image:hover img {
+  filter: brightness(0.92);
+}
+
+/* Hover overlay — covers the image, click-through except for buttons */
+.image-gen-result-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  cursor: zoom-in;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, transparent 50%);
+  border-radius: 12px;
+}
+
+.image-gen-result-image:hover .image-gen-result-overlay,
+.image-gen-grid-item:hover .image-gen-result-overlay {
+  opacity: 1;
+}
+
+/* Floating action buttons on hover */
+.image-gen-overlay-actions {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 12px;
+  pointer-events: auto;
+}
+
+.image-gen-overlay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.image-gen-overlay-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.image-gen-overlay-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+  transform: scale(1.1);
+}
+
+.image-gen-overlay-btn:active {
+  transform: scale(0.95);
+}
+
+/* --- Multi-Image Grid --- */
+
+.image-gen-grid {
+  display: grid;
+  gap: 6px;
+  max-width: 480px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.image-gen-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.image-gen-grid--4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.image-gen-grid-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  line-height: 0;
+}
+
+.image-gen-grid-item img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  cursor: zoom-in;
+  transition: filter 0.2s ease;
+}
+
+.image-gen-grid-item:hover img {
+  filter: brightness(0.88);
+}
+
+.image-gen-grid-item.image-gen--load-failed {
+  display: none;
+}
+
+/* --- Meta Info --- */
+
+.image-gen-result-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-tertiary, #888);
+}
+
+.image-gen-meta-item::after {
+  content: "\00b7";
+  margin-left: 4px;
+  color: var(--text-quaternary, #666);
+}
+
+.image-gen-meta-item:last-child::after {
+  content: none;
+}
+
+/* --- Action Buttons --- */
+
+.image-gen-result-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.image-gen-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-primary, rgba(0, 0, 0, 0.18));
+  background: var(--bg-secondary, rgba(0, 0, 0, 0.05));
+  color: var(--text-secondary, #555);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.image-gen-action svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.image-gen-action:hover {
+  background: var(--bg-tertiary, rgba(0, 0, 0, 0.08));
+  color: var(--text-primary, #333);
+  border-color: var(--accent-color, #6366f1);
+}
+
+.image-gen-action:active {
+  transform: scale(0.96);
+}
+
+/* Primary action (download button) */
+.image-gen-action--primary {
+  background: var(--accent-color, #6366f1);
+  border-color: var(--accent-color, #6366f1);
+  color: #fff;
+}
+
+.image-gen-action--primary:hover {
+  background: var(--accent-hover, #4f46e5);
+  border-color: var(--accent-hover, #4f46e5);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+  color: #fff;
+}
+
+.image-gen-action--success {
+  border-color: var(--color-success, #22c55e);
+  color: var(--color-success, #22c55e);
+}
+
+.image-gen-action--success:hover {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* --- Error State --- */
+
+.image-gen-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--color-warning-border, #fbbf2440);
+  background: var(--color-warning-bg, #fbbf240a);
+  max-width: 480px;
+}
+
+.image-gen-error-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--color-warning, #f59e0b);
+  fill: none;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.image-gen-error-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.image-gen-error-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary, #eee);
+}
+
+.image-gen-error-detail {
+  font-size: 12px;
+  color: var(--text-secondary, #aaa);
+  word-break: break-word;
+}
+
+/* --- Expired Image --- */
+
+.image-gen-expired {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 32px;
+  border-radius: 12px;
+  border: 1px dashed var(--border-primary, #333);
+  background: var(--bg-tertiary, #1a1a2e);
+  max-width: 320px;
+  text-align: center;
+}
+
+.image-gen-expired-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--text-quaternary, #666);
+  fill: none;
+}
+
+.image-gen-expired-text {
+  font-size: 13px;
+  color: var(--text-tertiary, #888);
+}
+
+.image-gen-expired-prompt {
+  font-size: 12px;
+  color: var(--text-quaternary, #666);
+  font-style: italic;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================
+ * Unified Media Generation Progress Card
+ * Used by image-gen and video-gen for pending / interrupted / expired states.
+ * Inspired by Gemini's clean horizontal card layout.
+ * ============================================================ */
+
+.media-gen-progress {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  max-width: 420px;
+  background: var(--bg-secondary, rgba(99, 102, 241, 0.06));
+  border: 1px solid var(--border-primary, rgba(99, 102, 241, 0.15));
+  margin: 4px 0;
+}
+
+/* --- Icon column --- */
+
+.media-gen-progress__icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-color, #6366f1), #a78bfa);
+  color: #fff;
+  animation: media-gen-icon-pulse 2s ease-in-out infinite;
+}
+
+.media-gen-progress__icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+}
+
+/* Subtle animated ring around the icon while generating */
+.media-gen-progress__icon::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--accent-color, #6366f1);
+  animation: media-gen-icon-spin 1.5s linear infinite;
+  pointer-events: none;
+}
+
+.media-gen-progress__icon--image {
+  background: linear-gradient(135deg, #6366f1, #a78bfa);
+  position: relative;
+}
+
+.media-gen-progress__icon--video {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  position: relative;
+}
+
+/* Interrupted / expired: muted, no animation */
+.media-gen-progress--interrupted .media-gen-progress__icon,
+.media-gen-progress--interrupted .media-gen-progress__icon--image,
+.media-gen-progress--interrupted .media-gen-progress__icon--video {
+  background: var(--bg-tertiary, rgba(0, 0, 0, 0.08));
+  color: var(--text-tertiary, #888);
+  animation: none;
+}
+
+.media-gen-progress__icon--interrupted {
+  background: var(--bg-tertiary, rgba(0, 0, 0, 0.08)) !important;
+  color: var(--text-tertiary, #888) !important;
+  animation: none !important;
+  position: relative;
+}
+
+.media-gen-progress--interrupted .media-gen-progress__icon::after,
+.media-gen-progress__icon--interrupted::after {
+  display: none;
+}
+
+/* --- Body column --- */
+
+.media-gen-progress__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+  padding-top: 2px;
+}
+
+.media-gen-progress__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #222);
+  line-height: 1.4;
+}
+
+.media-gen-progress__hint {
+  font-size: 12px;
+  color: var(--text-tertiary, #888);
+  line-height: 1.4;
+}
+
+.media-gen-progress__prompt {
+  font-size: 12px;
+  color: var(--text-quaternary, #999);
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* Interrupted state card styling */
+.media-gen-progress--interrupted {
+  background: var(--bg-tertiary, rgba(0, 0, 0, 0.03));
+  border-color: var(--border-secondary, rgba(0, 0, 0, 0.08));
+}
+
+.media-gen-progress--interrupted .media-gen-progress__title {
+  color: var(--text-secondary, #666);
+  font-weight: 500;
+}
+
+/* --- Regenerate button (inside interrupted/expired card) --- */
+
+.media-gen-progress__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-color, #6366f1);
+  background: transparent;
+  color: var(--accent-color, #6366f1);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 6px;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+
+.media-gen-progress__action svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.media-gen-progress__action:hover {
+  background: var(--accent-color, #6366f1);
+  color: #fff;
+}
+
+.media-gen-progress__action:active {
+  transform: scale(0.96);
+}
+
+/* --- Animations --- */
+
+@keyframes media-gen-icon-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+@keyframes media-gen-icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,1880 @@
+/* ===========================================
+   Extensions (MCP) Page - Glassmorphism Design
+   Aligned with Skills page & Figma visual language
+   =========================================== */
+
+/* ---- Page Layout ---- */
+.extensions-page {
+  padding: 24px;
+  max-width: 100%;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  flex: 1 1 0;
+  min-height: 0;
+  scrollbar-width: thin;
+}
+
+/* Hide shared page header on extensions page */
+.content--extensions .content-header {
+  display: none;
+}
+
+/* Match ch-layout pattern: zero padding, content handles its own spacing */
+.content.content--extensions {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+/* Background — match channels page */
+:root[data-theme="light"] .content.content--extensions {
+  background-image: var(--cn-page-bg-image);
+  background-position: var(--cn-page-bg-position);
+  background-repeat: var(--cn-page-bg-repeat);
+  background-size: var(--cn-page-bg-size);
+  background-color: var(--cn-page-bg-color);
+}
+
+:root:not([data-theme="light"]) .content.content--extensions {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 10%, rgba(91, 181, 222, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(91, 181, 222, 0.04) 0%, transparent 60%);
+}
+
+/* Make .card wrapper transparent + flex passthrough */
+.content--extensions .card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.content--extensions .card:hover {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* ---- Decorative accent glow ---- */
+.ext-accent-glow {
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(91, 181, 222, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+:root:not([data-theme="light"]) .ext-accent-glow {
+  background: radial-gradient(circle, rgba(108, 140, 255, 0.06) 0%, transparent 70%);
+}
+
+/* ---- Bottom fade gradient ---- */
+.ext-bottom-fade {
+  display: none;
+}
+
+/* ===========================================
+   Tab Bar — Capsule toggle (glass pill container)
+   =========================================== */
+.ext-glass-tabbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 20px;
+  padding: 0 8px;
+}
+
+/* Capsule container — glass pill that wraps both tabs */
+.ext-glass-tab-capsule {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 9999px;
+  padding: 3px;
+  box-shadow:
+    0 2px 8px rgba(91, 181, 222, 0.08),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+:root:not([data-theme="light"]) .ext-glass-tab-capsule {
+  background: rgba(26, 35, 50, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Individual tab button inside capsule */
+.ext-glass-tab {
+  all: unset;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #888;
+  padding: 7px 22px;
+  border-radius: 9999px;
+  transition: all 200ms ease;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ext-glass-tab:hover {
+  color: #555;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Active tab — orange filled pill */
+.ext-glass-tab--active {
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.ext-glass-tab--active:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+}
+
+/* Dark theme overrides */
+:root:not([data-theme="light"]) .ext-glass-tab {
+  color: rgba(255, 255, 255, 0.45);
+}
+:root:not([data-theme="light"]) .ext-glass-tab:hover {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.06);
+}
+:root:not([data-theme="light"]) .ext-glass-tab--active {
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+}
+:root:not([data-theme="light"]) .ext-glass-tab--active:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+}
+
+/* Trial badge on tab */
+.ext-glass-tab__badge {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  color: inherit;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* When inside active tab, badge uses white semi-transparent bg */
+.ext-glass-tab--active .ext-glass-tab__badge {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+/* When inside inactive tab, badge uses orange gradient */
+.ext-glass-tab:not(.ext-glass-tab--active) .ext-glass-tab__badge {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: #fff;
+}
+
+/* ===========================================
+   Stats Ribbon — inline stats bar (Figma style)
+   =========================================== */
+.ext-stats-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-size: 12px;
+  color: #86bed6;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.ext-stats-ribbon__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+}
+
+.ext-stats-ribbon__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.ext-stats-ribbon__dot--running {
+  background: var(--ok, #34d399);
+  box-shadow: 0 0 6px rgba(52, 211, 153, 0.4);
+}
+.ext-stats-ribbon__dot--stopped {
+  background: var(--muted, #94a3b8);
+}
+
+.ext-stats-ribbon__num {
+  font-size: 18px;
+  font-weight: 700;
+  color: #86bed6;
+  letter-spacing: -0.02em;
+}
+
+.ext-stats-ribbon__divider {
+  width: 1px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.06);
+}
+:root:not([data-theme="light"]) .ext-stats-ribbon__divider {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ext-stats-ribbon__import-btn {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 14px;
+  height: 32px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent, #6c8cff);
+  border: 1.5px solid rgba(108, 140, 255, 0.3);
+  background: rgba(108, 140, 255, 0.06);
+  transition:
+    background 150ms,
+    border-color 150ms;
+  white-space: nowrap;
+}
+
+.ext-stats-ribbon__import-btn:hover {
+  background: rgba(108, 140, 255, 0.12);
+  border-color: rgba(108, 140, 255, 0.5);
+}
+
+/* ===========================================
+   Capability Cards — Glass morphism (My tab)
+   =========================================== */
+.ext-glass-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 12px;
+  padding: 16px 18px;
+  position: relative;
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+  box-shadow:
+    0 2px 8px rgba(91, 181, 222, 0.06),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+:root:not([data-theme="light"]) .ext-glass-card {
+  background: rgba(26, 35, 50, 0.45);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.ext-glass-card:hover {
+  border-color: rgba(134, 190, 214, 0.5);
+  box-shadow:
+    0 4px 16px rgba(91, 181, 222, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+:root:not([data-theme="light"]) .ext-glass-card:hover {
+  border-color: rgba(108, 140, 255, 0.3);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.ext-glass-card:active {
+  transform: translateY(0);
+}
+
+/* Card header */
+.ext-glass-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ext-glass-card__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: -0.01em;
+}
+:root:not([data-theme="light"]) .ext-glass-card__name {
+  color: var(--text-strong, #e8ecf1);
+}
+
+/* Status pill */
+.ext-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.ext-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* New badge */
+.ext-new-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+}
+
+/* Description section */
+.ext-glass-card__desc-label {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+:root:not([data-theme="light"]) .ext-glass-card__desc-label {
+  color: var(--muted-strong, #6b7d91);
+}
+
+.ext-glass-card__desc-list {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.7;
+}
+:root:not([data-theme="light"]) .ext-glass-card__desc-list {
+  color: var(--fg-secondary, #a0aec0);
+}
+
+/* Config hint box */
+.ext-config-hint {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: rgba(251, 191, 36, 0.06);
+  border: 1px solid rgba(251, 191, 36, 0.12);
+  border-radius: 8px;
+}
+:root:not([data-theme="light"]) .ext-config-hint {
+  color: var(--muted-strong, #6b7d91);
+}
+
+/* Card footer */
+.ext-glass-card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 2px;
+}
+
+.ext-glass-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===========================================
+   Pill Buttons — unified button system
+   =========================================== */
+.ext-pill-btn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 14px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.4);
+  color: #333;
+  white-space: nowrap;
+  transition:
+    border-color 150ms,
+    background 150ms,
+    color 150ms,
+    box-shadow 150ms,
+    opacity 150ms;
+  user-select: none;
+}
+:root:not([data-theme="light"]) .ext-pill-btn {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text, #e8ecf1);
+}
+
+.ext-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+:root:not([data-theme="light"]) .ext-pill-btn:hover {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.ext-pill-btn:active {
+  opacity: 0.75;
+  transform: scale(0.97);
+}
+
+.ext-pill-btn:disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Primary: solid accent */
+.ext-pill-btn--primary {
+  background: var(--accent, #6c8cff);
+  color: #fff;
+  border-color: transparent;
+}
+.ext-pill-btn--primary:hover {
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgba(108, 140, 255, 0.2);
+}
+
+/* Warning: yellow gradient */
+.ext-pill-btn--warning {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #000;
+  border-color: transparent;
+  font-weight: 600;
+}
+.ext-pill-btn--warning:hover {
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.2);
+}
+
+/* Accent outline */
+.ext-pill-btn--accent {
+  border-color: rgba(108, 140, 255, 0.3);
+  color: var(--accent, #6c8cff);
+  background: rgba(108, 140, 255, 0.06);
+}
+.ext-pill-btn--accent:hover {
+  background: rgba(108, 140, 255, 0.12);
+  box-shadow: 0 2px 8px rgba(108, 140, 255, 0.1);
+}
+
+/* Danger outline */
+.ext-pill-btn--danger {
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.04);
+}
+.ext-pill-btn--danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Try-say button */
+.ext-pill-btn--try-say {
+  width: 100%;
+  box-sizing: border-box;
+  border-color: rgba(108, 140, 255, 0.12);
+  color: var(--accent, #6c8cff);
+  background: rgba(108, 140, 255, 0.04);
+  font-size: 12px;
+  height: auto;
+  padding: 6px 12px;
+  border-radius: 8px;
+  justify-content: flex-start;
+}
+.ext-pill-btn--try-say:hover {
+  background: rgba(108, 140, 255, 0.1);
+  border-color: rgba(108, 140, 255, 0.25);
+}
+
+/* Small pill */
+.ext-pill-btn--sm {
+  height: 24px;
+  padding: 0 10px;
+  font-size: 11px;
+  border-radius: 6px;
+}
+
+/* ===========================================
+   Store Card — Glass morphism (Store tab)
+   =========================================== */
+.ext-market-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  transition:
+    box-shadow 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 2px 8px rgba(91, 181, 222, 0.06),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  min-width: 0;
+  overflow: hidden;
+}
+
+:root:not([data-theme="light"]) .ext-market-card {
+  background: rgba(26, 35, 50, 0.45);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.ext-market-card:hover {
+  border-color: rgba(134, 190, 214, 0.5);
+  box-shadow:
+    0 4px 16px rgba(91, 181, 222, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+:root:not([data-theme="light"]) .ext-market-card:hover {
+  border-color: rgba(108, 140, 255, 0.3);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.ext-market-card--dimmed {
+  opacity: 0.65;
+  filter: grayscale(0.2);
+}
+
+/* Store card icon */
+.ext-market-card__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ext-market-card__icon--default {
+  background: rgba(108, 140, 255, 0.08);
+}
+.ext-market-card__icon--installed {
+  background: rgba(52, 211, 153, 0.1);
+}
+
+/* Card name */
+.ext-market-card__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
+  display: inline-block;
+  vertical-align: middle;
+}
+:root:not([data-theme="light"]) .ext-market-card__name {
+  color: var(--text-strong, #e8ecf1);
+}
+
+/* Description */
+.ext-market-card__desc {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 8px;
+  flex: 1;
+}
+:root:not([data-theme="light"]) .ext-market-card__desc {
+  color: var(--muted-strong, #a0aec0);
+}
+
+/* Tags */
+.ext-market-card__tag {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(148, 163, 184, 0.08);
+  color: #6b7d91;
+}
+
+/* ===========================================
+   Badge Pills — unified badge system
+   =========================================== */
+.ext-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ext-badge--npm {
+  background: rgba(203, 92, 88, 0.12);
+  color: #cb5c58;
+}
+.ext-badge--pypi {
+  background: rgba(53, 114, 165, 0.12);
+  color: #3572a5;
+}
+.ext-badge--sse {
+  background: rgba(251, 146, 60, 0.12);
+  color: #fb923c;
+}
+.ext-badge--none {
+  background: rgba(148, 163, 184, 0.08);
+  color: #6b7d91;
+}
+.ext-badge--official {
+  background: rgba(108, 140, 255, 0.12);
+  color: #818cf8;
+}
+.ext-badge--zero-config {
+  background: rgba(52, 211, 153, 0.12);
+  color: var(--ok, #34d399);
+}
+.ext-badge--needs-key {
+  background: rgba(251, 191, 36, 0.12);
+  color: var(--warn, #fbbf24);
+}
+.ext-badge--high-risk {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--danger, #f87171);
+}
+.ext-badge--remote {
+  background: rgba(251, 146, 60, 0.12);
+  color: #fb923c;
+}
+.ext-badge--new {
+  background: rgba(96, 165, 250, 0.12);
+  color: #60a5fa;
+}
+.ext-badge--update {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+}
+.ext-badge--version {
+  background: rgba(148, 163, 184, 0.1);
+  color: #6b7d91;
+}
+.ext-badge--version-upgrade {
+  background: rgba(251, 191, 36, 0.1);
+  color: var(--warn, #fbbf24);
+  font-size: 9px;
+}
+.ext-badge--installed {
+  background: rgba(52, 211, 153, 0.1);
+  color: var(--ok, #34d399);
+  font-weight: 600;
+}
+.ext-badge--installing {
+  background: rgba(108, 140, 255, 0.1);
+  color: var(--accent, #6c8cff);
+  font-weight: 600;
+}
+.ext-badge--error {
+  background: rgba(248, 113, 113, 0.1);
+  color: var(--danger, #f87171);
+  font-weight: 600;
+}
+.ext-badge--platform {
+  background: rgba(148, 163, 184, 0.08);
+  color: #6b7d91;
+  cursor: not-allowed;
+}
+
+/* ===========================================
+   Search Box — Glass pill input
+   =========================================== */
+.ext-glass-search {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    border-color 200ms,
+    box-shadow 200ms,
+    background 200ms;
+  height: 38px;
+}
+:root:not([data-theme="light"]) .ext-glass-search {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.ext-glass-search:focus-within {
+  border-color: var(--accent, #6c8cff);
+  box-shadow: 0 0 0 3px rgba(108, 140, 255, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+}
+:root:not([data-theme="light"]) .ext-glass-search:focus-within {
+  background: rgba(26, 35, 50, 0.55);
+}
+
+.ext-glass-search__input {
+  all: unset;
+  flex: 1;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #333;
+}
+:root:not([data-theme="light"]) .ext-glass-search__input {
+  color: var(--text, #e8ecf1);
+}
+
+.ext-glass-search__icon {
+  font-size: 14px;
+  color: #bbb;
+  margin-right: 8px;
+}
+:root:not([data-theme="light"]) .ext-glass-search__icon {
+  color: var(--muted-strong, #6b7d91);
+}
+
+.ext-glass-search__clear {
+  all: unset;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* ===========================================
+   Category Chips — pill style
+   =========================================== */
+.ext-category-chip {
+  all: unset;
+  cursor: pointer;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  white-space: nowrap;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(148, 163, 184, 0.04);
+  color: #6b7d91;
+  transition: all 150ms;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+:root:not([data-theme="light"]) .ext-category-chip {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.ext-category-chip:hover {
+  background: rgba(108, 140, 255, 0.06);
+  border-color: rgba(108, 140, 255, 0.2);
+}
+
+.ext-category-chip--active {
+  border-color: var(--accent, #6c8cff);
+  background: rgba(108, 140, 255, 0.12);
+  color: var(--accent, #6c8cff);
+  font-weight: 600;
+}
+
+/* ===========================================
+   Sort Select — Glass style
+   =========================================== */
+.ext-glass-select {
+  padding: 0 12px;
+  height: 38px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #333;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+:root:not([data-theme="light"]) .ext-glass-select {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+  color: var(--text, #e8ecf1);
+}
+
+/* ===========================================
+   Store Toolbar
+   =========================================== */
+.ext-store-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ext-store-toolbar__categories {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+  align-items: center;
+}
+
+/* Batch config button */
+.ext-batch-config-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 0 14px;
+  height: 38px;
+  border: 1.5px solid rgba(108, 140, 255, 0.3);
+  border-radius: 9999px;
+  background: rgba(108, 140, 255, 0.06);
+  color: var(--accent, #6c8cff);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition:
+    background 150ms,
+    border-color 150ms;
+}
+.ext-batch-config-btn:hover {
+  background: rgba(108, 140, 255, 0.12);
+  border-color: rgba(108, 140, 255, 0.5);
+}
+
+/* ===========================================
+   Card Grids
+   =========================================== */
+.ext-cards-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 28px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  max-width: 100%;
+}
+
+.ext-store-grid {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  .ext-cards-grid,
+  .ext-store-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================================
+   Update Notice Bar — Glass style
+   =========================================== */
+.ext-update-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.15);
+  color: var(--ok, #34d399);
+  font-size: 13px;
+  animation: extUpdateIn 300ms ease both;
+}
+
+/* ===========================================
+   Modals — Glass morphism
+   =========================================== */
+.ext-glass-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: extOverlayIn 200ms ease both;
+}
+
+.ext-glass-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.9) 100%);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1.5px solid rgba(134, 190, 214, 0.4);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 40px rgba(91, 181, 222, 0.15),
+    inset 0 1px 3px rgba(255, 255, 255, 0.7);
+  animation: extModalIn 350ms cubic-bezier(0.34, 1.3, 0.64, 1) both;
+}
+
+:root:not([data-theme="light"]) .ext-glass-modal {
+  background: linear-gradient(160deg, rgba(26, 35, 50, 0.85) 0%, rgba(26, 35, 50, 0.95) 100%);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.ext-glass-modal--detail {
+  width: min(540px, calc(100vw - 48px));
+  z-index: 9001;
+  padding: 28px 28px 24px;
+}
+
+.ext-glass-modal--wizard {
+  width: min(520px, calc(100vw - 48px));
+  z-index: 9101;
+  padding: 28px;
+}
+
+.ext-glass-modal--batch {
+  width: min(680px, calc(100vw - 48px));
+  z-index: 9201;
+  padding: 28px;
+}
+
+/* Modal close button */
+.ext-modal-close {
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 18px;
+  color: #999;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 150ms;
+}
+:root:not([data-theme="light"]) .ext-modal-close {
+  color: var(--muted-strong, #6b7d91);
+}
+.ext-modal-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+:root:not([data-theme="light"]) .ext-modal-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Modal title */
+.ext-modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 6px;
+}
+:root:not([data-theme="light"]) .ext-modal-title {
+  color: var(--text-strong, #e8ecf1);
+}
+
+/* Modal subtitle */
+.ext-modal-subtitle {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 20px;
+}
+:root:not([data-theme="light"]) .ext-modal-subtitle {
+  color: var(--muted-strong, #6b7d91);
+}
+
+/* Modal divider */
+.ext-modal-divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  margin: 0 -28px;
+  padding: 0 28px;
+}
+:root:not([data-theme="light"]) .ext-modal-divider {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Modal prompt button */
+.ext-modal-prompt-btn {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 12px;
+  color: #666;
+  transition:
+    border-color 150ms,
+    background 150ms;
+}
+:root:not([data-theme="light"]) .ext-modal-prompt-btn {
+  border-color: rgba(255, 255, 255, 0.06);
+  color: var(--fg-secondary, #a0aec0);
+}
+.ext-modal-prompt-btn:hover {
+  border-color: rgba(108, 140, 255, 0.3);
+  background: rgba(108, 140, 255, 0.04);
+}
+
+/* ===========================================
+   Warning / Alert Boxes
+   =========================================== */
+.ext-alert-box {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.ext-alert-box--danger {
+  background: rgba(248, 113, 113, 0.06);
+  border: 1px solid rgba(248, 113, 113, 0.15);
+  color: #666;
+}
+:root:not([data-theme="light"]) .ext-alert-box--danger {
+  color: var(--fg-secondary, #a0aec0);
+}
+
+.ext-alert-box--warning {
+  background: rgba(251, 191, 36, 0.06);
+  border: 1px solid rgba(251, 191, 36, 0.12);
+  color: #666;
+}
+:root:not([data-theme="light"]) .ext-alert-box--warning {
+  color: var(--fg-secondary, #a0aec0);
+}
+
+.ext-alert-box--info {
+  background: rgba(108, 140, 255, 0.04);
+  border: 1px solid rgba(108, 140, 255, 0.1);
+  color: #666;
+}
+:root:not([data-theme="light"]) .ext-alert-box--info {
+  color: var(--fg-secondary, #a0aec0);
+}
+
+/* ===========================================
+   Form Inputs — Glass style
+   =========================================== */
+.ext-glass-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #333;
+  font-size: 12px;
+  outline: none;
+  transition:
+    border-color 200ms,
+    box-shadow 200ms;
+}
+:root:not([data-theme="light"]) .ext-glass-input {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+  color: var(--text, #e8ecf1);
+}
+.ext-glass-input:focus {
+  border-color: var(--accent, #6c8cff);
+  box-shadow: 0 0 0 3px rgba(108, 140, 255, 0.12);
+}
+
+.ext-glass-input--password {
+  padding-right: 32px;
+}
+
+/* ===========================================
+   Form Card Container — Glass style
+   =========================================== */
+.ext-form-card {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+:root:not([data-theme="light"]) .ext-form-card {
+  background: rgba(26, 35, 50, 0.45);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ===========================================
+   Advanced Section — Process Table
+   =========================================== */
+.ext-advanced-card {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(91, 181, 222, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+:root:not([data-theme="light"]) .ext-advanced-card {
+  background: rgba(26, 35, 50, 0.45);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ext-process-row:hover {
+  background: rgba(108, 140, 255, 0.04);
+}
+:root:not([data-theme="light"]) .ext-process-row:hover {
+  background: rgba(108, 140, 255, 0.06);
+}
+
+/* ===========================================
+   Status Messages (loading / empty / error)
+   =========================================== */
+.ext-glass-status {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+:root:not([data-theme="light"]) .ext-glass-status {
+  color: var(--muted-strong, #6b7d91);
+}
+
+/* ===========================================
+   First Visit Guide — Glass banner
+   =========================================== */
+.ext-first-visit {
+  padding: 24px 32px;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.88) 100%);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1.5px solid rgba(134, 190, 214, 0.4);
+  box-shadow:
+    0 6px 30px rgba(91, 181, 222, 0.1),
+    0 2px 8px rgba(91, 181, 222, 0.06),
+    inset 0 2px 4px rgba(255, 255, 255, 0.7);
+  animation: extFadeIn 400ms ease both;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+:root:not([data-theme="light"]) .ext-first-visit {
+  background: linear-gradient(160deg, rgba(26, 35, 50, 0.5) 0%, rgba(26, 35, 50, 0.7) 100%);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 6px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* First visit capability pill */
+.ext-first-visit__pill {
+  padding: 5px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+:root:not([data-theme="light"]) .ext-first-visit__pill {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ===========================================
+   Recommendation Banner — Glass style
+   =========================================== */
+.ext-recommendation {
+  padding: 14px 24px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(108, 140, 255, 0.06), rgba(91, 181, 222, 0.04));
+  border: 1px solid rgba(134, 190, 214, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+:root:not([data-theme="light"]) .ext-recommendation {
+  background: linear-gradient(135deg, rgba(108, 140, 255, 0.06), rgba(32, 213, 188, 0.04));
+  border-color: rgba(108, 140, 255, 0.12);
+}
+
+/* ===========================================
+   Process Limit Warning
+   =========================================== */
+.ext-limit-warning {
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  font-size: 13px;
+  color: var(--warn, #fbbf24);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===========================================
+   Toast — Glass notification
+   =========================================== */
+.ext-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 10px 24px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: extToastIn 300ms ease both;
+  pointer-events: none;
+  max-width: min(560px, 90vw);
+  white-space: pre-line;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.ext-toast--success {
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  color: var(--ok, #34d399);
+  box-shadow: 0 4px 12px rgba(52, 211, 153, 0.1);
+}
+
+.ext-toast--error {
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  color: var(--danger, #f87171);
+  box-shadow: 0 4px 12px rgba(248, 113, 113, 0.1);
+}
+
+.ext-toast--info {
+  background: rgba(108, 140, 255, 0.12);
+  border: 1px solid rgba(108, 140, 255, 0.25);
+  color: var(--accent, #6c8cff);
+  box-shadow: 0 4px 12px rgba(108, 140, 255, 0.1);
+}
+
+/* ===========================================
+   MCP Icon Helper
+   =========================================== */
+.mcp-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.mcp-icon svg {
+  width: 1em;
+  height: 1em;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ===========================================
+   Spinner
+   =========================================== */
+.ext-spinner {
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: extSpin 0.8s linear infinite;
+  display: inline-block;
+}
+.ext-spinner--sm {
+  width: 10px;
+  height: 10px;
+}
+.ext-spinner--md {
+  width: 12px;
+  height: 12px;
+}
+.ext-spinner--lg {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+
+/* ===========================================
+   Animations
+   =========================================== */
+@keyframes extSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes extUpdateIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes extFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes extOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes extModalIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+  }
+}
+
+@keyframes extToastIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Legacy keyframe aliases for backward compat */
+@keyframes extCardSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mcpSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mcpModalBgIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes mcpModalIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes mcpWizBgIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes mcpWizIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes batchCfgBgIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes batchCfgIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes batchCfgSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mcpStoreSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===========================================
+   Batch Config — Table styles
+   =========================================== */
+.ext-batch-table-header {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr 50px 40px;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+:root:not([data-theme="light"]) .ext-batch-table-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  color: var(--muted-strong, #6b7d91);
+}
+
+.ext-batch-row {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr 50px 40px;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  align-items: center;
+}
+:root:not([data-theme="light"]) .ext-batch-row {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Batch key input */
+.batch-key-input:focus {
+  border-color: var(--accent, #6c8cff) !important;
+}
+
+/* ===========================================
+   Modal Actions Footer
+   =========================================== */
+.ext-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 20px;
+}
+:root:not([data-theme="light"]) .ext-modal-actions {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.ext-modal-actions--center {
+  justify-content: center;
+}
+
+/* ===========================================
+   Advanced Section Toggle
+   =========================================== */
+.ext-advanced-toggle {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 16px;
+}
+:root:not([data-theme="light"]) .ext-advanced-toggle {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ===========================================
+   Collapsible Details — Glass style
+   =========================================== */
+.ext-details-summary {
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  cursor: pointer;
+  user-select: none;
+}
+:root:not([data-theme="light"]) .ext-details-summary {
+  color: var(--muted-strong, #6b7d91);
+}
+
+/* ===========================================
+   Stats Dashboard — 3-column card row
+   Matches Skills sidebar stat-card design language
+   =========================================== */
+.ext-stats-dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 0 8px;
+  animation: extFadeIn 400ms ease both;
+}
+
+@media (max-width: 600px) {
+  .ext-stats-dashboard {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+.ext-stat-card {
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 8px rgba(91, 181, 222, 0.06);
+  border: 1px solid rgba(173, 216, 240, 0.35);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 200ms,
+    box-shadow 200ms,
+    transform 200ms;
+}
+
+.ext-stat-card:hover {
+  border-color: rgba(134, 190, 214, 0.5);
+  box-shadow: 0 4px 16px rgba(91, 181, 222, 0.12);
+  transform: translateY(-1px);
+}
+
+:root:not([data-theme="light"]) .ext-stat-card {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+:root:not([data-theme="light"]) .ext-stat-card:hover {
+  border-color: rgba(108, 140, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Three gradient variants */
+.ext-stat-card--running {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(232, 247, 240, 0.4) 100%);
+}
+
+.ext-stat-card--stopped {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(245, 240, 250, 0.4) 100%);
+}
+
+.ext-stat-card--tools {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(224, 240, 255, 0.4) 100%);
+}
+
+:root:not([data-theme="light"]) .ext-stat-card--running {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(52, 211, 153, 0.12) 100%);
+}
+
+:root:not([data-theme="light"]) .ext-stat-card--stopped {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(148, 163, 184, 0.12) 100%);
+}
+
+:root:not([data-theme="light"]) .ext-stat-card--tools {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(108, 140, 255, 0.12) 100%);
+}
+
+/* 3D SVG illustration */
+.ext-stat-card__illust {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+
+.ext-stat-card__illust svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 6px rgba(91, 181, 222, 0.2));
+}
+
+/* Text group */
+.ext-stat-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ext-stat-card__num {
+  font-size: 36px;
+  font-weight: 800;
+  color: #333;
+  line-height: 1.1;
+}
+
+:root:not([data-theme="light"]) .ext-stat-card__num {
+  color: #e0e0e0;
+}
+
+.ext-stat-card__label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #86bed6;
+}
+
+/* ===========================================
+   Toolbar — Search + Tabs + Actions
+   =========================================== */
+.ext-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 0 8px;
+  flex-wrap: wrap;
+}
+
+.ext-toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Sync button */
+.ext-toolbar__sync-btn {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 12px;
+  height: 34px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted-strong, #6b7d91);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.35);
+  transition:
+    background 150ms,
+    border-color 150ms;
+  white-space: nowrap;
+}
+
+.ext-toolbar__sync-btn:hover {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+:root:not([data-theme="light"]) .ext-toolbar__sync-btn {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+  color: var(--muted-strong, #6b7d91);
+}
+
+:root:not([data-theme="light"]) .ext-toolbar__sync-btn:hover {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Import button in toolbar — reuse existing import-btn style */
+.ext-toolbar__import-btn {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 14px;
+  height: 34px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent, #6c8cff);
+  border: 1.5px solid rgba(108, 140, 255, 0.3);
+  background: rgba(108, 140, 255, 0.06);
+  transition:
+    background 150ms,
+    border-color 150ms;
+  white-space: nowrap;
+}
+
+.ext-toolbar__import-btn:hover {
+  background: rgba(108, 140, 255, 0.12);
+  border-color: rgba(108, 140, 255, 0.5);
+}
+
+@media (max-width: 600px) {
+  .ext-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .ext-toolbar .ext-glass-search {
+    width: 100%;
+  }
+
+  .ext-toolbar .ext-glass-tab-capsule {
+    align-self: center;
+  }
+
+  .ext-toolbar__actions {
+    justify-content: center;
+    margin-left: 0;
+  }
+}
+
+/* ---- Process Action Buttons (状态设置表格操作按钮) ---- */
+.ext-process-action-btn {
+  all: unset;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm, 6px);
+  border: 1px solid;
+  transition: all 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  text-align: center;
+}
+
+.ext-process-action-btn--test {
+  color: var(--accent, #6c8cff);
+  border-color: rgba(108, 140, 255, 0.3);
+  background: rgba(108, 140, 255, 0.08);
+}
+.ext-process-action-btn--test:hover {
+  background: rgba(108, 140, 255, 0.18);
+  border-color: rgba(108, 140, 255, 0.5);
+}
+
+.ext-process-action-btn--restart {
+  color: var(--accent-2, #20d5bc);
+  border-color: rgba(32, 213, 188, 0.3);
+  background: rgba(32, 213, 188, 0.08);
+}
+.ext-process-action-btn--restart:hover {
+  background: rgba(32, 213, 188, 0.18);
+  border-color: rgba(32, 213, 188, 0.5);
+}
+
+.ext-process-action-btn--disable {
+  color: var(--muted-strong, #6b7d91);
+  border-color: rgba(107, 125, 145, 0.3);
+  background: rgba(107, 125, 145, 0.08);
+}
+.ext-process-action-btn--disable:hover {
+  background: rgba(107, 125, 145, 0.18);
+  border-color: rgba(107, 125, 145, 0.5);
+}
+
+.ext-process-action-btn--enable {
+  color: var(--ok, #34d399);
+  border-color: rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.08);
+}
+.ext-process-action-btn--enable:hover {
+  background: rgba(52, 211, 153, 0.18);
+  border-color: rgba(52, 211, 153, 0.5);
+}

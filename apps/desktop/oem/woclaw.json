@@ -1,0 +1,10 @@
+{
+  "oemId": "woclaw",
+  "productName": "WoClaw",
+  "displayName": "WoClaw",
+  "identifier": "com.woclaw.desktop",
+  "iconDir": "icons/woclaw",
+  "shortcutName": "WoClaw",
+  "exeName": "openclawcn-desktop",
+  "notes": "WoClaw OEM 品牌包"
+}

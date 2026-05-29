@@ -1,0 +1,15 @@
+{
+  "name": "@openclaw-cn/feishu-cn-enhance",
+  "version": "0.1.0",
+  "description": "飞书增强插件 — 日历/任务/审批/会议纪要工具 + 诊断 CLI（不侵入上游 feishu 插件）",
+  "type": "module",
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.59.0",
+    "@sinclair/typebox": "0.34.48"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

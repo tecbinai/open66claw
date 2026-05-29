@@ -1,0 +1,1033 @@
+/* ===========================================
+   Cron Page — Glassmorphism Design
+   Aligned with Skills page visual language
+   =========================================== */
+
+/* ---- Page Layout ---- */
+.cron-page {
+  contain: layout style;
+}
+
+/* Hide shared page header on cron page */
+.content--cron .content-header {
+  display: none;
+}
+
+/* Match ch-layout pattern: zero padding, content handles its own spacing */
+.content.content--cron {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+/* Background — match channels page */
+:root[data-theme="light"] .content.content--cron {
+  background-image: var(--cn-page-bg-image);
+  background-position: var(--cn-page-bg-position);
+  background-repeat: var(--cn-page-bg-repeat);
+  background-size: var(--cn-page-bg-size);
+  background-color: var(--cn-page-bg-color);
+}
+
+:root:not([data-theme="light"]) .content.content--cron {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 10%, rgba(91, 181, 222, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(91, 181, 222, 0.04) 0%, transparent 60%);
+}
+
+/* Make .card wrapper transparent + flex passthrough */
+.content--cron .card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+}
+.content--cron .card:hover {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* ===========================================
+   Two-column Layout — Sidebar + Main
+   =========================================== */
+.cron-layout {
+  display: grid;
+  grid-template-columns: 380px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  flex: 1 1 0;
+  min-height: 0;
+  box-sizing: border-box;
+  gap: 24px;
+  padding: 24px;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Sidebar — independent card matching ch-sidebar */
+.cron-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 6px 30px rgba(91, 181, 222, 0.1),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6);
+  scrollbar-width: thin;
+}
+:root:not([data-theme="light"]) .cron-sidebar {
+  background: rgba(12, 16, 22, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 6px 30px rgba(0, 0, 0, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Main area — independent card matching ch-main */
+.cron-main {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 6px 30px rgba(91, 181, 222, 0.1),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+:root:not([data-theme="light"]) .cron-main {
+  background: rgba(12, 16, 22, 0.45);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 6px 30px rgba(0, 0, 0, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Scrollable area inside main */
+.cron-main__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px 20px;
+}
+
+/* ===========================================
+   Sidebar Stats — 2x2 grid
+   =========================================== */
+.cron-sidebar__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.cron-sidebar__stat-card {
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 8px rgba(91, 181, 222, 0.06);
+  border: 1px solid rgba(173, 216, 240, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+:root:not([data-theme="light"]) .cron-sidebar__stat-card {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.cron-sidebar__stat-card--enabled {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(224, 240, 255, 0.4) 100%);
+}
+.cron-sidebar__stat-card--jobs {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(232, 247, 240, 0.4) 100%);
+}
+.cron-sidebar__stat-card--next {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 245, 230, 0.4) 100%);
+}
+.cron-sidebar__stat-card--active {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(232, 240, 255, 0.4) 100%);
+}
+:root:not([data-theme="light"]) .cron-sidebar__stat-card--enabled {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(108, 140, 255, 0.12) 100%);
+}
+:root:not([data-theme="light"]) .cron-sidebar__stat-card--jobs {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(52, 211, 153, 0.12) 100%);
+}
+:root:not([data-theme="light"]) .cron-sidebar__stat-card--next {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(254, 177, 66, 0.12) 100%);
+}
+:root:not([data-theme="light"]) .cron-sidebar__stat-card--active {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(91, 181, 222, 0.12) 100%);
+}
+
+.cron-sidebar__stat-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-bottom: 2px;
+}
+.cron-sidebar__stat-icon svg {
+  width: 20px;
+  height: 20px;
+}
+.cron-sidebar__stat-card--enabled .cron-sidebar__stat-icon {
+  background: rgba(91, 181, 222, 0.15);
+  color: #5bb5de;
+}
+.cron-sidebar__stat-card--jobs .cron-sidebar__stat-icon {
+  background: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+}
+.cron-sidebar__stat-card--next .cron-sidebar__stat-icon {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+.cron-sidebar__stat-card--active .cron-sidebar__stat-icon {
+  background: rgba(99, 102, 241, 0.15);
+  color: #6366f1;
+}
+
+.cron-sidebar__stat-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #333;
+  line-height: 1.2;
+}
+:root:not([data-theme="light"]) .cron-sidebar__stat-num {
+  color: #e0e0e0;
+}
+
+.cron-sidebar__stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #86bed6;
+}
+
+/* Sidebar section title */
+.cron-sidebar__section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+  padding: 4px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+:root:not([data-theme="light"]) .cron-sidebar__section-title {
+  color: rgba(255, 255, 255, 0.7);
+}
+.cron-sidebar__section-title svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* Sidebar refresh button */
+.cron-sidebar__refresh-btn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #5bb5de 0%, #4aa8d3 100%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(91, 181, 222, 0.2);
+  transition:
+    transform 150ms,
+    box-shadow 150ms;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.cron-sidebar__refresh-btn:hover {
+  background: linear-gradient(135deg, #4aa8d3 0%, #3a9bc8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(91, 181, 222, 0.35);
+}
+.cron-sidebar__refresh-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+:root:not([data-theme="light"]) .cron-sidebar__refresh-btn {
+  background: linear-gradient(135deg, #4aa8d3 0%, #3a9bc8 100%);
+}
+
+/* ===========================================
+   Sidebar — Job List
+   =========================================== */
+.cron-sidebar__list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.cron-sidebar__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  border-left: 3px solid #c8e4f4;
+  background: rgba(255, 255, 255, 0.65);
+  transition:
+    background 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+  user-select: none;
+  margin-bottom: 6px;
+}
+.cron-sidebar__item:hover {
+  background: rgba(220, 240, 252, 0.7);
+  border-left-color: #5bb5de;
+  box-shadow: 0 2px 8px rgba(91, 181, 222, 0.08);
+}
+.cron-sidebar__item--selected {
+  background: rgba(91, 181, 222, 0.12);
+  border-left-color: #e8872b;
+  box-shadow: 0 2px 8px rgba(232, 135, 43, 0.1);
+}
+:root:not([data-theme="light"]) .cron-sidebar__item {
+  background: rgba(255, 255, 255, 0.04);
+  border-left-color: rgba(91, 181, 222, 0.25);
+}
+:root:not([data-theme="light"]) .cron-sidebar__item:hover {
+  background: rgba(108, 140, 255, 0.08);
+  border-left-color: rgba(91, 181, 222, 0.5);
+}
+:root:not([data-theme="light"]) .cron-sidebar__item--selected {
+  background: rgba(232, 135, 43, 0.1);
+  border-left-color: #e8872b;
+}
+
+.cron-sidebar__item-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.cron-sidebar__item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cron-sidebar__item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+:root:not([data-theme="light"]) .cron-sidebar__item-name {
+  color: var(--text-strong, #e0e0e0);
+}
+
+.cron-sidebar__item-desc {
+  font-size: 11px;
+  font-weight: 400;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cron-sidebar__item-chips {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.cron-sidebar__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.cron-sidebar__chip--enabled {
+  background: rgba(52, 211, 153, 0.12);
+  color: #10b981;
+}
+.cron-sidebar__chip--disabled {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+}
+.cron-sidebar__chip--schedule {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+}
+
+.cron-sidebar__empty {
+  padding: 24px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+
+/* ===========================================
+   Main — Sticky Header
+   =========================================== */
+.cron-main__sticky-header {
+  flex-shrink: 0;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+:root:not([data-theme="light"]) .cron-main__sticky-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.cron-main__header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cron-main__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #feb142;
+  text-shadow: none;
+}
+:root:not([data-theme="light"]) .cron-main__title {
+  color: var(--text-strong, #e0e0e0);
+}
+
+.cron-main__subtitle {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* ===========================================
+   Main — Glass Form Card
+   =========================================== */
+.cron-glass-form {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.75) 100%
+  );
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-radius: 16px;
+  padding: 20px;
+  position: relative;
+  margin-bottom: 20px;
+  box-shadow:
+    0 4px 20px rgba(91, 181, 222, 0.08),
+    inset 0 1px 3px rgba(255, 255, 255, 0.7);
+  border: 1.5px solid rgba(173, 216, 240, 0.35);
+}
+:root:not([data-theme="light"]) .cron-glass-form {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.5) 0%, rgba(26, 35, 50, 0.7) 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cron-glass-form__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+:root:not([data-theme="light"]) .cron-glass-form__title {
+  color: var(--text-strong, #e0e0e0);
+}
+
+.cron-glass-form__title svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #e8872b;
+}
+
+/* Constrain all SVGs inside form to prevent overflow */
+.cron-form-section-title svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.cron-glass-form svg {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.cron-glass-form__desc {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 16px;
+}
+
+/* Form grid */
+.cron-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.cron-form-grid--three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cron-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cron-form-field--full {
+  grid-column: 1 / -1;
+}
+
+.cron-form-field__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+}
+:root:not([data-theme="light"]) .cron-form-field__label {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cron-form-field input[type="text"],
+.cron-form-field input[type="number"],
+.cron-form-field input[type="datetime-local"],
+.cron-form-field select,
+.cron-form-field textarea {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition:
+    border-color 200ms,
+    box-shadow 200ms;
+  box-sizing: border-box;
+}
+.cron-form-field input:focus,
+.cron-form-field select:focus,
+.cron-form-field textarea:focus {
+  border-color: #5bb5de;
+  box-shadow: 0 0 0 3px rgba(91, 181, 222, 0.15);
+}
+:root:not([data-theme="light"]) .cron-form-field input[type="text"],
+:root:not([data-theme="light"]) .cron-form-field input[type="number"],
+:root:not([data-theme="light"]) .cron-form-field input[type="datetime-local"],
+:root:not([data-theme="light"]) .cron-form-field select,
+:root:not([data-theme="light"]) .cron-form-field textarea {
+  background: rgba(26, 35, 50, 0.5);
+  border-color: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.cron-form-field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Checkbox field */
+.cron-form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+}
+.cron-form-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #5bb5de;
+}
+
+/* Form section separator */
+.cron-form-separator {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.06);
+  margin: 12px 0;
+  grid-column: 1 / -1;
+}
+:root:not([data-theme="light"]) .cron-form-separator {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Section subtitle inside form */
+.cron-form-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 4px;
+}
+:root:not([data-theme="light"]) .cron-form-section-title {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ===========================================
+   Main — Glass Job Cards (like skills cards)
+   =========================================== */
+.cron-glass-section {
+  margin-bottom: 20px;
+}
+
+.cron-glass-section__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+:root:not([data-theme="light"]) .cron-glass-section__title {
+  color: var(--text-strong, #e0e0e0);
+}
+
+.cron-glass-section__title-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cron-glass-section__title-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cron-glass-section__desc {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 14px;
+}
+
+/* Job card grid */
+.cron-glass-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+@media (max-width: 1100px) {
+  .cron-glass-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Individual job card */
+.cron-glass-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  transition:
+    box-shadow 200ms,
+    border-color 200ms,
+    transform 200ms;
+  cursor: pointer;
+}
+.cron-glass-card:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 16px rgba(91, 181, 222, 0.12);
+  transform: translateY(-1px);
+}
+.cron-glass-card--selected {
+  border-color: #e8872b;
+  box-shadow: 0 4px 16px rgba(232, 135, 43, 0.15);
+}
+:root:not([data-theme="light"]) .cron-glass-card {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+:root:not([data-theme="light"]) .cron-glass-card:hover {
+  background: rgba(26, 35, 50, 0.55);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+:root:not([data-theme="light"]) .cron-glass-card--selected {
+  border-color: #e8872b;
+}
+
+.cron-glass-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.cron-glass-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+
+.cron-glass-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cron-glass-card__name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cron-glass-card__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+}
+:root:not([data-theme="light"]) .cron-glass-card__name {
+  color: var(--text-strong, #e0e0e0);
+}
+
+.cron-glass-card__badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.cron-glass-card__badge--enabled {
+  background: rgba(52, 211, 153, 0.12);
+  color: #10b981;
+}
+.cron-glass-card__badge--disabled {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.cron-glass-card__desc {
+  font-size: 12px;
+  color: #777;
+  margin-top: 3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.cron-glass-card__meta {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: #999;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.cron-glass-card__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.cron-glass-card__meta-item svg {
+  width: 12px;
+  height: 12px;
+}
+
+.cron-glass-card__state {
+  font-size: 11px;
+  color: #86bed6;
+  margin-top: 4px;
+}
+
+.cron-glass-card__divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.06);
+  margin: 8px 0 6px;
+}
+:root:not([data-theme="light"]) .cron-glass-card__divider {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cron-glass-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+/* ===========================================
+   Main — Run History
+   =========================================== */
+.cron-glass-history {
+  margin-top: 20px;
+}
+
+.cron-glass-history__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+:root:not([data-theme="light"]) .cron-glass-history__title {
+  color: var(--text-strong, #e0e0e0);
+}
+
+.cron-glass-history__desc {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.cron-glass-history__empty {
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+  padding: 20px;
+}
+
+.cron-glass-run {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(173, 216, 240, 0.2);
+  margin-bottom: 8px;
+  transition: background 150ms;
+}
+.cron-glass-run:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+:root:not([data-theme="light"]) .cron-glass-run {
+  background: rgba(26, 35, 50, 0.3);
+  border-color: rgba(255, 255, 255, 0.04);
+}
+:root:not([data-theme="light"]) .cron-glass-run:hover {
+  background: rgba(26, 35, 50, 0.45);
+}
+
+.cron-glass-run__status {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.cron-glass-run__status--ok {
+  background: rgba(52, 211, 153, 0.15);
+  color: #10b981;
+}
+.cron-glass-run__status--error {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+.cron-glass-run__status--skipped {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+.cron-glass-run__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cron-glass-run__summary {
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+}
+:root:not([data-theme="light"]) .cron-glass-run__summary {
+  color: var(--text, #ccc);
+}
+
+.cron-glass-run__error {
+  font-size: 11px;
+  color: #ef4444;
+  margin-top: 3px;
+}
+
+.cron-glass-run__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.cron-glass-run__time {
+  font-size: 11px;
+  color: #999;
+}
+
+.cron-glass-run__duration {
+  font-size: 10px;
+  color: #bbb;
+}
+
+/* ===========================================
+   Pill Buttons (reuse skills style naming)
+   =========================================== */
+.cron-pill-btn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--text);
+  white-space: nowrap;
+  transition:
+    border-color 150ms,
+    background 150ms,
+    color 150ms,
+    box-shadow 150ms;
+  user-select: none;
+}
+.cron-pill-btn:hover {
+  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.55);
+}
+.cron-pill-btn:disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+:root:not([data-theme="light"]) .cron-pill-btn {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+:root:not([data-theme="light"]) .cron-pill-btn:hover {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cron-pill-btn--primary {
+  background: linear-gradient(135deg, #e8872b 0%, #f5a030 100%);
+  color: #fff;
+  border-color: transparent;
+  font-weight: 600;
+}
+.cron-pill-btn--primary:hover {
+  background: linear-gradient(135deg, #d4782a 0%, #e8872b 100%);
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(232, 135, 43, 0.25);
+}
+
+.cron-pill-btn--accent {
+  border-color: #5bb5de;
+  color: #3a8fc2;
+  background: rgba(91, 181, 222, 0.06);
+}
+.cron-pill-btn--accent:hover {
+  background: rgba(91, 181, 222, 0.12);
+  box-shadow: 0 2px 8px rgba(91, 181, 222, 0.1);
+}
+
+.cron-pill-btn--danger {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.04);
+}
+.cron-pill-btn--danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+.cron-pill-btn--sm {
+  height: 24px;
+  padding: 0 8px;
+  font-size: 11px;
+  border-radius: 6px;
+}
+
+/* ===========================================
+   Responsive — Collapse sidebar on small screens
+   =========================================== */
+@media (max-width: 900px) {
+  .cron-layout {
+    flex-direction: column;
+  }
+  .cron-sidebar {
+    width: 100%;
+    min-width: unset;
+    max-height: 300px;
+  }
+}

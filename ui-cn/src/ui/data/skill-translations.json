@@ -1,0 +1,168 @@
+{
+  "_version": 2,
+  "_updated": "2026-03-12",
+  "1password": { "nameZh": "密码管理", "descZh": "安全管理和自动填充密码" },
+  "a-stock-analysis": {
+    "nameZh": "A股分析",
+    "descZh": "A股实时行情、分时量能分析、主力动向和持仓管理"
+  },
+  "agent-self-reflection": {
+    "nameZh": "自我反思",
+    "descZh": "定期分析近期会话，总结经验教训并写入工作区"
+  },
+  "aminer-data-search": {
+    "nameZh": "学术搜索",
+    "descZh": "使用 AMiner API 进行学术数据查询与分析"
+  },
+  "apple-notes": { "nameZh": "苹果备忘录", "descZh": "读写苹果备忘录" },
+  "apple-reminders": { "nameZh": "苹果提醒", "descZh": "管理苹果提醒事项" },
+  "architecture-designer": { "nameZh": "架构设计", "descZh": "系统架构设计、评审和决策记录" },
+  "autoglm-browser-agent": {
+    "nameZh": "智谱浏览器",
+    "descZh": "使用 AutoGLM 浏览器代理自动操作网页"
+  },
+  "autoglm-deepresearch": {
+    "nameZh": "智谱深度研究",
+    "descZh": "对用户课题进行深度研究和调研，输出结构化报告"
+  },
+  "autoglm-generate-image": {
+    "nameZh": "智谱文生图",
+    "descZh": "使用 AutoGLM 根据文字描述生成图片"
+  },
+  "autoglm-open-link": {
+    "nameZh": "智谱网页提取",
+    "descZh": "使用 AutoGLM 打开网页并提取正文内容"
+  },
+  "autoglm-search-image": {
+    "nameZh": "智谱图片搜索",
+    "descZh": "使用 AutoGLM 根据关键词搜索相关图片"
+  },
+  "autoglm-websearch": { "nameZh": "智谱网页搜索", "descZh": "使用 AutoGLM 进行网络信息搜索" },
+  "automation-workflows": {
+    "nameZh": "自动化工作流",
+    "descZh": "设计和实施自动化工作流，节省重复操作时间"
+  },
+  "backtest-expert": { "nameZh": "量化回测", "descZh": "交易策略回测、参数鲁棒性测试和滑点建模" },
+  "bear-notes": { "nameZh": "Bear笔记", "descZh": "通过 grizzly CLI 创建、搜索和管理 Bear 笔记" },
+  "blog-writer": { "nameZh": "博客写作", "descZh": "撰写博客文章和长篇内容，匹配作者风格" },
+  "blogwatcher": { "nameZh": "博客监控", "descZh": "监控博客和 RSS/Atom 订阅源的更新" },
+  "blucli": { "nameZh": "蓝牙音箱", "descZh": "BluOS CLI 用于发现、播放、分组和音量控制" },
+  "bluebubbles": { "nameZh": "蓝泡泡消息", "descZh": "通过 BlueBubbles 发送和管理 iMessage 消息" },
+  "brainstorming": { "nameZh": "头脑风暴", "descZh": "在创建功能或修改行为前，探索需求和设计方案" },
+  "camsnap": { "nameZh": "摄像头拍照", "descZh": "使用 RTSP/ONVIF 摄像头拍摄照片或视频片段" },
+  "canvas": { "nameZh": "画布展示", "descZh": "在画布上展示图表、代码等内容" },
+  "clawhub": { "nameZh": "技能商店", "descZh": "搜索、安装、更新和发布 Agent 技能" },
+  "clawdefender": {
+    "nameZh": "安全防护",
+    "descZh": "检测提示注入、命令注入等攻击，保护 AI 代理安全"
+  },
+  "Code": { "nameZh": "代码编辑", "descZh": "代码编写和编辑辅助" },
+  "coding-agent": { "nameZh": "代码助手", "descZh": "将编程任务委托给后台 AI 代理执行" },
+  "content-strategy": { "nameZh": "内容策略", "descZh": "制定内容营销策略、内容日历和分发方案" },
+  "copywriting": { "nameZh": "文案写作", "descZh": "撰写落地页、邮件、广告等营销文案" },
+  "debug-pro": { "nameZh": "调试专家", "descZh": "高级代码调试和问题排查" },
+  "discord": { "nameZh": "Discord", "descZh": "管理 Discord 服务器和消息" },
+  "eightctl": { "nameZh": "智能床垫", "descZh": "控制 Eight Sleep 智能床垫（温度、闹钟、状态）" },
+  "executing-plans": { "nameZh": "执行计划", "descZh": "在独立会话中按检查点执行实施计划" },
+  "feishu-chat-history": { "nameZh": "飞书聊天记录", "descZh": "查看和搜索飞书聊天历史记录" },
+  "feishu-cron-reminder": { "nameZh": "飞书定时提醒", "descZh": "设置飞书定时提醒和通知" },
+  "feishu-doc": { "nameZh": "飞书文档", "descZh": "获取飞书 Wiki、文档、表格和多维表格内容" },
+  "feishu-drive": { "nameZh": "飞书云空间", "descZh": "飞书云空间文件管理（上传/下载/搜索/移动）" },
+  "feishu-perm": { "nameZh": "飞书权限", "descZh": "管理飞书文档和云空间权限" },
+  "feishu-screenshot": { "nameZh": "飞书截图", "descZh": "飞书截图功能" },
+  "feishu-send-file": { "nameZh": "飞书发文件", "descZh": "通过飞书发送文件" },
+  "FFmpeg Video Editor": {
+    "nameZh": "视频编辑",
+    "descZh": "自然语言生成 FFmpeg 命令进行视频剪辑和转换"
+  },
+  "find-skills": { "nameZh": "技能发现", "descZh": "帮助发现和安装适合需求的 Agent 技能" },
+  "frontend-design": { "nameZh": "前端设计", "descZh": "创建高质量生产级前端界面和组件" },
+  "gemini": { "nameZh": "Gemini AI", "descZh": "使用 Gemini CLI 进行问答、摘要和内容生成" },
+  "gh-issues": {
+    "nameZh": "GitHub Issues",
+    "descZh": "自动修复 GitHub Issues，并行子代理实现修复并提交 PR"
+  },
+  "gifgrep": { "nameZh": "GIF 搜索", "descZh": "搜索 GIF 图片、下载结果并提取静态帧" },
+  "git-essentials": { "nameZh": "Git 基础", "descZh": "Git 版本控制、分支管理和协作" },
+  "github": { "nameZh": "GitHub", "descZh": "管理 GitHub 仓库、Issue 和 PR" },
+  "gog": { "nameZh": "Google 办公", "descZh": "管理 Google Workspace（Gmail、日历、云端硬盘等）" },
+  "goplaces": { "nameZh": "地图导航", "descZh": "通过 Google Places API 搜索地点、查看详情和评论" },
+  "healthcheck": { "nameZh": "安全加固", "descZh": "主机安全加固和容错配置检查" },
+  "himalaya": {
+    "nameZh": "邮件管理",
+    "descZh": "通过 IMAP/SMTP 在终端管理邮件（收发、搜索、整理）"
+  },
+  "imsg": { "nameZh": "iMessage", "descZh": "iMessage/短信的收发、聊天记录查看和监听" },
+  "interview-designer": { "nameZh": "面试设计", "descZh": "分析简历并设计结构化面试策略" },
+  "Market Research": { "nameZh": "市场调研", "descZh": "市场规模评估、竞争分析和机会验证" },
+  "mcporter": {
+    "nameZh": "MCP 工具",
+    "descZh": "管理和调用 MCP 服务器/工具（HTTP 或 stdio 模式）"
+  },
+  "Memory": { "nameZh": "记忆管理", "descZh": "管理和调用 AI 记忆存储" },
+  "model-usage": { "nameZh": "模型用量", "descZh": "统计和分析 AI 模型的 Token 使用量" },
+  "nano-banana-pro": { "nameZh": "AI 图片生成Pro", "descZh": "使用 Gemini 3 Pro 生成或编辑图片" },
+  "nano-pdf": { "nameZh": "PDF 工具", "descZh": "使用自然语言指令编辑 PDF 文档" },
+  "notion": { "nameZh": "Notion 笔记", "descZh": "管理 Notion 笔记和数据库" },
+  "obsidian": { "nameZh": "Obsidian 笔记", "descZh": "管理 Obsidian 知识库" },
+  "obsidian-ontology-sync": {
+    "nameZh": "知识图谱同步",
+    "descZh": "Obsidian 笔记与结构化知识图谱双向同步"
+  },
+  "openai-image-gen": { "nameZh": "AI 图片生成", "descZh": "使用 OpenAI 生成图片" },
+  "openai-whisper": { "nameZh": "语音转文字", "descZh": "使用 Whisper 将音频转换为文字" },
+  "openai-whisper-api": { "nameZh": "语音转文字API", "descZh": "通过 OpenAI API 将音频转换为文字" },
+  "opencode-controller": { "nameZh": "OpenCode 控制", "descZh": "通过斜杠命令控制和操作 OpenCode" },
+  "openhue": { "nameZh": "智能灯光", "descZh": "控制飞利浦 Hue 智能灯光" },
+  "oracle": { "nameZh": "Oracle CLI", "descZh": "使用 oracle CLI 进行提示词和文件捆绑的最佳实践" },
+  "ordercli": { "nameZh": "订单查询", "descZh": "查看历史订单和实时追踪外卖配送状态" },
+  "peekaboo": { "nameZh": "屏幕截图", "descZh": "捕获和分析 macOS 屏幕内容" },
+  "research-paper-writer": { "nameZh": "论文写作", "descZh": "按 IEEE/ACM 格式撰写学术研究论文" },
+  "sag": { "nameZh": "语音合成", "descZh": "使用 ElevenLabs 进行文字转语音" },
+  "security-auditor": {
+    "nameZh": "安全审计",
+    "descZh": "代码安全审查、OWASP Top 10 审计和漏洞检测"
+  },
+  "SEO (Site Audit + Content Writer + Competitor Analysis)": {
+    "nameZh": "SEO 优化",
+    "descZh": "网站审计、内容优化和竞争对手分析"
+  },
+  "Self-Improving Agent (With Self-Reflection)": {
+    "nameZh": "自我进化",
+    "descZh": "AI 代理自我改进和反思能力"
+  },
+  "self-reflection": { "nameZh": "会话反思", "descZh": "定期分析近期会话，总结可执行的改进建议" },
+  "seo-content-writer": { "nameZh": "SEO 内容写作", "descZh": "撰写 SEO 优化的博客文章和内容" },
+  "session-logs": { "nameZh": "会话日志", "descZh": "搜索和分析历史对话记录" },
+  "sherpa-onnx-tts": { "nameZh": "本地语音合成", "descZh": "本地离线文字转语音（无需云服务）" },
+  "skill-creator": { "nameZh": "技能创建器", "descZh": "创建或更新 AgentSkills 技能包" },
+  "skill-vetter": { "nameZh": "技能审核", "descZh": "安全审查技能包，检测红旗和可疑模式" },
+  "slack": { "nameZh": "Slack", "descZh": "发送和管理 Slack 消息" },
+  "Social Media Scheduler": { "nameZh": "社媒排期", "descZh": "规划和管理多平台社交媒体内容发布" },
+  "social-content": {
+    "nameZh": "社媒内容",
+    "descZh": "创建和优化 LinkedIn、Twitter 等平台的社交内容"
+  },
+  "songsee": { "nameZh": "音乐识别", "descZh": "从音频生成频谱图和特征面板可视化" },
+  "sonoscli": { "nameZh": "音箱控制", "descZh": "控制 Sonos 音箱（发现、播放、音量、分组）" },
+  "spotify-player": { "nameZh": "Spotify 播放器", "descZh": "使用 spotify_player 播放和管理音乐" },
+  "supabase-postgres-best-practices": {
+    "nameZh": "Postgres 优化",
+    "descZh": "Postgres 性能优化和 Supabase 最佳实践"
+  },
+  "summarize": { "nameZh": "内容总结", "descZh": "总结长文章和文档要点" },
+  "test-runner": { "nameZh": "测试运行", "descZh": "运行和管理测试用例" },
+  "things-mac": {
+    "nameZh": "Things 待办",
+    "descZh": "通过 Things CLI 管理 Things 3 待办事项和项目"
+  },
+  "tmux": { "nameZh": "终端会话", "descZh": "远程控制 tmux 终端会话（发送按键、读取输出）" },
+  "trello": { "nameZh": "Trello 看板", "descZh": "通过 REST API 管理 Trello 看板、列表和卡片" },
+  "ui-ux-pro-max": { "nameZh": "UI/UX 设计", "descZh": "UI/UX 设计指导和高质量界面实现" },
+  "video-frames": { "nameZh": "视频帧提取", "descZh": "从视频中提取关键帧图片" },
+  "voice-call": { "nameZh": "语音通话", "descZh": "通过语音通话插件发起语音通话" },
+  "wacli": { "nameZh": "WhatsApp", "descZh": "通过 wacli CLI 发送 WhatsApp 消息和搜索聊天记录" },
+  "weather": { "nameZh": "天气查询", "descZh": "查询全球各地实时天气和未来预报" },
+  "writing-plans": { "nameZh": "编写计划", "descZh": "在写代码前制定多步骤任务的实施计划" },
+  "xurl": { "nameZh": "X/Twitter", "descZh": "通过 X API 发推、回复、搜索、管理关注和私信" }
+}

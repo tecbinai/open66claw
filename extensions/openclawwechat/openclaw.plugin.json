@@ -1,0 +1,9 @@
+{
+  "id": "openclawwechat",
+  "channels": ["openclawwechat"],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

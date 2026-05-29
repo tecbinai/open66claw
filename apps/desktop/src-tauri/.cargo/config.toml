@@ -1,0 +1,3 @@
+# Cross-compilation linker config is managed per-environment.
+# macOS/Linux cross-compiling to Windows: set CARGO_TARGET_X86_64_PC_WINDOWS_MSVC_LINKER=lld-link-wrapper
+# Windows native build: MSVC linker is auto-detected, no override needed.

@@ -1,0 +1,22 @@
+{
+  "name": "clawhub-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "ClawHub skills scraper → filter → translate pipeline",
+  "scripts": {
+    "1-list": "node stages/1-list.js",
+    "2-download": "node stages/2-download.js",
+    "3-filter": "node stages/3-filter.js",
+    "4-prepare": "node stages/4-prepare.js",
+    "5-assemble": "node stages/5-assemble.js",
+    "6-stats": "node stages/6-stats.js",
+    "retry": "node stages/2-download.js --retry",
+    "reset-filter": "node stages/3-filter.js --reset",
+    "pipeline": "bash scripts/run-pipeline.sh"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "better-sqlite3": "^11.7.0",
+    "dotenv": "^16.4.7"
+  }
+}

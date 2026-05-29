@@ -1,0 +1,155 @@
+/* Confirm Modal — 风格化确认弹窗样式 */
+/* 使用项目 CSS 变量，自动适配 dark/light 主题 */
+
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: confirm-modal-fade-in 0.2s ease-out;
+}
+
+.confirm-modal-overlay.confirm-modal-closing {
+  animation: confirm-modal-fade-out 0.15s ease-in forwards;
+}
+
+@keyframes confirm-modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes confirm-modal-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.confirm-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.confirm-modal-card {
+  position: relative;
+  background: var(--surface, #1a1a2e);
+  border-radius: 16px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  max-width: 400px;
+  width: 85%;
+  overflow: hidden;
+  animation: confirm-modal-slide-up 0.25s ease-out;
+}
+
+.confirm-modal-closing .confirm-modal-card {
+  animation: confirm-modal-slide-down 0.15s ease-in forwards;
+}
+
+@keyframes confirm-modal-slide-up {
+  from {
+    transform: translateY(20px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes confirm-modal-slide-down {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(10px) scale(0.98);
+    opacity: 0;
+  }
+}
+
+.confirm-modal-body {
+  padding: 28px 24px 20px;
+  text-align: center;
+}
+
+.confirm-modal-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.confirm-modal-title {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-strong, #fff);
+  line-height: 1.4;
+}
+
+.confirm-modal-message {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted, rgba(255, 255, 255, 0.55));
+}
+
+.confirm-modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 0 24px 24px;
+  justify-content: center;
+}
+
+.confirm-modal-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+  line-height: 1.2;
+}
+
+.confirm-modal-btn--cancel {
+  background: var(--secondary, rgba(255, 255, 255, 0.08));
+  color: var(--text, rgba(255, 255, 255, 0.8));
+  border-color: var(--border, rgba(255, 255, 255, 0.1));
+}
+
+.confirm-modal-btn--cancel:hover {
+  background: var(--bg-hover, rgba(255, 255, 255, 0.12));
+}
+
+.confirm-modal-btn--confirm {
+  background: var(--accent, #6c8cff);
+  color: #fff;
+  border-color: transparent;
+}
+
+.confirm-modal-btn--confirm:hover {
+  opacity: 0.9;
+  box-shadow: 0 2px 10px rgba(108, 140, 255, 0.3);
+}
+
+/* Danger variant — 使用橙色主题色 */
+.confirm-modal-btn--danger {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #fff;
+}
+
+.confirm-modal-btn--danger:hover {
+  background: linear-gradient(135deg, #ea580c, #c2410c);
+  opacity: 1;
+  box-shadow: 0 2px 10px rgba(249, 115, 22, 0.3);
+}

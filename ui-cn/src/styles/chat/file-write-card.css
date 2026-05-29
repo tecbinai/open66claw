@@ -1,0 +1,152 @@
+/* ─── File Write Card ──────────────────────────────────────────────────────
+ * Compact inline card for file outputs in chat.
+ * Follows the same pattern as image-gen.css for media-gen-progress states.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+.file-write-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-top: 8px;
+  background: var(--card);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  max-width: 480px;
+  transition:
+    border-color 200ms ease-out,
+    box-shadow 200ms ease-out;
+}
+
+.file-write-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Header Row ─────────────────────────────────────────────────────── */
+
+.file-write-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-write-card__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--bg-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.file-write-card__icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.file-write-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-write-card__filename {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-write-card__path {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+  font-family: var(--mono);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-write-card__meta {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ─── Actions ────────────────────────────────────────────────────────── */
+
+.file-write-card__actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.file-write-card__action-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition:
+    background 150ms,
+    color 150ms;
+}
+
+.file-write-card__action-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+}
+
+.file-write-card__action-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ─── Code Preview ───────────────────────────────────────────────────── */
+
+.file-write-card__preview {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: var(--bg-accent);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  max-height: 100px;
+  overflow: hidden;
+  white-space: pre;
+  position: relative;
+}
+
+.file-write-card__preview::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: linear-gradient(transparent, var(--bg-accent));
+  pointer-events: none;
+}
+
+.file-write-card__preview code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ─── Pending State (icon color for shimmer) ─────────────────────────── */
+
+.media-gen-progress__icon--file {
+  color: var(--accent);
+}

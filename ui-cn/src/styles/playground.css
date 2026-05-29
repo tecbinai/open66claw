@@ -1,0 +1,540 @@
+/* ============================================================================
+   Playground 页面样式 - 技能玩法推荐
+   ============================================================================ */
+
+/* --------------------------------------------------------------------------
+   介绍卡片
+   -------------------------------------------------------------------------- */
+.playground-intro-card {
+  background: linear-gradient(135deg, var(--card-bg, #fff) 0%, var(--card-bg-alt, #f8f9fa) 100%);
+}
+
+.playground-intro-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.playground-intro-icon {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.playground-intro-content {
+  flex: 1;
+}
+
+.playground-intro-title {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a2e);
+}
+
+.playground-intro-desc {
+  margin: 0;
+  color: var(--text-secondary, #666);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.playground-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color, #e0e0e0);
+}
+
+.playground-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.playground-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a2e);
+}
+
+.playground-stat-value.playground-stat-available {
+  color: var(--success-color, #0a7f5a);
+}
+
+.playground-stat-value.playground-stat-setup {
+  color: var(--warning-color, #d4a72c);
+}
+
+.playground-stat-label {
+  font-size: 12px;
+  color: var(--text-secondary, #666);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   搜索框
+   -------------------------------------------------------------------------- */
+.playground-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.playground-search__input {
+  width: 100%;
+  padding: 10px 36px 10px 14px;
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--card-bg, #fff);
+  color: var(--text-primary, #1a1a2e);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.playground-search__input:focus {
+  border-color: var(--primary-color, #0066cc);
+}
+
+.playground-search__input::placeholder {
+  color: var(--text-muted, #999);
+}
+
+.playground-search__clear {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-muted, #999);
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+.playground-search__clear:hover {
+  color: var(--text-primary, #1a1a2e);
+}
+
+/* --------------------------------------------------------------------------
+   分类标签栏
+   -------------------------------------------------------------------------- */
+.playground-categories-card {
+  padding: 12px 16px;
+}
+
+.playground-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.playground-category-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 20px;
+  background: var(--card-bg, #fff);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+}
+
+.playground-category-tab:hover {
+  border-color: var(--primary-color, #0066cc);
+  background: var(--primary-bg, #e6f0ff);
+}
+
+.playground-category-tab.active {
+  border-color: var(--primary-color, #0066cc);
+  background: var(--primary-color, #0066cc);
+  color: white;
+}
+
+.playground-category-emoji {
+  font-size: 16px;
+}
+
+.playground-category-label {
+  font-weight: 500;
+}
+
+.playground-category-count {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background: var(--bg-muted, rgba(0, 0, 0, 0.08));
+}
+
+.playground-category-tab.active .playground-category-count {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.playground-category-desc {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--bg-muted, #f5f5f5);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-secondary, #666);
+}
+
+/* --------------------------------------------------------------------------
+   技能卡片网格
+   -------------------------------------------------------------------------- */
+.playground-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.playground-skill-card {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 12px;
+  padding: 16px;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  contain: content;
+  /* Skip rendering for off-screen cards — major paint perf win */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
+}
+
+@media (hover: hover) {
+  .playground-skill-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    will-change: transform;
+  }
+}
+
+.playground-skill-unavailable {
+  opacity: 0.7;
+  background: var(--bg-muted, #f8f9fa);
+}
+
+.playground-skill-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-bottom: 10px;
+}
+
+.playground-skill-emoji {
+  font-size: 24px;
+}
+
+.playground-skill-name {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a2e);
+}
+
+.playground-skill-status {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.playground-skill-available {
+  background: var(--success-bg, #e6f7f1);
+  color: var(--success-color, #0a7f5a);
+}
+
+.playground-skill-needs-setup {
+  background: var(--warning-bg, #fff8e6);
+  color: var(--warning-color, #d4a72c);
+}
+
+.playground-skill-cn-blocked {
+  background: var(--bg-muted, #f0f0f0);
+  color: var(--text-muted, #999);
+  font-size: 10px;
+}
+
+.playground-skill-desc {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: var(--text-secondary, #666);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   示例玩法区域
+   -------------------------------------------------------------------------- */
+.playground-skill-example {
+  background: linear-gradient(135deg, var(--primary-bg, #e6f0ff) 0%, var(--bg-muted, #f5f5f5) 100%);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.playground-example-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-color, #0066cc);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.playground-example-text {
+  font-size: 14px;
+  color: var(--text-primary, #1a1a2e);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.playground-example-clickable {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.playground-example-clickable:hover {
+  color: var(--primary-color, #0066cc);
+  text-decoration: underline;
+}
+
+.playground-example-tips {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-secondary, #666);
+}
+
+/* --------------------------------------------------------------------------
+   缺失依赖提示
+   -------------------------------------------------------------------------- */
+.playground-skill-missing {
+  background: var(--warning-bg, #fff8e6);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.playground-missing-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--warning-color, #d4a72c);
+  margin-bottom: 4px;
+}
+
+.playground-missing-list {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: var(--text-secondary, #666);
+}
+
+.playground-missing-list li {
+  margin: 2px 0;
+}
+
+/* --------------------------------------------------------------------------
+   操作按钮区域
+   -------------------------------------------------------------------------- */
+.playground-skill-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.playground-try-btn,
+.playground-install-btn {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+.playground-try-btn:not(:disabled):hover,
+.playground-install-btn:not(:disabled):hover {
+  transform: scale(1.02);
+}
+
+/* 安装按钮特殊样式 */
+.playground-install-btn {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2, #20d5bc) 100%) !important;
+  border: none !important;
+  color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.playground-install-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+/* 卡片级安装消息 */
+.playground-card-message {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bg-muted, #f5f5f5);
+  color: var(--text-secondary, #666);
+  text-align: center;
+}
+
+/* 加载中的旋转动画 */
+.playground-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: playground-spin 0.8s linear infinite;
+}
+
+@keyframes playground-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   空状态
+   -------------------------------------------------------------------------- */
+.playground-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.playground-empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.playground-empty-text {
+  font-size: 16px;
+  color: var(--text-secondary, #666);
+}
+
+/* --------------------------------------------------------------------------
+   截断提示（全部视图超过上限时）
+   -------------------------------------------------------------------------- */
+.playground-truncation-hint {
+  text-align: center;
+  padding: 16px 0;
+  color: var(--text-muted, #999);
+  font-size: 14px;
+}
+
+.playground-truncation-link {
+  background: none;
+  border: none;
+  color: var(--primary-color, #0066cc);
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.playground-truncation-link:hover {
+  color: var(--primary-dark, #0052a3);
+}
+
+/* --------------------------------------------------------------------------
+   帮助卡片
+   -------------------------------------------------------------------------- */
+.playground-help-card {
+  margin-top: 16px;
+}
+
+.playground-help-summary {
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  color: var(--text-primary, #1a1a2e);
+}
+
+.playground-help-content {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.playground-help-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a2e);
+}
+
+.playground-help-section p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary, #666);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   响应式布局
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .playground-intro-header {
+    flex-direction: column;
+  }
+
+  .playground-intro-icon {
+    font-size: 36px;
+  }
+
+  .playground-intro-title {
+    font-size: 20px;
+  }
+
+  .playground-stats {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .playground-categories {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  .playground-skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   深色模式适配
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .playground-intro-card {
+  background: linear-gradient(135deg, var(--card-bg, #1e1e2e) 0%, var(--card-bg-alt, #252538) 100%);
+}
+
+[data-theme="dark"] .playground-skill-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .playground-skill-example {
+  background: linear-gradient(135deg, rgba(0, 102, 204, 0.15) 0%, var(--bg-muted, #252538) 100%);
+}

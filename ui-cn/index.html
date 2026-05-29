@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>__BRAND_TITLE__</title>
+    <meta name="description" content="__BRAND_DESC__" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+  </head>
+  <body>
+    <div
+      id="__loading__"
+      style="
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+        color: #e0e0e0;
+        margin: 0;
+        overflow: hidden;
+      "
+    >
+      <style>
+        @keyframes __spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes __pulse {
+          0%,
+          100% {
+            opacity: 0.6;
+          }
+          50% {
+            opacity: 1;
+          }
+        }
+        @keyframes __fadeDots {
+          0% {
+            content: "";
+          }
+          25% {
+            content: ".";
+          }
+          50% {
+            content: "..";
+          }
+          75% {
+            content: "...";
+          }
+        }
+      </style>
+      <div
+        id="__spinner__"
+        style="
+          width: 48px;
+          height: 48px;
+          border: 3px solid rgba(74, 108, 247, 0.2);
+          border-top-color: #4a6cf7;
+          border-radius: 50%;
+          animation: __spin 0.8s linear infinite;
+          margin-bottom: 28px;
+        "
+      ></div>
+      <div
+        id="__loading_text__"
+        style="
+          font-size: 15px;
+          color: #8892b0;
+          animation: __pulse 2s ease-in-out infinite;
+          letter-spacing: 0.5px;
+        "
+      >
+        正在启动服务...
+      </div>
+      <div id="__loading_sub__" style="font-size: 12px; color: #4a5568; margin-top: 12px">
+        __BRAND_LOADING__
+      </div>
+    </div>
+    <openclaw-cn-app></openclaw-cn-app>
+    <script src="/loading.js"></script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

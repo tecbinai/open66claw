@@ -1,0 +1,247 @@
+/* Modality Configuration Guide Modal Styles */
+/* 使用项目 base.css 中定义的 CSS 变量，自动适配 dark/light 主题 */
+
+.modality-config-guide-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modality-modal-fade-in 0.2s ease-out;
+  /* Override .modal-overlay background from components.css — this modal uses
+     its own .modal-backdrop child for the overlay to avoid double-layering. */
+  background: transparent;
+}
+
+@keyframes modality-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modality-config-guide-modal .modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modality-guide-content {
+  position: relative;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xl, 0 20px 60px rgba(0, 0, 0, 0.3));
+  max-width: 560px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: auto;
+  animation: modality-modal-slide-up 0.3s ease-out;
+}
+
+@keyframes modality-modal-slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modality-guide-content .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modality-guide-content .modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-strong);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modality-guide-content .title-icon {
+  font-size: 24px;
+}
+
+.modality-guide-content .close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  border-radius: 4px;
+  transition: background-color var(--duration-fast);
+}
+
+.modality-guide-content .close-button:hover {
+  background-color: var(--bg-hover);
+  color: var(--text);
+}
+
+.modality-guide-content .modal-body {
+  padding: 24px;
+}
+
+.modality-guide-content .guide-intro {
+  margin: 0 0 16px 0;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.modality-guide-content .capability-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modality-guide-content .capability-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: var(--bg-accent);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.modality-guide-content .capability-icon {
+  font-size: 24px;
+}
+
+.modality-guide-content .capability-label {
+  font-weight: 500;
+  color: var(--text-strong);
+}
+
+.modality-guide-content .suggestions-section {
+  margin-bottom: 20px;
+}
+
+.modality-guide-content .suggestions-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.modality-guide-content .suggestion-block {
+  margin-bottom: 12px;
+}
+
+.modality-guide-content .suggestion-block:last-child {
+  margin-bottom: 0;
+}
+
+.modality-guide-content .suggestion-block pre {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: "JetBrains Mono", "SF Mono", Monaco, Consolas, "Courier New", monospace;
+}
+
+.modality-guide-content .action-hint {
+  padding: 12px 16px;
+  background-color: var(--accent-subtle);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  border-radius: 8px;
+  margin-bottom: 0;
+}
+
+.modality-guide-content .action-hint p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--accent-hover);
+}
+
+.modality-guide-content .modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.modality-guide-content .button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  border: none;
+}
+
+.modality-guide-content .button-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.modality-guide-content .button-secondary:hover {
+  background-color: var(--bg-hover);
+}
+
+.modality-guide-content .button-primary {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.modality-guide-content .button-primary:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .modality-guide-content {
+    max-width: 95%;
+    border-radius: 8px;
+  }
+
+  .modality-guide-content .modal-header,
+  .modality-guide-content .modal-body,
+  .modality-guide-content .modal-footer {
+    padding: 16px;
+  }
+
+  .modality-guide-content .modal-title {
+    font-size: 16px;
+  }
+
+  .modality-guide-content .capability-icon {
+    font-size: 20px;
+  }
+}

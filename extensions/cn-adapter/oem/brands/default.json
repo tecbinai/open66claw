@@ -1,0 +1,24 @@
+{
+  "id": "openclawcn",
+  "name": "OpenClawCN",
+  "displayName": "OpenClaw 中国版",
+  "version": "0.1.0",
+  "description": "OpenClaw 中国区定制版",
+  "identity": {
+    "oemId": "openclawcn",
+    "identifier": "com.openclawcn.desktop",
+    "apiBaseUrl": ""
+  },
+  "defaults": {
+    "locale": "zh-CN",
+    "mirror": {
+      "npm": "https://registry.npmmirror.com"
+    }
+  },
+  "ui": {
+    "primaryColor": "#1677ff",
+    "logoPath": "assets/logo.png",
+    "productName": "OpenClawCN",
+    "windowTitle": "OpenClawCN"
+  }
+}

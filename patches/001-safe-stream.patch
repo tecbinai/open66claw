@@ -1,0 +1,29 @@
+diff --git a/src/agents/pi-embedded-runner/run/attempt.ts b/src/agents/pi-embedded-runner/run/attempt.ts
+index 467b8e150..67f21fde1 100644
+--- a/src/agents/pi-embedded-runner/run/attempt.ts
++++ b/src/agents/pi-embedded-runner/run/attempt.ts
+@@ -1784,6 +1784,24 @@ export async function runEmbeddedAttempt(
+         } catch (err) {
+           promptError = err;
+           promptErrorSource = "prompt";
++          // CN-PATCH: safe-stream — notify plugins about streaming errors
++          if (hookRunner?.hasHooks("llm_output")) {
++            hookRunner
++              .runLlmOutput(
++                {
++                  runId: params.runId,
++                  sessionId: params.sessionId ?? "",
++                  provider: params.provider,
++                  model: params.modelId,
++                  assistantTexts: [],
++                  error: err instanceof Error ? err.message : String(err),
++                } as Parameters<typeof hookRunner.runLlmOutput>[0] & { error: string },
++                hookCtx,
++              )
++              .catch((hookErr: unknown) => {
++                log.debug(`safe-stream hook notification failed: ${String(hookErr)}`);
++              });
++          }
+         } finally {
+           log.debug(
+             `embedded run prompt end: runId=${params.runId} sessionId=${params.sessionId} durationMs=${Date.now() - promptStartedAt}`,

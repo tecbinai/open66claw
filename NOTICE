@@ -1,0 +1,8 @@
+66Claw is a fork of OpenClaw:
+https://github.com/openclaw/openclaw
+
+The upstream OpenClaw code is licensed under the MIT License. A copy of the
+license is included in this repository as LICENSE.
+
+66Claw-specific changes include the desktop packaging, 66Claw branding,
+Chinese-localized UI, model setup flow, and local desktop integration work.

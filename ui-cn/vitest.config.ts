@@ -1,0 +1,36 @@
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  define: {
+    __OEM_BRAND_PRODUCTNAME__: JSON.stringify("66Claw"),
+    __OEM_BRAND_PRODUCTSHORTNAME__: JSON.stringify("66Claw"),
+    __OEM_BRAND_TAGLINE__: JSON.stringify("Your AI Control Hub"),
+    __OEM_BRAND_WELCOMETITLE__: JSON.stringify(""),
+    __OEM_BRAND_WINDOWTITLE__: JSON.stringify(""),
+    __OEM_BRAND_METADESCRIPTION__: JSON.stringify(""),
+    __OEM_BRAND_LOGOPATH__: JSON.stringify(""),
+    __OEM_BRAND_BANNERPATH__: JSON.stringify(""),
+    __OEM_BRAND_PROMONAME__: JSON.stringify(""),
+    __OEM_BRAND_PROMODESC__: JSON.stringify(""),
+    __OEM_BRAND_PROMOURL__: JSON.stringify(""),
+    __OEM_BRAND_ACTIVATIONPREFIX__: JSON.stringify(""),
+    __OEM_BRAND_ACTIVATIONPREFIXERROR__: JSON.stringify(""),
+    __OEM_BRAND_ACTIVATIONPLACEHOLDER__: JSON.stringify(""),
+    __OEM_BRAND_ACTIVATIONDIALOGTEXT__: JSON.stringify(""),
+    __OEM_BRAND_ACTIVATIONEXAMPLE__: JSON.stringify(""),
+    __OEM_BRAND_ACTIVATIONMASCOTPATH__: JSON.stringify(""),
+    __OEM_BRAND_SHOWPURCHASEENTRY__: JSON.stringify(""),
+    __OEM_BRAND_SHOWTRIALENTRY__: JSON.stringify(""),
+    __OEM_BRAND_SHOWADAPTATIONNOTICE__: JSON.stringify(""),
+    __OEM_BRAND_SHOWSUPPORTQRCODE__: JSON.stringify(""),
+    __OEM_BRAND_BATCHMIRRORBADGE__: JSON.stringify(""),
+    __OEM_BRAND_SKILLMIRRORHINT__: JSON.stringify(""),
+    __OEM_BRAND_SKILLEXCLUSIVETITLE__: JSON.stringify(""),
+    __OEM_BRAND_FREEMODELSEYEBROW__: JSON.stringify(""),
+  },
+  test: {
+    include: ["src/**/*.test.ts"],
+    exclude: ["src/**/*.browser.test.ts"],
+    environment: "jsdom",
+  },
+});

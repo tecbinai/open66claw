@@ -1,0 +1,2691 @@
+/* ===========================================
+   Skills Page - Glassmorphism Design
+   Aligned with Chat page visual language
+   =========================================== */
+
+/* ---- Page Layout ---- */
+.skills-page {
+  contain: layout style;
+}
+
+/* Hide shared page header on skills page */
+.content--skills .content-header {
+  display: none;
+}
+
+/* Match ch-layout pattern: zero padding, content handles its own spacing */
+.content.content--skills {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+/* Background — match channels page */
+:root[data-theme="light"] .content.content--skills {
+  background-image: var(--cn-page-bg-image);
+  background-position: var(--cn-page-bg-position);
+  background-repeat: var(--cn-page-bg-repeat);
+  background-size: var(--cn-page-bg-size);
+  background-color: var(--cn-page-bg-color);
+}
+
+:root:not([data-theme="light"]) .content.content--skills {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 10%, rgba(91, 181, 222, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(91, 181, 222, 0.04) 0%, transparent 60%);
+}
+
+/* Wrapper — matches agents-wrapper + agents-layout pattern */
+.skills-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  padding: 24px;
+  overflow: hidden;
+}
+
+/* ===========================================
+   Tab Bar — Figma style (24px/18px)
+   =========================================== */
+.skills-glass-tabbar {
+  display: flex;
+  align-items: baseline;
+  gap: 30px;
+  padding: 0;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.skills-glass-tabs {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 50px;
+  position: relative;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.75) 100%
+  );
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  box-shadow:
+    0 4px 20px rgba(91, 181, 222, 0.1),
+    0 2px 6px rgba(91, 181, 222, 0.06),
+    inset 0 1px 3px rgba(255, 255, 255, 0.7),
+    inset 0 -1px 2px rgba(255, 255, 255, 0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+}
+:root:not([data-theme="light"]) .skills-glass-tabs {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.5) 0%, rgba(26, 35, 50, 0.7) 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.skills-glass-tab {
+  all: unset;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  color: #666;
+  padding: 6px 20px;
+  border-radius: 50px;
+  transition:
+    color 200ms,
+    font-size 200ms,
+    background 200ms,
+    box-shadow 200ms;
+  user-select: none;
+}
+.skills-glass-tab:hover {
+  color: #e8872b;
+  background: rgba(232, 135, 43, 0.06);
+}
+.skills-glass-tab--active {
+  font-size: 18px;
+  font-weight: 800;
+  color: #e8872b;
+  background: rgba(232, 135, 43, 0.12);
+  box-shadow: 0 1px 4px rgba(232, 135, 43, 0.15);
+  position: relative;
+}
+/* Dark theme overrides */
+:root:not([data-theme="light"]) .skills-glass-tab {
+  color: rgba(255, 255, 255, 0.5);
+}
+:root:not([data-theme="light"]) .skills-glass-tab:hover {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+}
+:root:not([data-theme="light"]) .skills-glass-tab--active {
+  color: #f5a030;
+  background: rgba(245, 160, 48, 0.12);
+  box-shadow: 0 1px 4px rgba(245, 160, 48, 0.15);
+}
+
+/* ===========================================
+   Two-column Layout — Sidebar + Main
+   =========================================== */
+.skills-layout {
+  display: grid;
+  grid-template-columns: 380px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 24px;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Sidebar — independent card matching ch-sidebar */
+.skills-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 6px 30px rgba(91, 181, 222, 0.1),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6);
+  scrollbar-width: thin;
+}
+:root:not([data-theme="light"]) .skills-sidebar {
+  background: rgba(12, 16, 22, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 6px 30px rgba(0, 0, 0, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Main area — independent card matching ch-main */
+.skills-main {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 6px 30px rgba(91, 181, 222, 0.1),
+    inset 0 2px 0 rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+:root:not([data-theme="light"]) .skills-main {
+  background: rgba(12, 16, 22, 0.45);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 6px 30px rgba(0, 0, 0, 0.15),
+    inset 0 2px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Scrollable cards area */
+.skills-main__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px 20px;
+}
+
+/* Stats dashboard — 2+1+btn grid (matching Figma layout) */
+.skills-sidebar__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.skills-sidebar__stat-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 8px rgba(91, 181, 222, 0.06);
+  border: 1px solid rgba(173, 216, 240, 0.35);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+/* Illustration (3D-style SVG — matching Figma 3D orange illustrations) */
+.skills-sidebar__stat-illust {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+.skills-sidebar__stat-illust svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 6px rgba(232, 135, 43, 0.25));
+}
+/* Text group (num + label) */
+.skills-sidebar__stat-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+:root:not([data-theme="light"]) .skills-sidebar__stat-card {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.skills-sidebar__stat-card--core {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(224, 240, 255, 0.4) 100%);
+}
+.skills-sidebar__stat-card--ready {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(232, 247, 240, 0.4) 100%);
+}
+.skills-sidebar__stat-card--config {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 245, 230, 0.4) 100%);
+}
+:root:not([data-theme="light"]) .skills-sidebar__stat-card--core {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(108, 140, 255, 0.12) 100%);
+}
+:root:not([data-theme="light"]) .skills-sidebar__stat-card--ready {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(52, 211, 153, 0.12) 100%);
+}
+:root:not([data-theme="light"]) .skills-sidebar__stat-card--config {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.55) 0%, rgba(254, 177, 66, 0.12) 100%);
+}
+
+.skills-sidebar__stat-num {
+  font-size: 36px;
+  font-weight: 800;
+  color: #444;
+  line-height: 1.1;
+}
+.skills-sidebar__stat-card--core .skills-sidebar__stat-num {
+  color: #333;
+}
+.skills-sidebar__stat-card--ready .skills-sidebar__stat-num {
+  color: #333;
+}
+.skills-sidebar__stat-card--config .skills-sidebar__stat-num {
+  color: #333;
+}
+:root:not([data-theme="light"]) .skills-sidebar__stat-num {
+  color: #e0e0e0;
+}
+
+.skills-sidebar__stat-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #86bed6;
+}
+.skills-sidebar__stat-card--core .skills-sidebar__stat-label {
+  font-weight: 700;
+}
+
+.skills-sidebar__stat-card--config {
+  /* No flex-wrap needed — import btn is now outside the card */
+}
+/* Import button — inline pill inside config card row */
+.skills-sidebar__import-btn {
+  all: unset;
+  background: linear-gradient(135deg, #feb142 0%, #f5a030 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(232, 135, 43, 0.2);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  gap: 5px;
+  transition:
+    transform 150ms,
+    box-shadow 150ms;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.skills-sidebar__import-btn:hover {
+  background: linear-gradient(135deg, #f5a030 0%, #e8872b 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(232, 135, 43, 0.35);
+}
+:root:not([data-theme="light"]) .skills-sidebar__import-btn {
+  background: linear-gradient(135deg, #e8872b 0%, #d4782a 100%);
+}
+:root:not([data-theme="light"]) .skills-sidebar__import-btn:hover {
+  background: linear-gradient(135deg, #f5a030 0%, #e8872b 100%);
+}
+
+/* Sidebar search */
+.skills-sidebar__search {
+  position: relative;
+}
+.skills-sidebar__search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+  pointer-events: none;
+}
+.skills-sidebar__search-input {
+  width: 100%;
+  padding: 10px 14px 10px 40px;
+  font-size: 13px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 38px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition:
+    border-color 200ms,
+    box-shadow 200ms;
+  box-sizing: border-box;
+}
+.skills-sidebar__search-input:focus {
+  border-color: #5bb5de;
+  box-shadow: 0 0 0 3px rgba(91, 181, 222, 0.15);
+}
+:root:not([data-theme="light"]) .skills-sidebar__search-input {
+  background: rgba(26, 35, 50, 0.5);
+  border-color: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.skills-sidebar__search-count {
+  font-size: 11px;
+  color: #7ab8d8;
+  padding-left: 4px;
+  min-height: 15px;
+}
+
+/* Sidebar tier filter tabs */
+.skills-sidebar__tier-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+:root:not([data-theme="light"]) .skills-sidebar__tier-tabs {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.skills-sidebar__tier-tab {
+  all: unset;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #444;
+  padding: 8px 12px;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 150ms,
+    border-color 150ms;
+  user-select: none;
+}
+.skills-sidebar__tier-tab:hover {
+  color: var(--text);
+}
+.skills-sidebar__tier-tab--active {
+  font-weight: 600;
+  color: #e8872b;
+  border-bottom-color: #e8872b;
+}
+
+/* Sidebar skill list */
+.skills-sidebar__list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.skills-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  border-left: 3px solid #c8e4f4;
+  background: rgba(255, 255, 255, 0.65);
+  transition:
+    background 150ms,
+    border-color 150ms;
+  user-select: none;
+  margin-bottom: 6px;
+}
+.skills-sidebar__item:hover {
+  background: rgba(220, 240, 252, 0.7);
+  border-left-color: #5bb5de;
+}
+:root:not([data-theme="light"]) .skills-sidebar__item {
+  background: rgba(255, 255, 255, 0.04);
+  border-left-color: rgba(91, 181, 222, 0.25);
+}
+:root:not([data-theme="light"]) .skills-sidebar__item:hover {
+  background: rgba(108, 140, 255, 0.08);
+  border-left-color: rgba(91, 181, 222, 0.5);
+}
+.skills-sidebar__item--dragging {
+  opacity: 0.4;
+}
+
+.skills-sidebar__item-drag {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  color: #e6e6e6;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.skills-sidebar__item:hover .skills-sidebar__item-drag {
+  opacity: 0.4;
+}
+
+.skills-sidebar__item-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+/* Colored icon circle (replaces emoji) */
+.skills-color-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.skills-color-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.skills-sidebar__item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skills-sidebar__item-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+:root:not([data-theme="light"]) .skills-sidebar__item-name {
+  color: var(--text-strong);
+}
+
+.skills-sidebar__item-desc {
+  font-size: 12px;
+  font-weight: 350;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skills-sidebar__empty {
+  padding: 24px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+
+/* Main area filter tabs */
+/* Fixed header — tabs + tips, does NOT scroll */
+.skills-main__sticky-header {
+  flex-shrink: 0;
+  padding: 16px 20px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+:root:not([data-theme="light"]) .skills-main__sticky-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.skills-main__filter-tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-bottom: 0;
+}
+:root:not([data-theme="light"]) .skills-main__filter-tabs {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.skills-main__filter-tab {
+  all: unset;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  padding: 8px 4px;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 150ms,
+    border-color 150ms;
+  user-select: none;
+}
+.skills-main__filter-tab:hover {
+  color: var(--text);
+}
+.skills-main__filter-tab--active {
+  font-weight: 600;
+  color: #e8872b;
+  border-bottom-color: #e8872b;
+}
+
+.skills-main__download-all {
+  margin-left: auto;
+  border-bottom: none;
+}
+
+/* Tips line */
+.skills-main__tips {
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+.skills-main__tips svg {
+  flex-shrink: 0;
+}
+
+/* Card meta line (category + author) */
+.skills-glass-card__meta {
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  color: #999;
+  margin-top: 4px;
+}
+
+/* Missing deps line in card */
+.skills-glass-card__missing-line {
+  font-size: 11px;
+  color: #b0b0b0;
+  margin-top: 4px;
+}
+
+/* Card divider line */
+.skills-glass-card__divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.06);
+  margin: 6px 0 4px;
+}
+:root:not([data-theme="light"]) .skills-glass-card__divider {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ===========================================
+   Search Box — Glass pill input
+   =========================================== */
+.skills-glass-search__input {
+  padding: 7px 16px;
+  font-size: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--text);
+  outline: none;
+  transition:
+    border-color 200ms,
+    box-shadow 200ms,
+    background 200ms;
+}
+
+.skills-glass-search__input:focus {
+  border-color: var(--accent, #6c8cff);
+  box-shadow: 0 0 0 3px rgba(108, 140, 255, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+:root:not([data-theme="light"]) .skills-glass-search__input {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+:root:not([data-theme="light"]) .skills-glass-search__input:focus {
+  background: rgba(26, 35, 50, 0.55);
+}
+
+/* Inside tabbar: fill available middle space */
+.skills-glass-search__input--tabbar {
+  flex: 1;
+  min-width: 120px;
+  max-width: 360px;
+}
+
+/* ===========================================
+   SVG Tier Icons — replaces emoji
+   =========================================== */
+.skills-glass-tier__icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.skills-glass-tier__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skills-glass-tier--core > .skills-glass-tier__header .skills-glass-tier__icon,
+.skills-glass-tier--core .skills-glass-tier__icon {
+  color: #f59e0b;
+}
+.skills-glass-tier--ready > .skills-glass-tier__header .skills-glass-tier__icon,
+.skills-glass-tier--ready .skills-glass-tier__icon {
+  color: #34d399;
+}
+.skills-glass-tier--needs-config > .skills-glass-tier__header .skills-glass-tier__icon,
+.skills-glass-tier--needs-config .skills-glass-tier__icon {
+  color: #f97316;
+}
+.skills-glass-tier--incompatible > .skills-glass-tier__header .skills-glass-tier__icon,
+.skills-glass-tier--incompatible .skills-glass-tier__icon {
+  color: #94a3b8;
+}
+
+/* ===========================================
+   Pill Buttons — unified button system
+   =========================================== */
+.skills-pill-btn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--text);
+  white-space: nowrap;
+  transition:
+    border-color 150ms,
+    background 150ms,
+    color 150ms,
+    box-shadow 150ms;
+  user-select: none;
+}
+
+.skills-pill-btn:hover {
+  border-color: var(--border-strong);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.skills-pill-btn:disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+:root:not([data-theme="light"]) .skills-pill-btn {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+:root:not([data-theme="light"]) .skills-pill-btn:hover {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Primary pill: blue background (matching Figma) */
+.skills-pill-btn--primary {
+  background: #5bb5de;
+  color: #fff;
+  border-color: transparent;
+}
+
+.skills-pill-btn--primary:hover {
+  opacity: 0.9;
+  background: #4aa8d3;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(91, 181, 222, 0.25);
+}
+
+:root:not([data-theme="light"]) .skills-pill-btn--primary {
+  background: #5bb5de;
+  border-color: transparent;
+}
+
+/* Accent pill: outline blue (matching Figma) */
+.skills-pill-btn--accent {
+  border-color: #5bb5de;
+  color: #3a8fc2;
+  background: rgba(91, 181, 222, 0.06);
+}
+
+.skills-pill-btn--accent:hover {
+  background: rgba(91, 181, 222, 0.12);
+  box-shadow: 0 2px 8px rgba(91, 181, 222, 0.1);
+}
+
+/* Danger pill: red outline */
+.skills-pill-btn--danger {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.skills-pill-btn--danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+/* Installed row: badge + uninstall button side by side */
+.skills-card-installed-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Small pill: for inline usage */
+.skills-pill-btn--sm {
+  height: 24px;
+  padding: 0 8px;
+  font-size: 11px;
+  border-radius: 6px;
+}
+
+/* Full-width pill: load more button */
+.skills-pill-btn--block {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Installed badge (non-interactive) */
+.skills-installed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 14px;
+  height: 28px;
+  border-radius: 14px;
+  background: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+}
+
+/* Install progress badge (non-interactive) */
+.skills-progress-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0 14px;
+  height: 28px;
+  border-radius: 14px;
+}
+
+.skills-progress-badge--success {
+  background: rgba(52, 211, 153, 0.1);
+  color: #34d399;
+}
+.skills-progress-badge--error {
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
+}
+.skills-progress-badge--working {
+  background: rgba(108, 140, 255, 0.1);
+  color: var(--accent, #6c8cff);
+}
+
+.skills-progress-badge__spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: skillsSpin 0.8s linear infinite;
+  display: inline-block;
+}
+
+/* ===========================================
+   Card icon — SVG fallback for skill cards
+   =========================================== */
+.skills-glass-card__icon-svg {
+  width: 22px;
+  height: 22px;
+}
+
+.skills-glass-card__icon-svg svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ===========================================
+   Market toolbar layout
+   =========================================== */
+.skills-glass-market-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.skills-glass-category-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+  align-items: center;
+}
+
+/* ===========================================
+   Market card inner layout
+   =========================================== */
+.skills-glass-market-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.skills-glass-market-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.skills-glass-market-card__name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.skills-glass-market-card__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.skills-glass-market-card__tier-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.skills-glass-market-card__category {
+  font-size: 12px;
+  color: var(--muted-strong, #6b7d91);
+  margin-top: 3px;
+}
+
+.skills-glass-market-card__subtitle {
+  font-size: 11px;
+  color: var(--muted-strong, #6b7d91);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skills-glass-market-card__desc {
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  flex: 1;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--muted-strong, #a0aec0);
+}
+
+.skills-glass-market-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.skills-glass-market-card__tag {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--glass-bg-subtle, rgba(255,255,255,0.06));
+  color: var(--muted-strong, #8899aa);
+}
+
+.skills-glass-market-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  gap: 8px;
+}
+
+.skills-glass-market-card__stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skills-glass-market-card__stat {
+  font-size: 11px;
+  color: var(--muted-strong, #6b7d91);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* CN blocked info */
+.skills-cnblocked {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.skills-cnblocked__reason {
+  font-size: 11px;
+  color: #f87171;
+  line-height: 1.3;
+  text-align: right;
+  max-width: 220px;
+}
+
+.skills-cnblocked__alt {
+  font-size: 11px;
+  color: #f59e0b;
+  line-height: 1.3;
+}
+
+/* ===========================================
+   Status states (loading/error/empty)
+   =========================================== */
+.skills-glass-status {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted-strong, #6b7d91);
+}
+
+.skills-glass-status__icon {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 16px;
+  color: var(--muted);
+}
+
+.skills-glass-status__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skills-glass-status__icon--spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--accent, #6c8cff);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: skillsSpin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+.skills-glass-status__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.skills-glass-status__desc {
+  font-size: 13px;
+  margin-top: 8px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.skills-glass-status__hint {
+  font-size: 13px;
+  margin-top: 14px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+/* Scroll sentinel bottom text */
+.skills-glass-scroll-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+  gap: 10px;
+  color: var(--muted-strong, #6b7d91);
+  font-size: 12px;
+}
+
+.skills-glass-scroll-status__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--accent, #6c8cff);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: skillsSpin 0.8s linear infinite;
+  display: inline-block;
+}
+
+/* Modal loading spinner */
+.skills-glass-modal__spinner {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--muted-strong, #6b7d91);
+}
+
+.skills-glass-modal__spinner-ring {
+  width: 20px;
+  height: 20px;
+  margin: 0 auto 12px;
+  border: 2px solid var(--accent, #6c8cff);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: skillsSpin 0.8s linear infinite;
+}
+
+/* Modal directory icons (SVG) */
+.skills-glass-modal__dir-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.skills-glass-modal__dir-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skills-glass-modal__dir-icon--skill {
+  color: #f59e0b;
+}
+.skills-glass-modal__dir-icon--back {
+  opacity: 0.7;
+}
+
+/* Modal footer buttons layout */
+.skills-glass-modal__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Empty dir text */
+.skills-glass-modal__empty-text {
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  color: var(--muted-strong, #6b7d91);
+}
+
+/* No skill found text */
+.skills-glass-modal__no-skill {
+  text-align: center;
+  padding: 12px;
+  font-size: 13px;
+  color: var(--muted-strong, #6b7d91);
+}
+
+/* Banner icon (SVG) */
+.skills-glass-banner__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--accent, #6c8cff);
+}
+
+.skills-glass-banner__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Tier section content wrapper */
+.skills-glass-tier__content {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* API key field */
+.skills-glass-card__apikey-label {
+  font-size: 12px;
+  color: var(--muted-strong);
+}
+
+.skills-glass-card__apikey-input {
+  font-size: 13px;
+}
+
+/* ===========================================
+   Tier Container — Glass card with gradient border
+   =========================================== */
+.skills-glass-tier {
+  position: relative;
+  border-radius: 20px;
+  padding: 20px;
+  /* Light theme glass — translucent so bg image shows through */
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.75) 100%
+  );
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  box-shadow:
+    0 6px 30px rgba(91, 181, 222, 0.1),
+    0 2px 8px rgba(91, 181, 222, 0.06),
+    inset 0 2px 4px rgba(255, 255, 255, 0.7),
+    inset 0 -1px 3px rgba(255, 255, 255, 0.3);
+  transition:
+    border-color 200ms,
+    background 200ms,
+    box-shadow 200ms;
+}
+
+/* Gradient border via ::before mask trick */
+.skills-glass-tier::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1.5px;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Dark theme */
+:root:not([data-theme="light"]) .skills-glass-tier {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.5) 0%, rgba(26, 35, 50, 0.7) 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+:root:not([data-theme="light"]) .skills-glass-tier::before {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+/* ---- Tier accents: top color strip via box-shadow ---- */
+.skills-glass-tier--core {
+  box-shadow:
+    0 4px 20px rgba(91, 181, 222, 0.08),
+    inset 0 1px 3px rgba(255, 255, 255, 0.6),
+    inset 0 3px 0 rgba(251, 191, 36, 0.4);
+}
+
+:root:not([data-theme="light"]) .skills-glass-tier--core {
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 3px 0 rgba(251, 191, 36, 0.25);
+}
+
+.skills-glass-tier--ready {
+  box-shadow:
+    0 4px 20px rgba(91, 181, 222, 0.08),
+    inset 0 1px 3px rgba(255, 255, 255, 0.6),
+    inset 0 3px 0 rgba(52, 211, 153, 0.3);
+}
+
+:root:not([data-theme="light"]) .skills-glass-tier--ready {
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 3px 0 rgba(52, 211, 153, 0.2);
+}
+
+.skills-glass-tier--needs-config {
+  box-shadow:
+    0 4px 20px rgba(91, 181, 222, 0.08),
+    inset 0 1px 3px rgba(255, 255, 255, 0.6),
+    inset 0 3px 0 rgba(249, 115, 22, 0.3);
+}
+
+:root:not([data-theme="light"]) .skills-glass-tier--needs-config {
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    inset 0 3px 0 rgba(249, 115, 22, 0.2);
+}
+
+.skills-glass-tier--incompatible {
+  opacity: 0.85;
+}
+
+.skills-glass-tier--incompatible > summary {
+  filter: grayscale(0.2);
+}
+
+.skills-glass-tier--incompatible[open] {
+  opacity: 1;
+}
+
+.skills-glass-tier--incompatible[open] > summary {
+  filter: none;
+}
+
+/* ---- Tier header ---- */
+.skills-glass-tier__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.skills-glass-tier__title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* .skills-glass-tier__icon moved to top (SVG Tier Icons) */
+
+.skills-glass-tier__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.skills-glass-tier__count {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 10px;
+  font-family: var(--mono, monospace);
+}
+
+.skills-glass-tier__count--normal {
+  background: rgba(251, 191, 36, 0.15);
+  color: #f59e0b;
+}
+
+.skills-glass-tier__count--limit {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+.skills-glass-tier__count--plain {
+  font-weight: 400;
+  padding: 0;
+  color: var(--muted);
+}
+
+.skills-glass-tier__desc {
+  font-size: 12px;
+  color: var(--muted-strong, #6b7d91);
+}
+
+/* ---- Alert banners ---- */
+.skills-glass-alert--limit {
+  font-size: 12px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.skills-glass-alert--warning {
+  font-size: 12px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: rgba(251, 191, 36, 0.08);
+  color: #d97706;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+/* ===========================================
+   Skill Card — Glass card
+   =========================================== */
+.skills-glass-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  transition:
+    box-shadow 200ms,
+    border-color 200ms,
+    opacity 200ms,
+    transform 200ms;
+  box-shadow:
+    0 2px 8px rgba(91, 181, 222, 0.06),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.skills-glass-card__clickable {
+  cursor: pointer;
+  flex: 1;
+}
+
+.skills-glass-card:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 4px 16px rgba(91, 181, 222, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+:root:not([data-theme="light"]) .skills-glass-card {
+  background: rgba(26, 35, 50, 0.45);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+:root:not([data-theme="light"]) .skills-glass-card:hover {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(108, 140, 255, 0.2);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.skills-glass-card--draggable {
+  cursor: grab;
+}
+
+.skills-glass-card--draggable:active {
+  cursor: grabbing;
+}
+
+.skills-glass-card--dragging {
+  opacity: 0.35;
+  border-style: dashed;
+  border-color: var(--accent, #6c8cff);
+}
+
+/* ---- Card inner structure ---- */
+.skills-glass-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.skills-glass-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+/* Figma: all card icons use consistent light-blue background */
+.skills-glass-card__icon--core,
+.skills-glass-card__icon--ready,
+.skills-glass-card__icon--needs-config,
+.skills-glass-card__icon--incompatible {
+  background: transparent;
+  border: none;
+}
+
+.skills-glass-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.skills-glass-card__name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.skills-glass-card__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+}
+:root:not([data-theme="light"]) .skills-glass-card__name {
+  color: var(--text-strong);
+}
+
+.skills-glass-card__badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.skills-glass-card__badge--inactive {
+  background: rgba(249, 115, 22, 0.1);
+  color: #f97316;
+}
+
+.skills-glass-card__badge--bundled {
+  background: rgba(251, 191, 36, 0.1);
+  color: #d97706;
+}
+
+.skills-glass-card__badge--cn-blocked {
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
+}
+
+.skills-glass-card__badge--disabled {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.skills-glass-card__desc {
+  font-size: 12px;
+  color: #777;
+  margin-top: 3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.skills-glass-card__missing {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.skills-glass-card__message--success {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ok, #34d399);
+}
+
+.skills-glass-card__message--error {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--danger, #ef4444);
+}
+
+/* ---- Card progress bar ---- */
+.skills-glass-progress {
+  margin-top: 8px;
+}
+
+.skills-glass-progress__info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.skills-glass-progress__message {
+  font-size: 10px;
+  color: var(--muted-strong, #a0aec0);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skills-glass-progress__percent {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-strong);
+  font-family: var(--mono, monospace);
+}
+
+.skills-glass-progress__track {
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--border, rgba(148, 163, 184, 0.2));
+}
+
+.skills-glass-progress__fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 300ms ease;
+  background: linear-gradient(90deg, #60a5fa, #3b82f6);
+}
+
+/* ===========================================
+   Tier Grid
+   =========================================== */
+.skills-glass-tier-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .skills-glass-tier-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .skills-glass-tier-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================================
+   Market Card — Glass card with tier top-border
+   =========================================== */
+.skills-glass-market-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition:
+    box-shadow 200ms,
+    border-color 200ms,
+    transform 200ms,
+    background 200ms;
+  box-shadow:
+    0 2px 8px rgba(91, 181, 222, 0.06),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.skills-glass-market-card:hover {
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 6px 24px rgba(91, 181, 222, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+:root:not([data-theme="light"]) .skills-glass-market-card {
+  background: rgba(26, 35, 50, 0.45);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+:root:not([data-theme="light"]) .skills-glass-market-card:hover {
+  background: rgba(26, 35, 50, 0.55);
+  border-color: rgba(108, 140, 255, 0.2);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.skills-glass-market-card--tier-s {
+  border-top: 2px solid #34d399;
+}
+.skills-glass-market-card--tier-a {
+  border-top: 2px solid #60a5fa;
+}
+.skills-glass-market-card--tier-b {
+  border-top: 2px solid #fbbf24;
+}
+.skills-glass-market-card--tier-default {
+  border-top: 2px solid var(--border);
+}
+
+.skills-glass-market-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.skills-glass-market-card__icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skills-glass-market-card__icon--installed {
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.skills-glass-market-card__icon--default {
+  background: rgba(108, 140, 255, 0.08);
+}
+
+.skills-glass-market-card__tag {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(148, 163, 184, 0.08);
+  color: var(--muted-strong, #6b7d91);
+}
+
+:root:not([data-theme="light"]) .skills-glass-market-card__tag {
+  background: rgba(148, 163, 184, 0.12);
+}
+
+/* ===========================================
+   Market Scroll Container
+   =========================================== */
+.skills-market-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 4px 20px 0;
+  scrollbar-width: thin;
+}
+
+/* ===========================================
+   Market Grid (responsive)
+   =========================================== */
+.skills-glass-market-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 20px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1400px) {
+  .skills-glass-market-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1000px) {
+  .skills-glass-market-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-glass-market-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================================
+   Market Search Box — Glass pill
+   =========================================== */
+.skills-glass-market-search {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition:
+    border-color 200ms,
+    box-shadow 200ms,
+    background 200ms;
+  height: 38px;
+}
+
+.skills-glass-market-search:focus-within {
+  border-color: var(--accent, #6c8cff);
+  box-shadow: 0 0 0 3px rgba(108, 140, 255, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+:root:not([data-theme="light"]) .skills-glass-market-search {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+:root:not([data-theme="light"]) .skills-glass-market-search:focus-within {
+  background: rgba(26, 35, 50, 0.55);
+}
+
+.skills-glass-market-search__icon {
+  font-size: 13px;
+  color: var(--muted-strong, #6b7d91);
+  margin-right: 8px;
+}
+
+.skills-glass-market-search__input {
+  all: unset;
+  flex: 1;
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* ===========================================
+   Category Chips — Glass pills
+   =========================================== */
+.skills-glass-category-chip {
+  all: unset;
+  cursor: pointer;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  white-space: nowrap;
+  border: 1px solid var(--border);
+  background: rgba(148, 163, 184, 0.04);
+  color: var(--muted-strong, #6b7d91);
+  font-weight: 400;
+  transition: all 150ms;
+  user-select: none;
+}
+
+.skills-glass-category-chip:hover {
+  border-color: var(--border-strong);
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.skills-glass-category-chip--active {
+  border-color: var(--accent, #6c8cff);
+  background: rgba(108, 140, 255, 0.12);
+  color: var(--accent, #6c8cff);
+  font-weight: 600;
+}
+
+.skills-glass-category-chip--active:hover {
+  background: rgba(108, 140, 255, 0.18);
+}
+
+/* ===========================================
+   Refresh Button — Glass outline
+   =========================================== */
+.skills-glass-refresh-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 0 16px;
+  height: 38px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  flex-shrink: 0;
+  transition:
+    border-color 200ms,
+    background 200ms,
+    box-shadow 200ms;
+}
+
+.skills-glass-refresh-btn:hover {
+  border-color: var(--accent, #6c8cff);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 8px rgba(108, 140, 255, 0.12);
+}
+
+:root:not([data-theme="light"]) .skills-glass-refresh-btn {
+  background: rgba(26, 35, 50, 0.4);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ===========================================
+   ClawHub Banner — Glass strip
+   =========================================== */
+.skills-glass-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(108, 140, 255, 0.15);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(108, 140, 255, 0.06) 0%, rgba(108, 140, 255, 0.02) 100%);
+  font-size: 12px;
+  color: var(--muted-strong, #6b7d91);
+}
+
+:root:not([data-theme="light"]) .skills-glass-banner {
+  border-color: rgba(108, 140, 255, 0.1);
+}
+
+/* .skills-glass-banner__icon moved to top (SVG icons) */
+
+.skills-glass-banner__link {
+  color: var(--accent, #6c8cff);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* ===========================================
+   Import Modal — Glass overlay
+   =========================================== */
+.skills-glass-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: skillsGlassOverlayIn 0.25s ease;
+}
+
+.skills-glass-modal {
+  width: 92%;
+  max-width: 640px;
+  max-height: 85vh;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: skillsGlassModalIn 0.35s cubic-bezier(0.34, 1.3, 0.64, 1);
+  /* Light glass */
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.9) 100%);
+  box-shadow:
+    0 8px 40px rgba(91, 181, 222, 0.15),
+    inset 0 1px 3px rgba(255, 255, 255, 0.7);
+  position: relative;
+}
+
+.skills-glass-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1.5px;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.2) 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+:root:not([data-theme="light"]) .skills-glass-modal {
+  background: linear-gradient(135deg, rgba(26, 35, 50, 0.85) 0%, rgba(26, 35, 50, 0.95) 100%);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+:root:not([data-theme="light"]) .skills-glass-modal::before {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.skills-glass-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.skills-glass-modal__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.skills-glass-modal__close {
+  all: unset;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--muted-strong, #6b7d91);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background 150ms;
+}
+
+.skills-glass-modal__close:hover {
+  background: var(--bg-hover);
+}
+
+.skills-glass-modal__path-bar {
+  display: flex;
+  gap: 8px;
+  padding: 16px 24px 0;
+  flex-shrink: 0;
+}
+
+.skills-glass-modal__path-input {
+  flex: 1;
+  padding: 8px 14px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--text);
+  outline: none;
+  font-family: var(--mono, monospace);
+}
+
+:root:not([data-theme="light"]) .skills-glass-modal__path-input {
+  background: rgba(26, 35, 50, 0.5);
+}
+
+.skills-glass-modal__drives {
+  display: flex;
+  gap: 6px;
+  padding: 10px 24px 0;
+  flex-wrap: wrap;
+}
+
+.skills-glass-modal__drive-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-family: var(--mono, monospace);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.3);
+  transition:
+    border-color 150ms,
+    background 150ms;
+}
+
+:root:not([data-theme="light"]) .skills-glass-modal__drive-btn {
+  background: rgba(26, 35, 50, 0.4);
+}
+
+.skills-glass-modal__drive-btn:hover {
+  border-color: var(--accent, #6c8cff);
+}
+
+.skills-glass-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 24px;
+  min-height: 200px;
+}
+
+.skills-glass-modal__footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.skills-glass-modal__dir-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 150ms;
+  color: var(--text);
+}
+
+.skills-glass-modal__dir-item:hover {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+:root:not([data-theme="light"]) .skills-glass-modal__dir-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* .skills-glass-modal__dir-icon moved to top (SVG icons) */
+.skills-glass-modal__dir-name {
+  font-size: 13px;
+}
+.skills-glass-modal__dir-name--skill {
+  font-weight: 600;
+}
+
+.skills-glass-modal__dir-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(52, 211, 153, 0.12);
+  color: #34d399;
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.skills-glass-modal__detect {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.skills-glass-modal__detect--skill {
+  background: rgba(52, 211, 153, 0.06);
+  border: 1px solid rgba(52, 211, 153, 0.15);
+}
+
+.skills-glass-modal__detect--multi {
+  background: rgba(251, 191, 36, 0.06);
+  border: 1px solid rgba(251, 191, 36, 0.15);
+}
+
+.skills-glass-modal__detect-icon {
+  font-size: 14px;
+}
+.skills-glass-modal__detect-text {
+  font-size: 13px;
+  color: var(--text);
+  flex: 1;
+}
+
+.skills-glass-modal__success {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  font-size: 13px;
+  color: #34d399;
+  font-weight: 500;
+}
+
+.skills-glass-modal__error {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* ===========================================
+   Empty State — Glass
+   =========================================== */
+.skills-glass-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.skills-glass-empty__icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 16px;
+  color: var(--muted);
+  opacity: 0.4;
+}
+
+.skills-glass-empty__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skills-glass-empty__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+}
+
+.skills-glass-empty__desc {
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 300px;
+}
+
+/* ===========================================
+   Loading Spinner (shared)
+   =========================================== */
+.skill-spinner {
+  width: 16px;
+  height: 16px;
+  animation: skill-spin 1s linear infinite;
+  display: inline-flex;
+}
+
+.skill-spinner svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes skill-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===========================================
+   Drop Zone — Preserved class names for querySelector
+   =========================================== */
+.skills-drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  transition:
+    border-color 250ms,
+    background 250ms,
+    color 250ms;
+}
+
+/* Ready tier: subtle red hint in idle state (remove semantic) */
+.skills-drop-zone--remove {
+  border-color: rgba(239, 68, 68, 0.35);
+  color: rgba(239, 68, 68, 0.6);
+}
+
+.skills-drop-zone__icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.5;
+  transition: opacity 250ms;
+}
+
+.skills-drop-zone__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.skills-drop-active {
+  border-color: var(--accent, #6c8cff);
+  background: rgba(108, 140, 255, 0.05);
+  color: var(--accent, #6c8cff);
+  animation: skills-drop-pulse 1.2s ease-in-out infinite;
+}
+
+.skills-drop-active .skills-drop-zone__icon {
+  opacity: 1;
+}
+
+@keyframes skills-drop-pulse {
+  0%,
+  100% {
+    border-color: var(--accent, #6c8cff);
+    background: rgba(108, 140, 255, 0.05);
+  }
+  50% {
+    border-color: rgba(108, 140, 255, 0.6);
+    background: rgba(108, 140, 255, 0.1);
+  }
+}
+
+.skills-drop-active--core {
+  border-color: #f59e0b;
+  background: rgba(251, 191, 36, 0.06);
+  color: #f59e0b;
+  animation: skills-drop-pulse-core 1.2s ease-in-out infinite;
+}
+
+@keyframes skills-drop-pulse-core {
+  0%,
+  100% {
+    border-color: #f59e0b;
+    background: rgba(251, 191, 36, 0.06);
+  }
+  50% {
+    border-color: rgba(251, 191, 36, 0.6);
+    background: rgba(251, 191, 36, 0.12);
+  }
+}
+
+.skills-drop-active--ready {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  animation: skills-drop-pulse-ready 1.2s ease-in-out infinite;
+}
+
+@keyframes skills-drop-pulse-ready {
+  0%,
+  100% {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+  }
+  50% {
+    border-color: rgba(239, 68, 68, 0.75);
+    background: rgba(239, 68, 68, 0.18);
+  }
+}
+
+/* ===========================================
+   Drag Handle — Preserved class names
+   =========================================== */
+.skills-drag-handle {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 3px;
+  opacity: 0.35;
+  cursor: grab;
+  transition: opacity 200ms;
+  flex-shrink: 0;
+}
+
+.skills-drag-handle:hover {
+  opacity: 0.7;
+}
+
+.skills-drag-handle__line {
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.skills-glass-card--draggable:active .skills-drag-handle {
+  cursor: grabbing;
+  opacity: 0.7;
+}
+
+/* ===========================================
+   Card Footer — Preserved class name
+   =========================================== */
+.skills-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+:root:not([data-theme="light"]) .skills-card-footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ===========================================
+   Animations
+   =========================================== */
+@keyframes skillsGlassOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes skillsGlassModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes skillsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===========================================
+   Scroll Sentinel
+   =========================================== */
+.skills-scroll-sentinel {
+  height: 1px;
+  width: 100%;
+}
+
+/* ===========================================
+   Legacy compat: batch install progress styles
+   (kept for skills-batch-*.ts views)
+   =========================================== */
+.skill-progress-cn-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  margin: -16px -16px 16px -16px;
+}
+.skill-progress-cn-flag {
+  font-size: 18px;
+}
+.skill-progress-cn-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.02em;
+}
+.skill-progress-percent {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 8px 0;
+  font-family: var(--mono);
+}
+.skill-progress-download-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px;
+  background: var(--secondary);
+  border-radius: var(--radius-md);
+  margin: 12px 0;
+}
+.skill-progress-download-size {
+  font-size: 13px;
+  color: var(--text);
+  font-family: var(--mono);
+}
+.skill-progress-download-speed {
+  font-size: 13px;
+  color: var(--ok);
+  font-weight: 500;
+}
+.skill-progress-download-eta {
+  font-size: 13px;
+  color: var(--muted);
+}
+.skill-progress-dependency {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.skill-progress-fill {
+  transition: width 0.3s ease-out;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.skill-progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.skill-progress-card-success .skill-progress-fill::after {
+  display: none;
+}
+.skill-progress-card-error .skill-progress-fill {
+  background: linear-gradient(90deg, var(--err) 0%, var(--err-hover) 100%);
+}
+.skill-progress-card-error .skill-progress-fill::after {
+  display: none;
+}
+.skill-card--installing {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb, 99, 102, 241), 0.1);
+}
+.skill-icon--installing {
+  background: var(--accent-subtle, rgba(99, 102, 241, 0.1));
+  border-color: var(--accent);
+  animation: pulse-icon 2s ease-in-out infinite;
+}
+.skill-icon--installing svg {
+  stroke: var(--accent);
+  animation: skill-spin 1s linear infinite;
+}
+@keyframes pulse-icon {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--accent-rgb, 99, 102, 241), 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(var(--accent-rgb, 99, 102, 241), 0);
+  }
+}
+
+/* ============================================================================
+   Detail modal — skill detail popup
+   ============================================================================ */
+
+.skills-detail-modal {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow:
+    0 8px 40px rgba(91, 181, 222, 0.12),
+    0 2px 12px rgba(0, 0, 0, 0.06),
+    inset 0 1px 3px rgba(255, 255, 255, 0.7);
+  animation: skills-modal-in 200ms ease-out;
+}
+
+:root:not([data-theme="light"]) .skills-detail-modal {
+  background: rgba(26, 35, 50, 0.88);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.35),
+    0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes skills-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.skills-detail-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.skills-detail-modal__hero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.skills-detail-modal__name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-strong, #1a2332);
+  line-height: 1.3;
+}
+
+.skills-detail-modal__source {
+  font-size: 12px;
+  color: var(--muted, #6b7d91);
+  margin-top: 2px;
+}
+
+.skills-detail-modal__category {
+  font-size: 12px;
+  color: var(--muted, #6b7d91);
+  margin-left: 8px;
+}
+
+.skills-detail-modal__close {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--muted, #6b7d91);
+  transition:
+    background 150ms,
+    color 150ms;
+  flex-shrink: 0;
+}
+.skills-detail-modal__close:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text);
+}
+:root:not([data-theme="light"]) .skills-detail-modal__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.skills-detail-modal__desc {
+  font-size: 14px;
+  color: var(--text, #334155);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.skills-detail-modal__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.skills-detail-modal__badges:empty {
+  display: none;
+}
+
+.skills-detail-modal__section {
+  padding: 12px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+:root:not([data-theme="light"]) .skills-detail-modal__section {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.skills-detail-modal__section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-strong, #475569);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
+.skills-detail-modal__apikey {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.skills-detail-modal__apikey .skills-glass-card__apikey-input {
+  flex: 1;
+}
+
+.skills-detail-modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.skills-detail-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+:root:not([data-theme="light"]) .skills-detail-modal__actions {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Attention badge — shows "API 密钥" or "缺失" hint on slim cards */
+.skills-glass-card__badge--attention {
+  background: rgba(251, 191, 36, 0.1);
+  color: #d97706;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+:root:not([data-theme="light"]) .skills-glass-card__badge--attention {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.2);
+}

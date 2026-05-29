@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>66Claw</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; overflow: hidden; }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0f0f1a;
+        font-family: system-ui, -apple-system, "Microsoft YaHei", sans-serif;
+        color: #e0e0e0;
+        user-select: none;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+      @keyframes fadein {
+        from { opacity: 0; transform: translateY(4px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        animation: fadein 0.4s ease;
+      }
+      .logo-wrap {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+      }
+      .logo-wrap img {
+        width: 80px !important;
+        height: 80px !important;
+        max-width: 80px !important;
+        object-fit: contain;
+        border-radius: 16px;
+        display: block;
+      }
+      .logo-emoji {
+        font-size: 48px;
+        line-height: 1;
+      }
+      .spinner-wrap {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .spinner {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2.5px solid rgba(99, 130, 255, 0.15);
+        border-top-color: #6382ff;
+        animation: spin 1s linear infinite;
+      }
+      .app-name {
+        font-size: 22px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 2px;
+        margin-bottom: 6px;
+      }
+      .stage-badge {
+        display: inline-block;
+        padding: 2px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        margin-bottom: 22px;
+        background: rgba(99, 130, 255, 0.12);
+        color: #6382ff;
+        transition: background 0.4s, color 0.4s;
+      }
+      .progress-track {
+        width: 240px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .progress-fill {
+        height: 100%;
+        border-radius: 3px;
+        background: linear-gradient(90deg, #5a6ef5, #8fa0ff);
+        transition: width 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        width: 5%;
+      }
+      .status-text {
+        font-size: 13px;
+        color: #7a8499;
+        letter-spacing: 0.3px;
+        text-align: center;
+        min-height: 18px;
+        transition: color 0.3s;
+      }
+      .hint-text {
+        font-size: 11px;
+        color: #3d4560;
+        margin-top: 10px;
+        text-align: center;
+        max-width: 300px;
+        line-height: 1.6;
+        min-height: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo-wrap">
+        <div class="logo-emoji">🦞</div>
+      </div>
+
+      <div class="app-name">66Claw</div>
+
+      <div class="spinner-wrap">
+        <div class="spinner"></div>
+      </div>
+
+      <div id="badge" class="stage-badge">启动中</div>
+
+      <div class="progress-track">
+        <div id="bar" class="progress-fill"></div>
+      </div>
+
+      <div id="status" class="status-text">正在启动服务...</div>
+      <div id="hint" class="hint-text">首次启动需要初始化运行环境，请稍候</div>
+    </div>
+
+    <script>
+      var _start = Date.now();
+      var _pct = 5;
+      var _idx = 0;
+
+      // [ms, pct, badge, badgeColor, badgeBg, status, hint]
+      var stages = [
+        [0,      5,  '启动中',   '#6382ff', 'rgba(99,130,255,0.12)',
+          '正在启动服务...',
+          '首次启动需要初始化运行环境，请稍候'],
+        [4000,   22, '加载中',   '#6382ff', 'rgba(99,130,255,0.12)',
+          '正在加载插件与扩展...',
+          '已有缓存的环境通常 7 秒内完成'],
+        [12000,  40, '初始化',   '#6382ff', 'rgba(99,130,255,0.12)',
+          '正在初始化后台服务...',
+          '首次启动会构建加速缓存，下次将秒开'],
+        [25000,  56, '首次启动', '#e8a020', 'rgba(232,160,32,0.12)',
+          '首次启动，正在建立加速缓存...',
+          '这是一次性过程，完成后每次启动约 7 秒'],
+        [50000,  72, '首次启动', '#e8a020', 'rgba(232,160,32,0.12)',
+          '缓存构建中，请耐心等待...',
+          '进度已过半，即将完成初始化'],
+        [75000,  86, '即将就绪', '#20c997', 'rgba(32,201,151,0.12)',
+          '服务即将就绪...',
+          '正在完成最后的初始化步骤'],
+        [105000, 92, '超时',     '#e05555', 'rgba(224,85,85,0.12)',
+          '启动时间较长，如长时间无响应请重启应用',
+          '请检查后台服务是否正常运行'],
+      ];
+
+      function applyStage(s) {
+        var badge = document.getElementById('badge');
+        var status = document.getElementById('status');
+        var hint = document.getElementById('hint');
+        badge.textContent = s[2];
+        badge.style.color = s[3];
+        badge.style.background = s[4];
+        status.textContent = s[5];
+        if (s[0] >= 105000) status.style.color = '#e05555';
+        hint.textContent = s[6];
+      }
+
+      function tick() {
+        var now = Date.now() - _start;
+
+        for (var i = _idx; i < stages.length; i++) {
+          if (now >= stages[i][0]) _idx = i; else break;
+        }
+        applyStage(stages[_idx]);
+
+        // Interpolate progress
+        var cur = stages[_idx];
+        var nxt = stages[Math.min(_idx + 1, stages.length - 1)];
+        var pct;
+        if (cur === nxt) {
+          pct = cur[1];
+        } else {
+          var r = Math.min((now - cur[0]) / (nxt[0] - cur[0]), 1);
+          pct = cur[1] + (nxt[1] - cur[1]) * r;
+        }
+        _pct = Math.max(_pct, Math.min(pct, 93));
+        document.getElementById('bar').style.width = _pct + '%';
+      }
+
+      applyStage(stages[0]);
+      setInterval(tick, 400);
+    </script>
+  </body>
+</html>
