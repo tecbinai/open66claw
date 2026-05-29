@@ -95,26 +95,19 @@
 
 | 路径 | 说明 |
 |------|------|
-| `66claw-docs/` | CN 专属文档（架构概览、自定义清单、UI 功能对比等） |
+| - | Legacy CN Docker overlays were removed during open-source cleanup. |
+| `docs/66claw/` | CN 专属文档（架构概览、自定义清单、UI 功能对比等） |
 
 ### 3.3 部署与运维
 
 | 路径 | 说明 |
 |------|------|
-| `docker/cn/Dockerfile` | CN Docker 镜像（上游基础镜像 + cn-adapter 覆盖层） |
-| `docker/cn/docker-compose.cn.yml` | CN 服务编排 |
-| `docker/cn/seccomp-profile.json` | 容器安全策略 |
-| `docker/cn/README.md` | 部署说明 |
+| - | Legacy root-level install/upgrade scripts were removed during open-source cleanup. |
 
 ### 3.4 安装/升级脚本（根目录散落）
 
 | 路径 | 说明 |
 |------|------|
-| `install-cn.sh` | Linux/macOS 安装脚本 |
-| `install-cn.ps1` | Windows 安装脚本 |
-| `upgrade-cn.sh` | Linux/macOS 升级脚本 |
-| `upgrade-cn.ps1` | Windows 升级脚本 |
-| `openclaw.podman.env` | Podman 容器环境变量 |
 
 ### 3.5 开发脚本
 

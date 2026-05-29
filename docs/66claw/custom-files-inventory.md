@@ -10,17 +10,11 @@ This document lists local files and directories that are not part of upstream Op
 | `apps/desktop/` | 66claw desktop shell and release packaging adaptations. |
 | `extensions/cn-adapter/` | 66claw China adapter: setup flow, marketplace bridge, provider defaults, model capability matrix, and UI bridge RPC. |
 | `extensions/feishu-cn-enhance/` | 66claw Feishu enhancement extension. |
-| `66claw-docs/` | 66claw project notes and merge-boundary documentation. |
+| `docs/66claw/` | 66claw project notes and merge-boundary documentation. |
 
 ## Custom Root Files
 
-| Path | Ownership |
-| --- | --- |
-| `install-cn.sh` | 66claw Linux/macOS install script. |
-| `install-cn.ps1` | 66claw Windows install script. |
-| `upgrade-cn.sh` | 66claw Linux/macOS upgrade script. |
-| `upgrade-cn.ps1` | 66claw Windows upgrade script. |
-| `openclaw.podman.env` | 66claw Podman deployment environment file. |
+No 66claw-owned installation or deployment helper scripts should live in the repository root. Keep product-specific tooling under `scripts/`, `deploy/`, or `docs/66claw/` when it is intentionally retained.
 
 ## Upstream Files With Local Changes
 

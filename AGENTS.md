@@ -221,7 +221,7 @@ Skills own workflows; root owns hard policy and routing.
 
 ## 66claw Local Development
 
-- 66claw-owned paths: `ui-cn/`, `extensions/cn-adapter/`, `extensions/feishu-cn-enhance/`, `apps/desktop/`, `66claw-docs/`, and `dev/upstream-tracking/`.
+- 66claw-owned paths: `ui-cn/`, `extensions/cn-adapter/`, `extensions/feishu-cn-enhance/`, `apps/desktop/`, `docs/66claw/`, and `dev/upstream-tracking/`.
 - Keep generated artifacts out of Git: `apps/desktop/src-tauri/_dist/`, `build/bundled-extensions/`, temp files, logs, local DBs, and packaged downloads.
 - Do not restore commercial license checks, server verification, protected builds, code obfuscation, integrity hashes, runtime anti-tamper, or encrypted packaging.
 - CLI gateway: `pnpm cn:gateway`, then open `http://localhost:18789`.
