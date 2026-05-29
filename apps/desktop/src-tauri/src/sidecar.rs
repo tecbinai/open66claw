@@ -1079,6 +1079,8 @@ pub fn log_file_path() -> Result<PathBuf, Box<dyn std::error::Error>> {
 /// - `gateway.bind = "loopback"` (security: only listen on localhost)
 /// - `gateway.auth.mode = "none"`
 /// - `gateway.controlUi.dangerouslyDisableDeviceAuth = true`
+/// - `update.checkOnStart = false`
+/// - `update.auto.enabled = false`
 /// - `plugins.entries.cn-adapter.enabled = true`
 /// - `plugins.entries.agent-team.enabled = true`
 pub fn ensure_cn_defaults() {
@@ -1144,6 +1146,31 @@ pub fn ensure_cn_defaults() {
             .or_insert_with(|| { changed = true; serde_json::json!(true) });
     }
 
+    // Open-source desktop builds must be fully local by default. Disable the
+    // gateway's npm update checks so first launch does not call registry.npmjs.org
+    // or block the UI on network timeouts.
+    {
+        let update = config
+            .as_object_mut().unwrap()
+            .entry("update")
+            .or_insert_with(|| serde_json::json!({}))
+            .as_object_mut()
+            .unwrap();
+        if update.get("checkOnStart").and_then(|v| v.as_bool()) != Some(false) {
+            update.insert("checkOnStart".to_string(), serde_json::json!(false));
+            changed = true;
+        }
+        let auto = update
+            .entry("auto")
+            .or_insert_with(|| serde_json::json!({}))
+            .as_object_mut()
+            .unwrap();
+        if auto.get("enabled").and_then(|v| v.as_bool()) != Some(false) {
+            auto.insert("enabled".to_string(), serde_json::json!(false));
+            changed = true;
+        }
+    }
+
     // Ensure all CN-relevant plugins are enabled by default.
     // Channel plugins must be enabled for their configSchema to appear in the UI.
     {
@@ -1152,68 +1179,37 @@ pub fn ensure_cn_defaults() {
             .entry("plugins")
             .or_insert_with(|| serde_json::json!({}))
             .as_object_mut().unwrap();
-        let entries = plugins
-            .entry("entries")
-            .or_insert_with(|| serde_json::json!({}))
-            .as_object_mut().unwrap();
 
-        // All plugins enabled by default — unconfigured plugins have zero runtime
-        // cost (no connections, no timers, no listeners) thanks to isConfigured() guard.
+        // Keep the packaged app on a small trusted plugin set by default.
+        // Users can enable channel/provider plugins explicitly from the UI/config.
         let default_plugins: &[&str] = &[
-            // CN core
             "cn-adapter",
             "agent-team",
-            "feishu-cn-enhance",
-            // Channel plugins — enabled so config UI shows all entries
-            "feishu",
-            "dingtalk",
-            "wecom",
-            "telegram",
-            "discord",
-            "qqbot",
-            "openclawwechat",
-            "whatsapp",
-            "slack",
-            "signal",
-            "msteams",
-            "googlechat",
-            "matrix",
-            "mattermost",
-            "irc",
-            "line",
-            "nostr",
-            "synology-chat",
-            "tlon",
-            "twitch",
-            "bluebubbles",
-            "imessage",
-            "nextcloud-talk",
-            "zalo",
-            "zalouser",
-            // LLM backends
-            "ollama",
-            "sglang",
-            "vllm",
-            "copilot-proxy",
-            "google-gemini-cli-auth",
-            "minimax-portal-auth",
-            "qwen-portal-auth",
-            // Feature plugins
             "acpx",
             "llm-task",
-            "lobster",
-            "open-prose",
-            "talk-voice",
-            "voice-call",
-            "phone-control",
-            // Memory & utility
             "memory-core",
-            "memory-lancedb",
             "device-pair",
             "diffs",
             "thread-ownership",
             "diagnostics-otel",
         ];
+        if plugins
+            .get("allow")
+            .and_then(|v| v.as_array())
+            .map(|arr| arr.is_empty())
+            .unwrap_or(true)
+        {
+            plugins.insert(
+                "allow".to_string(),
+                serde_json::json!(default_plugins),
+            );
+            changed = true;
+        }
+
+        let entries = plugins
+            .entry("entries")
+            .or_insert_with(|| serde_json::json!({}))
+            .as_object_mut().unwrap();
         for plugin_id in default_plugins {
             let entry = entries
                 .entry(*plugin_id)

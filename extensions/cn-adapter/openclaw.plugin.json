@@ -5,6 +5,9 @@
   "activation": {
     "onStartup": true
   },
+  "contracts": {
+    "tools": ["image_gen", "video_gen", "video_understand"]
+  },
   "configSchema": {
     "type": "object",
     "additionalProperties": false,

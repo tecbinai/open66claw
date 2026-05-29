@@ -276,13 +276,12 @@ $env:CARGO_BUILD_JOBS = "8"
 Push-Location "$ROOT\apps\desktop"
 # OEM 鏋勫缓锛氬垹闄?.version-stamp 瑙﹀彂閲嶆柊 stage锛圲I 璧勬簮宸插彉浣嗙増鏈彿鏈彉锛?
 # stage-dist.sh 宸蹭慨鏀逛负娓呯悊鏃朵繚鐣?node/ 鐩綍锛屼笉浼氶噸鏂颁笅杞?Node.js
-if ($isOem) {
-    $stampFile = Join-Path $ROOT "apps\desktop\src-tauri\_dist\.version-stamp"
-    if (Test-Path $stampFile) {
-        Remove-Item $stampFile -Force -ErrorAction SilentlyContinue
-        Write-Host "  Cleared _dist/.version-stamp to force re-stage" -ForegroundColor Gray
-    }
+$stampFile = Join-Path $ROOT "apps\desktop\src-tauri\_dist\.version-stamp"
+if (Test-Path $stampFile) {
+    Remove-Item $stampFile -Force -ErrorAction SilentlyContinue
+    Write-Host "  Cleared _dist/.version-stamp to force re-stage" -ForegroundColor Gray
 }
+$env:FORCE_STAGE = "1"
 # Tauri 2.x 鍦ㄨ繍琛?beforeBuildCommand 涔嬪墠浼氶妫€ frontendDist 鏄惁瀛樺湪銆?
 # stage-dist.sh 鐨?beforeBuildCommand 浼氭竻绌哄苟閲嶅缓 _dist锛屼絾 Tauri 鐨勯妫€鏃╀簬姝ゃ€?
 # 鍥犳锛屾瘡娆℃瀯寤哄墠閮界‘淇?_dist/dist/control-ui 瀛樺湪锛坰tage-dist 浼氬湪 beforeBuildCommand
@@ -377,5 +376,14 @@ Write-Host "========================================" -ForegroundColor Green
 if ($nsisZip)    { Write-Host "  Update package : $($nsisZip.Name) ($([math]::Round($nsisZip.Length/1MB,2))MB)" -ForegroundColor White }
 if ($nsisZipSig) { Write-Host "  Signature      : $($nsisZipSig.Name)" -ForegroundColor White }
 if ($nsisExe)    { Write-Host "  Installer      : $($nsisExe.Name) ($([math]::Round($nsisExe.Length/1MB,2))MB)" -ForegroundColor White }
+
+$buildOutDir = Join-Path $ROOT "build"
+New-Item -ItemType Directory -Path $buildOutDir -Force | Out-Null
+foreach ($artifact in @($nsisExe, $nsisZip, $nsisZipSig)) {
+    if ($artifact) {
+        Copy-Item -LiteralPath $artifact.FullName -Destination (Join-Path $buildOutDir $artifact.Name) -Force
+    }
+}
+Write-Host "  Copied artifacts to: $buildOutDir" -ForegroundColor White
 Write-Host ""
 Write-Host "Next: test the generated installer locally." -ForegroundColor Yellow

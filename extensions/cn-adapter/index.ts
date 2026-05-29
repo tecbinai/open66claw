@@ -289,7 +289,7 @@ const plugin = {
     api.registerCli(({ program }) => registerCnMigrate(program), { commands: ["cn-migrate"] });
     api.registerCli(({ program }) => registerCnUninstall(program), { commands: ["cn-uninstall"] });
     api.registerCli(({ program }) => registerCnCommands(program), {
-      commands: ["帮助", "状态", "配置", "升级"],
+      commands: ["cn-help", "cn-status", "cn-config", "cn-upgrade"],
     });
     api.registerCli(({ program }) => registerCnRule(program), { commands: ["cn-rule"] });
     api.registerCli(({ program }) => registerCnCompliance(program), { commands: ["cn-compliance"] });

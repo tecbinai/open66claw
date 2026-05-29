@@ -88,6 +88,9 @@ STAMP_FILE="$DIST_DST/.version-stamp"
 if [ "${FORCE_STAGE:-}" != "1" ] && [ -f "$STAMP_FILE" ]; then
   CACHED_STAMP=$(cat "$STAMP_FILE")
   if [ "$CACHED_STAMP" = "$STAMP_KEY" ]; then
+    if [ ! -d "$DIST_DST/node_modules" ] || [ -z "$(ls -A "$DIST_DST/node_modules" 2>/dev/null)" ]; then
+      echo "[stage-dist] Cache stamp matched but node_modules is missing/empty, forcing full re-stage"
+    else
     echo "[stage-dist] _dist already staged for v$DESKTOP_VERSION ($TAURI_TARGET), skipping"
     # 即使命中缓存，也确保 CLI wrapper 脚本存在（新增文件不在旧缓存中）
     if [ ! -f "$DIST_DST/openclaw" ] || [ ! -f "$DIST_DST/openclaw.cmd" ]; then
@@ -120,6 +123,7 @@ SHEOF
     _apply_oem_patch
     _stage_cn_adapter_marketplace_data
     exit 0
+    fi
   fi
   # 版本相同但架构不同（all-mac 双架构构建）→ 只需替换 node binary
   CACHED_VER=$(echo "$CACHED_STAMP" | cut -d'|' -f1)
@@ -267,7 +271,7 @@ fi  # end of SKIP_TO_NODE_ONLY check
 #   Windows: app_dir/node/node.exe
 # 若包内没有 node，则依次尝试系统 node → 自动下载（nodejs.org，国内无法访问）
 # 因此必须在构建时打入 node，避免用户首次启动联网下载失败。
-NODE_VERSION="v22.16.0"
+NODE_VERSION="v22.19.0"
 # Tauri 2.x sets TAURI_ENV_TARGET_TRIPLE (e.g. x86_64-pc-windows-msvc)
 TAURI_TARGET="${TAURI_ENV_TARGET_TRIPLE:-${TAURI_TARGET:-}}"
 
@@ -282,9 +286,19 @@ if echo "$TAURI_TARGET" | grep -qi "windows\|msvc"; then
     if [ "$NODE_BYTES" -lt 50000000 ]; then
       echo "[stage-dist] Existing Windows node.exe is too small ($NODE_BYTES bytes); restaging real Node.js"
       rm -f "$NODE_EXE"
+    elif ! "$NODE_EXE" -e 'const [maj,min]=process.versions.node.split(".").map(Number); process.exit(maj > 22 || (maj === 22 && min >= 19) ? 0 : 1)' >/dev/null 2>&1; then
+      OLD_NODE_VERSION=$("$NODE_EXE" --version 2>/dev/null || echo "unknown")
+      echo "[stage-dist] Existing Windows node.exe is too old ($OLD_NODE_VERSION); restaging Node.js >=22.19.0"
+      rm -f "$NODE_EXE"
     fi
   fi
   if [ ! -f "$NODE_EXE" ]; then
+    BUILD_NODE="$(command -v node 2>/dev/null || true)"
+    if [ -n "$BUILD_NODE" ] && "$BUILD_NODE" -e 'const [maj,min]=process.versions.node.split(".").map(Number); process.exit(maj > 22 || (maj === 22 && min >= 19) ? 0 : 1)' >/dev/null 2>&1; then
+      BUILD_NODE_VERSION=$("$BUILD_NODE" --version 2>/dev/null || echo "unknown")
+      echo "[stage-dist] Bundling Windows node from build machine: $BUILD_NODE ($BUILD_NODE_VERSION)"
+      cp "$BUILD_NODE" "$NODE_EXE"
+    else
     NODE_ARCH="x64"
     NODE_ZIP="node-${NODE_VERSION}-win-${NODE_ARCH}.zip"
     NODE_URL="https://nodejs.org/dist/${NODE_VERSION}/${NODE_ZIP}"
@@ -307,6 +321,7 @@ if echo "$TAURI_TARGET" | grep -qi "windows\|msvc"; then
     unzip -q "$NODE_CACHE" "node-${NODE_VERSION}-win-${NODE_ARCH}/node.exe" -d "$TMP_EXTRACT"
     cp "$TMP_EXTRACT/node-${NODE_VERSION}-win-${NODE_ARCH}/node.exe" "$NODE_EXE"
     rm -rf "$TMP_EXTRACT"
+    fi
 
     NODE_SIZE=$(du -h "$NODE_EXE" | cut -f1)
     echo "[stage-dist] Bundled Node.js for Windows: $NODE_EXE ($NODE_SIZE)"
@@ -894,8 +909,14 @@ if uname -s | grep -qi darwin; then
 
   echo "[stage-dist] Installing node_modules with npm (macOS, --prefer-offline)..."
   cd "$DIST_DST"
-  npm install --omit=dev --ignore-scripts --no-audit --no-fund --prefer-offline --loglevel=error 2>&1 | tail -5 || \
-  npm install --omit=dev --ignore-scripts --no-audit --no-fund --loglevel=error 2>&1 | tail -10
+  NPM_INSTALL_LOG="$DIST_DST/.npm-install.log"
+  if ! npm install --omit=dev --ignore-scripts --no-audit --no-fund --legacy-peer-deps --prefer-offline --loglevel=error > "$NPM_INSTALL_LOG" 2>&1; then
+    tail -50 "$NPM_INSTALL_LOG" >&2
+    echo "[stage-dist] ERROR: npm install failed" >&2
+    exit 1
+  fi
+  tail -5 "$NPM_INSTALL_LOG" || true
+  rm -f "$NPM_INSTALL_LOG"
   cd - > /dev/null
   NM_COUNT=$(ls "$NODE_MODULES_DST" | wc -l | tr -d ' ')
   echo "[stage-dist] npm install done ($NM_COUNT packages)"
@@ -915,17 +936,23 @@ else
   # Previously used pnpm store copy which only copied 80 direct deps, missing
   # ~450 transitive deps. Switch to npm install (same as macOS) for correctness.
   # npm --prefer-offline uses local npm cache; no network needed if previously run.
-  echo "[stage-dist] Installing node_modules with npm (Windows, --prefer-offline)..."
+  echo "[stage-dist] Installing node_modules with pnpm (Windows/Linux, --prefer-offline)..."
   cd "$DIST_DST"
-  npm install --omit=dev --ignore-scripts --no-audit --no-fund --prefer-offline --loglevel=error 2>&1 | tail -5 || \
-  npm install --omit=dev --ignore-scripts --no-audit --no-fund --loglevel=error 2>&1 | tail -10
+  PNPM_INSTALL_LOG="$DIST_DST/.pnpm-install.log"
+  if ! CI=true pnpm install --prod --ignore-scripts --no-frozen-lockfile --ignore-workspace --config.node-linker=hoisted --prefer-offline > "$PNPM_INSTALL_LOG" 2>&1; then
+    tail -80 "$PNPM_INSTALL_LOG" >&2
+    echo "[stage-dist] ERROR: pnpm install failed" >&2
+    exit 1
+  fi
+  tail -8 "$PNPM_INSTALL_LOG" || true
+  rm -f "$PNPM_INSTALL_LOG"
   NM_COUNT=$(ls "$NODE_MODULES_DST" 2>/dev/null | wc -l | tr -d ' ')
-  echo "[stage-dist] npm install done ($NM_COUNT packages)"
+  echo "[stage-dist] pnpm install done ($NM_COUNT packages)"
   cd - > /dev/null
 fi
 
 # Verify node_modules was actually created
-if [ ! -d "$NODE_MODULES_DST" ]; then
+if [ ! -d "$NODE_MODULES_DST" ] || [ -z "$(ls -A "$NODE_MODULES_DST" 2>/dev/null)" ]; then
   echo "[stage-dist] ERROR: node_modules installation failed!" >&2
   exit 1
 fi

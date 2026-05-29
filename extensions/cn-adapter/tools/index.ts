@@ -18,17 +18,17 @@ export function registerCnTools(api: OpenClawPluginApi): void {
   // image_gen — 生图工具
   api.registerTool(((ctx) => {
     return createImageGenTool(ctx.sessionKey);
-  }) as OpenClawPluginToolFactory);
+  }) as OpenClawPluginToolFactory, { name: "image_gen" });
 
   // video_gen — 生视频工具
   api.registerTool(((ctx) => {
     return createVideoGenTool(ctx.sessionKey);
-  }) as OpenClawPluginToolFactory);
+  }) as OpenClawPluginToolFactory, { name: "video_gen" });
 
   // video_understand — 视频理解工具
   api.registerTool(((ctx) => {
     return createVideoUnderstandTool(ctx.sessionKey);
-  }) as OpenClawPluginToolFactory);
+  }) as OpenClawPluginToolFactory, { name: "video_understand" });
 
   log.info("Registered tools: image_gen, video_gen, video_understand");
 }

@@ -191,15 +191,15 @@ describe("cn-adapter integration smoke test", () => {
     // before_agent_start x1 (E3: MCP tool whitelist guard)
     expect(events.filter((e: string) => e === "before_agent_start").length).toBe(1);
 
-    expect(mockApi.on.mock.calls.length).toBe(11);
+    expect(mockApi.on.mock.calls.length).toBe(10);
   });
 
   // ── 4. CLI 命令注册 ─────────────────────────────────────────────
 
-  it("should register 5 CLI command groups", () => {
+  it("should register 6 CLI command groups", () => {
     plugin.register(mockApi as any);
 
-    expect(mockApi.registerCli.mock.calls.length).toBe(5);
+    expect(mockApi.registerCli.mock.calls.length).toBe(6);
 
     // Verify command names
     const allCommands = mockApi.registerCli.mock.calls.flatMap((c: any[]) => c[1]?.commands ?? []);
@@ -207,11 +207,10 @@ describe("cn-adapter integration smoke test", () => {
     expect(allCommands).toContain("cn-migrate");
     expect(allCommands).toContain("cn-uninstall");
     expect(allCommands).toContain("cn-rule");
-    // 中文别名
-    expect(allCommands).toContain("帮助");
-    expect(allCommands).toContain("状态");
-    expect(allCommands).toContain("配置");
-    expect(allCommands).toContain("升级");
+    expect(allCommands).toContain("cn-help");
+    expect(allCommands).toContain("cn-status");
+    expect(allCommands).toContain("cn-config");
+    expect(allCommands).toContain("cn-upgrade");
   });
 
   // ── 5. Provider 注册 ────────────────────────────────────────────

@@ -598,14 +598,7 @@ export function registerUiBridgeHandlers(api: OpenClawPluginApi): void {
   );
 
   // ====== update 系列 ======
-
-  api.registerGatewayMethod(
-    "update.status",
-    safeGateway("update.status", async ({ respond }) => {
-      respond(true, { hasUpdate: false });
-    }),
-  );
-
+  // update.status / update.run 由上游 Gateway 注册；这里不重复注册，避免插件启动时报错。
   api.registerGatewayMethod(
     "update.execute",
     safeGateway("update.execute", async ({ respond }) => {
@@ -765,6 +758,25 @@ export function registerUiBridgeHandlers(api: OpenClawPluginApi): void {
     "local_engine.status",
     safeGateway("local_engine.status", async ({ respond }) => {
       respond(true, { status: "unavailable", models: [] });
+    }),
+  );
+
+  api.registerGatewayMethod(
+    "voicewake.listen.status",
+    safeGateway("voicewake.listen.status", async ({ respond }) => {
+      respond(true, { available: false, listening: false });
+    }),
+  );
+
+  api.registerGatewayMethod(
+    "sessions.dmScopeStatus",
+    safeGateway("sessions.dmScopeStatus", async ({ respond }) => {
+      respond(true, {
+        current: "main",
+        recommended: "main",
+        shouldUpgrade: false,
+        multiUserChannels: [],
+      });
     }),
   );
 
