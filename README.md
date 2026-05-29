@@ -95,6 +95,8 @@ build\
 - WeChat: `sunshineonly1314`
 - 抖音 / 小红书 / 视频号 / B 站：`tecbinAI进化`
 
+企业如需定制或者 OEM，可直接联系。
+
 ## 和 OpenClaw 的关系
 
 66Claw 是 OpenClaw 的二开项目。
